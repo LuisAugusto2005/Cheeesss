@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Xadrez de cria</title>
+  <style>
+
+    body {
+        background-color: #f0f0f0;
+    }
+
+    table {
+      border-collapse: collapse;
+    }
+    td {
+      width: 60px;
+      height: 60px;
+    }
+    .preto {
+      background-color: rgb(92, 158, 97);
+    }
+    .branco {
+      background-color: rgb(228, 236, 207);
+    }
+  </style>
+</head>
+<body id="body">
+  <h1>Tabuleiro de Xadrez</h1>
+  <table id="tabuleiro"></table>
+ 
+  <script>
+    const linhas = 8;
+    const colunas = 8;
+    const tabela = document.getElementById("tabuleiro");
+
+        const pecasIniciais = [
+      ["♜","♞","♝","♛","♚","♝","♞","♜"],
+      ["♟","♟","♟","♟","♟","♟","♟","♟"],
+      ["","","","","","","",""],
+      ["","","","","","","",""],
+      ["","","","","","","",""],
+      ["","","","","","","",""],
+      ["♙","♙","♙","♙","♙","♙","♙","♙"],
+      ["♖","♘","♗","♕","♔","♗","♘","♖"]
+    ];
+    
+
+    function criarMatriz() {
+      for (let i = 0; i < linhas; i++) {
+        const linha = document.createElement("tr");
+
+        for (let j = 0; j < colunas; j++) {
+          const celula = document.createElement("td");
+
+          celula.dataset.row = i;
+          celula.dataset.col = j;
+
+          celula.textContent = pecasIniciais[i][j];
+          celula.style.fontSize = "40px";
+          celula.style.textAlign = "center";
+          
+          if ((i + j) % 2 === 0) {
+            celula.classList.add("branco");
+          } else {
+            celula.classList.add("preto");
+          }
+
+          linha.appendChild(celula);
+        }
+
+        tabela.appendChild(linha);
+      }
+    }
+
+
+
+    criarMatriz();
+  </script>
+</body>
+</html>
