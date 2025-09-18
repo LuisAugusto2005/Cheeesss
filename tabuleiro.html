@@ -51,6 +51,12 @@
 
         for (let j = 0; j < colunas; j++) {
           const celula = document.createElement("td");
+          
+          
+          celula.onclick = function() {
+            alert(`Célula clicada: Linha ${this.dataset.row}, Coluna ${this.dataset.col}`);
+          };
+
 
           celula.dataset.row = i;
           celula.dataset.col = j;
