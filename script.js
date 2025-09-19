@@ -96,24 +96,274 @@ document.addEventListener('DOMContentLoaded', () => {
         const row = parseInt(square.dataset.row);
         const col = parseInt(square.dataset.col);
         const piece = board[row][col];
+        
+        if (!selectpiece && piece && piece.color === currentplayer) { 
 
-        if (selectpiece) { 
-            
-            movePiece(selectpiece, { row, col }); 
-           
-        } else if (piece && piece.color === currentplayer) { 
-            selectPiece(row, col);
+          selectpiece = getSquare(row, col);
+          selectpiece.classList.add('selected');
+          
+          const moves = getPossibleMoves(piece, row, col);
+          moves.forEach(([ir, ic]) => {
+            const quadrado = getSquare(row + ir, col + ic);
+            quadrado.classList.add('possible-move');
+          });
+          
+        } else { 
+          if (selectpiece && (square.classList.contains('possible-move') || square.classList.contains('possible-capture'))) {
+            movePiece(selectpiece.dataset, { row, col });
+            console.log("Peça movida para: Linha " + row + " Coluna " + col);
+          }
+          clearHighlights();
         }
     }
 
-    
-    function selectPiece(row, col) {
-        selectpiece = { row, col, piece: board[row][col] };
-        clearHighlights();
-        const quadrado = chessboard.querySelector(`[data-row='${row}'][data-col='${col}']`);
-        quadrado.classList.add('selected');
-        
-       
+  
+
+    function getPossibleMoves(piece, row, col) {
+      let moves = [];
+      console.log("Linha: " + row + " Coluna: " + col);
+      switch (piece.type) {
+        case "pawn":
+          console.log("Peão selecionado");
+          if (piece.color === "black") {
+            if (getPiece(row + 1, col)?.type === "") {
+              moves.push([1, 0]);
+              if (!piece.hasMoved) {
+                moves.push([2, 0]);
+              }
+            }
+            if (getPiece(row + 1, col - 1)?.type != "" && getPiece(row + 1, col - 1)?.color !== piece.color) {
+              moves.push([1, -1]);
+            }
+            if (getPiece(row + 1, col + 1)?.type != "" && getPiece(row + 1, col + 1)?.color !== piece.color) {
+              moves.push([1, 1]);
+            }
+          } else {
+            if (getPiece(row - 1, col)?.type === "") {
+              moves.push([-1, 0]);
+              if (!celula.hasMoved) {
+                moves.push([-2, 0]);
+              }
+            }
+            if (getPiece(row - 1, col - 1)?.type != "" && getPiece(row - 1, col - 1)?.color !== piece.color) {
+              moves.push([-1, -1]);
+            }
+            if (getPiece(row - 1, col + 1)?.type != "" && getPiece(row - 1, col + 1)?.color !== piece.color) {
+              moves.push([-1, 1]);
+            }
+          }
+          break;
+        case "rook":
+          for (let i = 1; i < 8; i++) {
+            let destino = getPiece(row + i, col);
+            if (destino?.type === "") {
+              moves.push([i, 0]);
+            } else if (destino?.color !== piece.color) {
+              moves.push([i, 0]);
+              break;
+            } else {
+              break;
+            }
+          }
+          for (let i = 1; i < 8; i++) {
+            let destino = getPiece(row - i, col);
+            if (destino?.type === "") {
+              moves.push([-i, 0]);
+            } else if (destino?.color !== piece.color) {
+              moves.push([-i, 0]);
+              break;
+            } else {
+              break;
+            }
+          }
+          for (let i = 1; i < 8; i++) {
+            let destino = getPiece(row, col + i);
+            if (destino?.type === "") {
+              moves.push([0, i]);
+            } else if (destino?.color !== piece.color) {
+              moves.push([0, i]);
+              break;
+            } else {
+              break;
+            }
+          }
+          for (let i = 1; i < 8; i++) {
+            let destino = getPiece(row, col - i);
+            if (destino?.type === "") {
+              moves.push([0, -i]);
+            } else if (destino?.color !== piece.color) {
+              moves.push([0, -i]);
+              break;
+            } else {
+              break;
+            }
+          }
+          break;
+        case "knight":
+          const knightMoves = [
+            [2, 1], [2, -1], [-2, 1], [-2, -1],
+            [1, 2], [1, -2], [-1, 2], [-1, -2]
+          ];
+          knightMoves.forEach(([dr, dc]) => {
+            const destino = getPiece(selecionada.row + dr, selecionada.col + dc);
+            if (destino) {
+              if (destino.type === "" || destino.color !== piece.color) {
+                moves.push([dr, dc]);
+              }
+            }
+          });
+          break;
+        case "bishop":
+          for (let i = 1; i < 8; i++) {
+            let destino = getPiece(row + i, col + i);
+            if (destino?.type === "") {
+              moves.push([i, i]);
+            } else if (destino?.color !== piece.color) {
+              moves.push([i, i]);
+              break;
+            } else {
+              break;
+            }
+          }
+          for (let i = 1; i < 8; i++) {
+            let destino = getPiece(row - i, col + i);
+            if (destino?.type === "") {
+              moves.push([-i, i]);
+            } else if (destino?.color !== piece.color) {
+              moves.push([-i, i]);
+              break;
+            } else {
+              break;
+            }
+          }
+          for (let i = 1; i < 8; i++) {
+            let destino = getPiece(row - i, col - i);
+            if (destino?.type === "") {
+              moves.push([-i, -i]);
+            } else if (destino?.color !== piece.color) {
+              moves.push([-i, -i]);
+              break;
+            } else {
+              break;
+            }
+          }
+          for (let i = 1; i < 8; i++) {
+            let destino = getPiece(row + i, col - i);
+            if (destino?.type === "") {
+              moves.push([i, -i]);
+            } else if (destino?.color !== piece.color) {
+              moves.push([i, -i]);
+              break;
+            } else {
+              break;
+            }
+          }
+          break;
+        case "queen":
+          for (let i = 1; i < 8; i++) {
+            let destino = getPiece(row + i, col);
+            if (destino?.type === "") {
+              moves.push([i, 0]);
+            } else if (destino?.color !== piece.color) {
+              moves.push([i, 0]);
+              break;
+            } else {
+              break;
+            }
+          }
+          for (let i = 1; i < 8; i++) {
+            let destino = getPiece(row - i, col);
+            if (destino?.type === "") {
+              moves.push([-i, 0]);
+            } else if (destino?.color !== piece.color) {
+              moves.push([-i, 0]);
+              break;
+            } else {
+              break;
+            }
+          }
+          for (let i = 1; i < 8; i++) {
+            let destino = getPiece(row, col + i);
+            if (destino?.type === "") {
+              moves.push([0, i]);
+            } else if (destino?.color !== piece.color) {
+              moves.push([0, i]);
+              break;
+            } else {
+              break;
+            }
+          }
+          for (let i = 1; i < 8; i++) {
+            let destino = getPiece(row, col - i);
+            if (destino?.type === "") {
+              moves.push([0, -i]);
+            } else if (destino?.color !== piece.color) {
+              moves.push([0, -i]);
+              break;
+            } else {
+              break;
+            }
+          }
+          for (let i = 1; i < 8; i++) {
+            let destino = getPiece(row + i, col + i);
+            if (destino?.type === "") {
+              moves.push([i, i]);
+            } else if (destino?.color !== piece.color) {
+              moves.push([i, i]);
+              break;
+            } else {
+              break;
+            }
+          }
+          for (let i = 1; i < 8; i++) {
+            let destino = getPiece(row - i, col + i);
+            if (destino?.type === "") {
+              moves.push([-i, i]);
+            } else if (destino?.color !== piece.color) {
+              moves.push([-i, i]);
+              break;
+            } else {
+              break;
+            }
+          }
+          for (let i = 1; i < 8; i++) {
+            let destino = getPiece(row - i, col - i);
+            if (destino?.type === "") {
+              moves.push([-i, -i]);
+            } else if (destino?.color !== piece.color) {
+              moves.push([-i, -i]);
+              break;
+            } else {
+              break;
+            }
+          }
+          for (let i = 1; i < 8; i++) {
+            let destino = getPiece(row + i, col - i);
+            if (destino?.type === "") {
+              moves.push([i, -i]);
+            } else if (destino?.color !== piece.color) {
+              moves.push([i, -i]);
+              break;
+            } else {
+              break;
+            }
+          }
+          break;
+        case "king":
+          const kingMoves = [
+            [1, 0], [-1, 0], [0, 1], [0, -1],
+            [1, 1], [1, -1], [-1, 1], [-1, -1]
+          ];
+          kingMoves.forEach(([dr, dc]) => {
+            const destino = getPiece(selecionada.row + dr, selecionada.col + dc);
+            if (destino) {
+              if (destino.type === "" || destino.color !== piece.color) {
+                moves.push([dr, dc]);
+              }
+            }
+          });
+        }
+      return moves;
     }
 
     function movePiece(from, to) {
@@ -148,7 +398,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    
+    function getSquare(row, col) {
+      return chessboard.querySelector(`[data-row='${row}'][data-col='${col}']`);
+    }
+
+    function getPiece(row, col) {
+      console.log("GetPiece - Linha: " + row + " Coluna: " + col);
+      return board[row][col];
+    }
+
     function clearHighlights() {
         document.querySelectorAll('.selected, .possible-move, .possible-capture').forEach(el => el.classList.remove('selected', 'possible-move', 'possible-capture'));
     }
