@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else { 
           if (selectpiece && (square.classList.contains('possible-move') || square.classList.contains('possible-capture'))) {
             movePiece(selectpiece.dataset, { row, col });
-            // currentplayer = currentplayer === 'white' ? 'black' : 'white';
+            currentplayer = currentplayer === 'white' ? 'black' : 'white';
           }
           selectpiece = null;
           clearHighlights();
