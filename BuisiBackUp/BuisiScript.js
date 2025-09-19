@@ -1,12 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- Elementos do DOM ---
     const menuContainer = document.getElementById('menu-container');
     const botSelectionContainer = document.getElementById('bot-selection-container');
     const gameContainer = document.getElementById('game-container');
     const pvpButton = document.getElementById('pvpButton');
-    const pvbButton = document.getElementById('pvbButton'); // NOVO: Faltava essa referência
+    const pvbButton = document.getElementById('pvbButton');
     const backToMenuButton = document.getElementById('back-to-menu');
-    const botList = document.getElementById('bot-list'); // NOVO: Faltava essa referência
+    const botList = document.getElementById('bot-list');
 
     const chessboard = document.getElementById('chessboard');
     const turnDisplay = document.getElementById('turn-display');
@@ -15,21 +14,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const blackScoreDisplay = document.getElementById('black-score');
     const moveHistoryList = document.querySelector('#move-history ul');
     
-    // NOVO: Elementos para a personalidade do Bot
     const botDisplay = document.getElementById('bot-personality-display');
     const botImage = document.getElementById('bot-image');
     const botName = document.getElementById('bot-name');
     const botDialogue = document.getElementById('bot-dialogue');
 
-    // --- Estado do Jogo (variáveis corrigidas e adicionadas) ---
     let board = [];
     let currentPlayer = "white"; 
-    let selectedPiece = null; // Corrigido de 'selectpiece' para consistência
-    let moveHistory = []; // Corrigido de 'historico_movimento'
+    let selectedPiece = null;
+    let moveHistory = [];
     let gameEnded = false;
-    let gameMode = 'pvp'; // NOVO: para saber se é PvP ou PvB
-    let currentBot = null; // NOVO: para guardar os dados do bot escolhido
-    let botCurrentMood = 'normal'; // NOVO: para guardar o humor do bot
+    let gameMode = 'pvp';
+    let currentBot = null;
+    let botCurrentMood = 'normal';
 
     const pieceValues = { 'pawn': 1, 'knight': 3, 'bishop': 3, 'rook': 5, 'queen': 9, 'king': 1000 };
     const pieceUnicode = {
@@ -112,6 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
         gameContainer.classList.remove('hidden');
         
         if (gameMode === 'pvb' && currentBot) {
+            //Colocar aqui o AudioVisualizer!
             botDisplay.classList.remove('hidden');
             botCurrentMood = 'normal';
             botImage.src = currentBot.images.normal;

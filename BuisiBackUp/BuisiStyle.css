@@ -264,3 +264,14 @@ body {
 #move-history::-webkit-scrollbar-track { background: #1f2a40; border-radius: 10px; }
 #move-history::-webkit-scrollbar-thumb { background: #4a0e3a; border-radius: 10px; }
 #move-history::-webkit-scrollbar-thumb:hover { background: #6a1a5a; }
+
+/* Testar o audio-visualizer */
+#audio-visualizer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: #0b0b1a;
+}
