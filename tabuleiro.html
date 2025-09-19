@@ -26,46 +26,47 @@
   </div>
 
   <div id="game-container" class="hidden">
-    <div id="chessboard"></div>
 
-    <div id="game-info">
-
-
-      <div class="piece-style-dropdown hidden" id="pieceStyleDropdown">
-        <button id="styleButton">Estilo das peças ▼</button>
-        <div id="styleMenu" class="dropdown-content">
-          <div data-style="classic">Clássico</div>
-          <div data-style="california">California</div>
-          <div data-style="fantasy">Fantasia</div>
+      <div id="main-game-area">
+        <div id="bot-personality-display" class="hidden">
+          <img id="bot-image" src="" alt="Bot Avatar">
+          <div id="bot-dialogue-box">
+            <p id="bot-name"></p>
+            <p id="bot-dialogue">"Boa sorte... você vai precisar."</p>
+          </div>
         </div>
-      </div>
 
-      <div id="bot-personality-display" class="hidden">
-        <img id="bot-image" src="" alt="Bot Avatar">
-        <div id="bot-dialogue-box">
-          <p id="bot-name"></p>
-          <p id="bot-dialogue">"Boa sorte... você vai precisar."</p>
+        <div id="chessboard"></div>
+      </div>
+      <div id="game-info">
+        <div class="piece-style-dropdown hidden" id="pieceStyleDropdown">
+          <button id="styleButton">Estilo das peças ▼</button>
+          <div id="styleMenu" class="dropdown-content">
+            <div data-style="classic">Clássico</div>
+            <div data-style="california">California</div>
+            <div data-style="fantasy">Fantasia</div>
+          </div>
         </div>
+
+        <h2>Informações do Jogo</h2>
+        <p id="turn-display">Vez das Brancas</p>
+        <p id="status-display">O jogo começou.</p>
+
+        <h3>Placar</h3>
+        <div id="score-display">
+          <p>Brancas: <span id="white-score">0</span></p>
+          <p>Pretas: <span id="black-score">0</span></p>
+        </div>
+
+        <h3>Histórico de Movimentos</h3>
+        <div id="move-history">
+          <ul>
+          </ul>
+        </div>
+
+        <button id="back-to-menu">Voltar ao Menu</button>
       </div>
-
-      <h2>Informações do Jogo</h2>
-      <p id="turn-display">Vez das Brancas</p>
-      <p id="status-display">O jogo começou.</p>
-
-      <h3>Placar</h3>
-      <div id="score-display">
-        <p>Brancas: <span id="white-score">0</span></p>
-        <p>Pretas: <span id="black-score">0</span></p>
-      </div>
-
-      <h3>Histórico de Movimentos</h3>
-      <div id="move-history">
-        <ul>
-        </ul>
-      </div>
-
-      <button id="back-to-menu">Voltar ao Menu</button>
-    </div>
+      
   </div>
 
   <script src="script.js"></script>
