@@ -1,13 +1,36 @@
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #1a1a2e;
-    margin: 0;
-    overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  overflow: hidden;
+
+  /* gradiente animado estilo Balatro */
+  background: linear-gradient(-45deg, #081229, #0e5b4c, #6b0e5b, #123456);
+  background-size: 400% 400%;
+  animation: gradientMove 20s ease infinite;
 }
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* overlay pattern translúcido */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle at 1px 1px,
+    rgba(255,255,255,0.04) 1px, transparent 0);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+
+/* === seu CSS existente abaixo === */
 
 #menu-container {
     text-align: center;
@@ -115,6 +138,7 @@ body {
     background-image: radial-gradient(circle, rgba(0, 123, 255, 0.4) 25%, transparent 26%) !important;
     cursor: pointer;
 }
+
 .possible-capture {
     background-image: radial-gradient(circle, rgba(220, 53, 69, 0.6) 25%, transparent 26%) !important;
     cursor: pointer;
