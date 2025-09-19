@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else { 
           if (selectpiece && (square.classList.contains('possible-move') || square.classList.contains('possible-capture'))) {
             movePiece(selectpiece.dataset, { row, col });
-            currentplayer = currentplayer === 'white' ? 'black' : 'white';
+            // currentplayer = currentplayer === 'white' ? 'black' : 'white';
           }
           selectpiece = null;
           clearHighlights();
@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if (piece.color === "black") {
             if (getPiece(row + 1, col)?.type === undefined) {
               moves.push([1, 0]);
-              if (!piece.hasMoved) {
+              if (!piece.hasMoved && getPiece(row + 2, col)?.type === undefined) {
                 moves.push([2, 0]);
               }
             }
@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
           } else {
             if (getPiece(row - 1, col)?.type === undefined) {
               moves.push([-1, 0]);
-              if (!piece.hasMoved) {
+              if (!piece.hasMoved && getPiece(row - 2, col)?.type === undefined) {
                 moves.push([-2, 0]);
               }
             }
@@ -363,7 +363,23 @@ document.addEventListener('DOMContentLoaded', () => {
               moves.push([ir, ic]);
             }
           });
-        }
+            if (piece.hasMoved) break;
+            const Kr = piece.color === 'white' ? '7' : '0';
+            console.log(Kr);
+            let rook = getPiece(Kr, 7);
+            if (rook.hasMoved === false && rook.type === "rook" && rook.color === piece.color) {
+              if (getPiece(Kr, 5)?.type === undefined && getPiece(Kr, 6)?.type === undefined) {
+                moves.push([0, 2]);
+              }
+            }
+             rook = getPiece(Kr, 0);
+            if (rook.hasMoved === false && rook.type === "rook" && rook.color === piece.color) {
+              if (getPiece(Kr, 3)?.type === undefined && getPiece(Kr, 2)?.type === undefined && getPiece(Kr, 1)?.type === undefined) {
+                moves.push([0, -2]);
+              }
+            }
+            break;
+          }
       return moves;
     }
 
@@ -376,10 +392,13 @@ document.addEventListener('DOMContentLoaded', () => {
             endGame(pecamovida.color);
             return;
         }
-
-      
-        if (pecamovida.type === 'pawn' && (to.row === 0 || to.row === 7)) {
-            pecamovida.type = 'queen';
+        
+        if (pecamovida.type === 'king' && Math.abs(to.col - from.col) === 2) {
+          if (to.col === 6) {
+            movePiece({row: from.row, col: 7}, {row: from.row, col: 5});
+          } else { 
+            movePiece({row: from.row, col: 0}, {row: from.row, col: 3});
+          }
         }
         
         board[to.row][to.col] = pecamovida;
