@@ -274,4 +274,20 @@ body {
   height: 100%;
   z-index: -1;
   background: #0b0b1a;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 4px;
 }
+
+/* Cada barra */
+#audio-visualizer .bar {
+  width: 6px;
+  height: 40%;
+  background: linear-gradient(180deg, #ff4d6d, #ffa94d, #00f5d4);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255, 100, 200, 0.7), 0 0 20px rgba(255, 150, 200, 0.4);
+  transition: height 0.15s ease, opacity 0.3s ease;
+  opacity: 0.8;
+}
+

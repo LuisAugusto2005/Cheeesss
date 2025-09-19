@@ -1,4 +1,47 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Parte do áudio, tentei seguir um vídeo e coisinhas que pesquisei
+    const canvas = document.getElementById("audio-visualizer");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let audio, audioCtx, analyser, source, dataArray;
+
+    function initAudioVisualizer(audioFile) {
+        audio = new Audio(audioFile);
+        audio.loop = true;
+        audio.play();
+
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        analyser = audioCtx.createAnalyser();
+        source = audioCtx.createMediaElementSource(audio);
+        source.connect(analyser);
+        analyser.connect(audioCtx.destination);
+
+        analyser.fftSize = 256;
+        const bufferLength = analyser.frequencyBinCount;
+        dataArray = new Uint8Array(bufferLength);
+
+        drawVisualizer();
+    }
+
+    function drawVisualizer() {
+        requestAnimationFrame(drawVisualizer);
+        analyser.getByteFrequencyData(dataArray);
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        const barWidth = (canvas.width / dataArray.length) * 2.5;
+        let x = 0;
+
+        for (let i = 0; i < dataArray.length; i++) {
+            const barHeight = dataArray[i];
+            ctx.fillStyle = `rgb(${barHeight + 100}, 50, 200)`;
+            ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+            x += barWidth + 1;
+        }
+    }
+
     const menuContainer = document.getElementById('menu-container');
     const botSelectionContainer = document.getElementById('bot-selection-container');
     const gameContainer = document.getElementById('game-container');
@@ -109,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
         gameContainer.classList.remove('hidden');
         
         if (gameMode === 'pvb' && currentBot) {
-            //Colocar aqui o AudioVisualizer!
+            initAudioVisualizer("../Resources/Musics/Blade-Arts-III.mp3");
             botDisplay.classList.remove('hidden');
             botCurrentMood = 'normal';
             botImage.src = currentBot.images.normal;
