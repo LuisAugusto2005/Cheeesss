@@ -103,9 +103,12 @@ document.addEventListener('DOMContentLoaded', () => {
           selectpiece.classList.add('selected');
           
           const moves = getPossibleMoves(piece, row, col);
+          console.log(moves);
           moves.forEach(([ir, ic]) => {
             const quadrado = getSquare(row + ir, col + ic);
+            if (quadrado) {
             quadrado.classList.add('possible-move');
+            }
           });
           
         } else { 
@@ -113,6 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
             movePiece(selectpiece.dataset, { row, col });
             console.log("Peça movida para: Linha " + row + " Coluna " + col);
           }
+          selectpiece = null;
           clearHighlights();
         }
     }
@@ -124,39 +128,39 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log("Linha: " + row + " Coluna: " + col);
       switch (piece.type) {
         case "pawn":
-          console.log("Peão selecionado");
           if (piece.color === "black") {
-            if (getPiece(row + 1, col)?.type === "") {
+            if (getPiece(row + 1, col)?.type === undefined) {
               moves.push([1, 0]);
               if (!piece.hasMoved) {
                 moves.push([2, 0]);
               }
             }
-            if (getPiece(row + 1, col - 1)?.type != "" && getPiece(row + 1, col - 1)?.color !== piece.color) {
+            if (getPiece(row + 1, col - 1)?.type != undefined && getPiece(row + 1, col - 1)?.color !== piece.color) {
               moves.push([1, -1]);
             }
-            if (getPiece(row + 1, col + 1)?.type != "" && getPiece(row + 1, col + 1)?.color !== piece.color) {
+            if (getPiece(row + 1, col + 1)?.type != undefined && getPiece(row + 1, col + 1)?.color !== piece.color) {
               moves.push([1, 1]);
             }
           } else {
-            if (getPiece(row - 1, col)?.type === "") {
+            if (getPiece(row - 1, col)?.type === undefined) {
               moves.push([-1, 0]);
-              if (!celula.hasMoved) {
+              if (!piece.hasMoved) {
                 moves.push([-2, 0]);
               }
             }
-            if (getPiece(row - 1, col - 1)?.type != "" && getPiece(row - 1, col - 1)?.color !== piece.color) {
+            if (getPiece(row - 1, col - 1)?.type != undefined && getPiece(row - 1, col - 1)?.color !== piece.color) {
               moves.push([-1, -1]);
             }
-            if (getPiece(row - 1, col + 1)?.type != "" && getPiece(row - 1, col + 1)?.color !== piece.color) {
+            if (getPiece(row - 1, col + 1)?.type != undefined && getPiece(row - 1, col + 1)?.color !== piece.color) {
               moves.push([-1, 1]);
             }
           }
           break;
         case "rook":
           for (let i = 1; i < 8; i++) {
-            let destino = getPiece(row + i, col);
-            if (destino?.type === "") {
+            const destino = getPiece(row + i, col);
+            console.log("Destino Rook - Linha: " + row + " Coluna: " + col + " Tipo: " + destino?.type);
+            if (destino?.type === undefined) {
               moves.push([i, 0]);
             } else if (destino?.color !== piece.color) {
               moves.push([i, 0]);
@@ -167,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
           for (let i = 1; i < 8; i++) {
             let destino = getPiece(row - i, col);
-            if (destino?.type === "") {
+            if (destino?.type === undefined) {
               moves.push([-i, 0]);
             } else if (destino?.color !== piece.color) {
               moves.push([-i, 0]);
@@ -178,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
           for (let i = 1; i < 8; i++) {
             let destino = getPiece(row, col + i);
-            if (destino?.type === "") {
+            if (destino?.type === undefined) {
               moves.push([0, i]);
             } else if (destino?.color !== piece.color) {
               moves.push([0, i]);
@@ -189,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
           for (let i = 1; i < 8; i++) {
             let destino = getPiece(row, col - i);
-            if (destino?.type === "") {
+            if (destino?.type === undefined) {
               moves.push([0, -i]);
             } else if (destino?.color !== piece.color) {
               moves.push([0, -i]);
@@ -204,19 +208,19 @@ document.addEventListener('DOMContentLoaded', () => {
             [2, 1], [2, -1], [-2, 1], [-2, -1],
             [1, 2], [1, -2], [-1, 2], [-1, -2]
           ];
-          knightMoves.forEach(([dr, dc]) => {
-            const destino = getPiece(selecionada.row + dr, selecionada.col + dc);
-            if (destino) {
-              if (destino.type === "" || destino.color !== piece.color) {
-                moves.push([dr, dc]);
-              }
+          knightMoves.forEach(([ir, ic]) => {
+            const destino = getPiece(row + ir, col + ic);
+            if (!destino) {
+              moves.push([ir, ic]);
+            } else if (destino.color !== piece.color) {
+              moves.push([ir, ic]);
             }
           });
           break;
         case "bishop":
           for (let i = 1; i < 8; i++) {
             let destino = getPiece(row + i, col + i);
-            if (destino?.type === "") {
+            if (destino?.type === undefined) {
               moves.push([i, i]);
             } else if (destino?.color !== piece.color) {
               moves.push([i, i]);
@@ -227,7 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
           for (let i = 1; i < 8; i++) {
             let destino = getPiece(row - i, col + i);
-            if (destino?.type === "") {
+            if (destino?.type === undefined) {
               moves.push([-i, i]);
             } else if (destino?.color !== piece.color) {
               moves.push([-i, i]);
@@ -238,7 +242,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
           for (let i = 1; i < 8; i++) {
             let destino = getPiece(row - i, col - i);
-            if (destino?.type === "") {
+            if (destino?.type === undefined) {
               moves.push([-i, -i]);
             } else if (destino?.color !== piece.color) {
               moves.push([-i, -i]);
@@ -249,7 +253,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
           for (let i = 1; i < 8; i++) {
             let destino = getPiece(row + i, col - i);
-            if (destino?.type === "") {
+            if (destino?.type === undefined) {
               moves.push([i, -i]);
             } else if (destino?.color !== piece.color) {
               moves.push([i, -i]);
@@ -262,7 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
         case "queen":
           for (let i = 1; i < 8; i++) {
             let destino = getPiece(row + i, col);
-            if (destino?.type === "") {
+            if (destino?.type === undefined) {
               moves.push([i, 0]);
             } else if (destino?.color !== piece.color) {
               moves.push([i, 0]);
@@ -273,7 +277,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
           for (let i = 1; i < 8; i++) {
             let destino = getPiece(row - i, col);
-            if (destino?.type === "") {
+            if (destino?.type === undefined) {
               moves.push([-i, 0]);
             } else if (destino?.color !== piece.color) {
               moves.push([-i, 0]);
@@ -284,7 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
           for (let i = 1; i < 8; i++) {
             let destino = getPiece(row, col + i);
-            if (destino?.type === "") {
+            if (destino?.type === undefined) {
               moves.push([0, i]);
             } else if (destino?.color !== piece.color) {
               moves.push([0, i]);
@@ -295,7 +299,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
           for (let i = 1; i < 8; i++) {
             let destino = getPiece(row, col - i);
-            if (destino?.type === "") {
+            if (destino?.type === undefined) {
               moves.push([0, -i]);
             } else if (destino?.color !== piece.color) {
               moves.push([0, -i]);
@@ -306,7 +310,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
           for (let i = 1; i < 8; i++) {
             let destino = getPiece(row + i, col + i);
-            if (destino?.type === "") {
+            if (destino?.type === undefined) {
               moves.push([i, i]);
             } else if (destino?.color !== piece.color) {
               moves.push([i, i]);
@@ -317,7 +321,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
           for (let i = 1; i < 8; i++) {
             let destino = getPiece(row - i, col + i);
-            if (destino?.type === "") {
+            if (destino?.type === undefined) {
               moves.push([-i, i]);
             } else if (destino?.color !== piece.color) {
               moves.push([-i, i]);
@@ -328,7 +332,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
           for (let i = 1; i < 8; i++) {
             let destino = getPiece(row - i, col - i);
-            if (destino?.type === "") {
+            if (destino?.type === undefined) {
               moves.push([-i, -i]);
             } else if (destino?.color !== piece.color) {
               moves.push([-i, -i]);
@@ -339,7 +343,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
           for (let i = 1; i < 8; i++) {
             let destino = getPiece(row + i, col - i);
-            if (destino?.type === "") {
+            if (destino?.type === undefined) {
               moves.push([i, -i]);
             } else if (destino?.color !== piece.color) {
               moves.push([i, -i]);
@@ -354,12 +358,12 @@ document.addEventListener('DOMContentLoaded', () => {
             [1, 0], [-1, 0], [0, 1], [0, -1],
             [1, 1], [1, -1], [-1, 1], [-1, -1]
           ];
-          kingMoves.forEach(([dr, dc]) => {
-            const destino = getPiece(selecionada.row + dr, selecionada.col + dc);
-            if (destino) {
-              if (destino.type === "" || destino.color !== piece.color) {
-                moves.push([dr, dc]);
-              }
+          kingMoves.forEach(([ir, ic]) => {
+            const destino = getPiece(row + ir, col + ic);
+            if (!destino) {
+              moves.push([ir, ic]);
+            } else if (destino.color !== piece.color) {
+              moves.push([ir, ic]);
             }
           });
         }
@@ -398,13 +402,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function inBoard(row, col) {
+      return row >= 0 && row < 8 && col >= 0 && col < 8;
+    }
+
     function getSquare(row, col) {
-      return chessboard.querySelector(`[data-row='${row}'][data-col='${col}']`);
+      if (!inBoard(row, col)) return null;
+      return chessboard.querySelector(`[data-row='${row}'][data-col='${col}']` || null);
     }
 
     function getPiece(row, col) {
       console.log("GetPiece - Linha: " + row + " Coluna: " + col);
-      return board[row][col];
+      if (!inBoard(row, col)) return null;
+      return board[row][col] || null;
     }
 
     function clearHighlights() {
