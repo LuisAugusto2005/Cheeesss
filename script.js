@@ -103,7 +103,6 @@ document.addEventListener('DOMContentLoaded', () => {
           selectpiece.classList.add('selected');
           
           const moves = getPossibleMoves(piece, row, col);
-          console.log(moves);
           moves.forEach(([ir, ic]) => {
             const quadrado = getSquare(row + ir, col + ic);
             if (quadrado) {
@@ -114,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else { 
           if (selectpiece && (square.classList.contains('possible-move') || square.classList.contains('possible-capture'))) {
             movePiece(selectpiece.dataset, { row, col });
-            console.log("Peça movida para: Linha " + row + " Coluna " + col);
+            currentplayer = currentplayer === 'white' ? 'black' : 'white';
           }
           selectpiece = null;
           clearHighlights();
@@ -125,7 +124,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function getPossibleMoves(piece, row, col) {
       let moves = [];
-      console.log("Linha: " + row + " Coluna: " + col);
       switch (piece.type) {
         case "pawn":
           if (piece.color === "black") {
@@ -159,7 +157,6 @@ document.addEventListener('DOMContentLoaded', () => {
         case "rook":
           for (let i = 1; i < 8; i++) {
             const destino = getPiece(row + i, col);
-            console.log("Destino Rook - Linha: " + row + " Coluna: " + col + " Tipo: " + destino?.type);
             if (destino?.type === undefined) {
               moves.push([i, 0]);
             } else if (destino?.color !== piece.color) {
@@ -412,7 +409,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function getPiece(row, col) {
-      console.log("GetPiece - Linha: " + row + " Coluna: " + col);
       if (!inBoard(row, col)) return null;
       return board[row][col] || null;
     }
