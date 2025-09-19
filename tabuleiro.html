@@ -15,6 +15,7 @@
     <p>Selecione o modo de gaming:</p>
     <button id="pvpButton">Jogador vs Jogador</button>
     <button id="pvbButton">Jogador vs Bot</button>
+    <input type="text" id="insert_code" placeholder="INSERT CODE">
   </div>
 
   <div id="bot-selection-container" class="hidden">
@@ -28,6 +29,17 @@
     <div id="chessboard"></div>
 
     <div id="game-info">
+
+
+      <div class="piece-style-dropdown hidden" id="pieceStyleDropdown">
+        <button id="styleButton">Estilo das peças ▼</button>
+        <div id="styleMenu" class="dropdown-content">
+          <div data-style="classic">Clássico</div>
+          <div data-style="california">California</div>
+          <div data-style="fantasy">Fantasia</div>
+        </div>
+      </div>
+
       <div id="bot-personality-display" class="hidden">
         <img id="bot-image" src="" alt="Bot Avatar">
         <div id="bot-dialogue-box">
@@ -51,6 +63,8 @@
         <ul>
         </ul>
       </div>
+
+      <button id="back-to-menu">Voltar ao Menu</button>
     </div>
   </div>
 

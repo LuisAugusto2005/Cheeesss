@@ -7,11 +7,94 @@ body {
   margin: 0;
   overflow: hidden;
 
-  /* gradiente animado estilo Balatro */
   background: linear-gradient(-45deg, #081229, #0e5b4c, #6b0e5b, #123456);
   background-size: 400% 400%;
   animation: gradientMove 20s ease infinite;
 }
+
+
+.piece {
+  width: 80%;       
+  height: auto;     
+  display: block;   
+  margin: 0 auto;   
+}
+
+
+
+.piece {
+  width: 55px;  
+  height: 55px; 
+}
+
+
+
+.piece-style-dropdown {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+
+
+
+#styleButton {
+    font-size: 1.2em;
+    padding: 10px 15px;
+    cursor: pointer;
+    border: none;
+    border-radius: 6px;
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+
+
+
+#styleButton:hover {
+    background-color: #0056b3;
+}
+
+
+
+
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #1f2a40;
+    min-width: 160px;
+    border-radius: 6px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    z-index: 1000;
+    margin-top: 5px;
+    padding: 5px 0;
+}
+
+
+
+
+.dropdown-content div {
+    padding: 10px 15px;
+    cursor: pointer;
+    color: #e0e0e0;
+    transition: background-color 0.2s;
+}
+
+.dropdown-content div:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.hidden {
+    display: none !important;
+}
+
+
+
 
 @keyframes gradientMove {
   0% { background-position: 0% 50%; }
@@ -19,7 +102,7 @@ body {
   100% { background-position: 0% 50%; }
 }
 
-/* overlay pattern translúcido */
+
 body::before {
   content: "";
   position: fixed;
@@ -30,7 +113,7 @@ body::before {
   pointer-events: none;
 }
 
-/* === seu CSS existente abaixo === */
+
 
 #menu-container {
     text-align: center;
@@ -57,6 +140,33 @@ body::before {
     font-size: 1.4em;
     margin-bottom: 30px;
     color: #a0a0a0;
+}
+
+
+#menu-container #insert_code{
+font-size: 1.3em;
+padding: 12px 20px;
+margin-top: 20px;
+display: block;
+width: 100%;
+box-sizing: border-box;
+border: 2px solid #007bff;
+border-radius: 8px;
+background-color: #1a1a2e;
+color: #e0e0e0;
+font-weight: bold;
+transition: border-color 0,3 ease, boxshadow 0.3s ease ;
+text-align: center;
+}
+
+#menu-container #insert_code::placeholder{
+    color: #a0a0a0;
+}
+
+#menu-container #insert_code:focus{
+    outline: none;
+    border-color: #0056b3;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.4);
 }
 
 #menu-container button {
