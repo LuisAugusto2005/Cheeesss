@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
             x += barWidth + 1;
         }
     }
-
+    // Para parar o áudio e o visualizador
     function stopAudioVisualizer() {
     if (audio) {
         audio.pause();
@@ -58,29 +58,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
-    
+    // Variáveis de interface
     const menuContainer = document.getElementById('menu-container');
     const botSelectionContainer = document.getElementById('bot-selection-container');
     const gameContainer = document.getElementById('game-container');
     const pvpButton = document.getElementById('pvpButton');
     const pvbButton = document.getElementById('pvbButton');
     const botList = document.getElementById('bot-list');
-
+    // Botão de voltar
     const backFromBotSelection = botSelectionContainer.querySelector('#back-to-menu');
     const backFromGame = gameContainer.querySelector('#back-to-menu');
-     
+     // Variáveis do jogo
     const chessboard = document.getElementById('chessboard');
     const turnDisplay = document.getElementById('turn-display');
     const statusDisplay = document.getElementById('status-display');
     const whiteScoreDisplay = document.getElementById('white-score');
     const blackScoreDisplay = document.getElementById('black-score');
     const moveHistoryList = document.querySelector('#move-history ul');
-
+    // Variáveis do bot
     const botDisplay = document.getElementById('bot-personality-display');
     const botImage = document.getElementById('bot-image');
     const botName = document.getElementById('bot-name');
     const botDialogue = document.getElementById('bot-dialogue');
-
+    // Variáveis do jogo
     let board = [];
     let currentPlayer = "white"; 
     let selectedPiece = null; 
@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let gameMode = 'pvp';
     let currentBot = null;
     let botCurrentMood = 'normal';
-
+    // Define os valores das peças e suas representações Unicode
     const pieceValues = { 'pawn': 1, 'knight': 3, 'bishop': 3, 'rook': 5, 'queen': 9, 'king': 1000 };
     const pieceUnicode = {
         classic: {
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     let currentPieceStyle = 'classic'; 
-
+    // Define os bots
     const bots = {
         loliBot: {
             name: "Samantha Helkaiser",
@@ -125,15 +125,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 angry: {
                     winning: ["..."],
-                    losing: ["Entendi..."],
+                    losing: ["Nah i'd win"],
                 }
             }
         }
     };
-
+    // Eventos dos botões do menu
     pvpButton.addEventListener('click', () => startGame('pvp'));
     pvbButton.addEventListener('click', showBotSelection);
-
+    // Mostra a tela de seleção de bots
     function showBotSelection() {
         menuContainer.classList.add('hidden');
         botSelectionContainer.classList.remove('hidden');
@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
         menuContainer.classList.remove('hidden');
         stopAudioVisualizer();
     });
-
+    // Popula a lista de bots na tela de seleção
     function populateBotList() {
         botList.innerHTML = '';
         for (const botKey in bots) {
@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
             botList.appendChild(card);
         }
     }
-
+    // Inicia o jogo com o modo selecionado
     function startGame(mode, bot = null) {
         gameMode = mode;
         currentBot = bot;
@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
         turnDisplay.textContent = 'Vez das Brancas';
         statusDisplay.textContent = 'O jogo começou.';
     }
-
+    // Inicializa o tabuleiro com as peças na posição inicial
     function initBoard() {
         board = Array(8).fill(null).map(() => Array(8).fill(null));
         const setupPiece = (row, col, type, color) => { board[row][col] = { type, color, hasMoved: false }; };
@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setupPiece(7, 2, 'bishop', 'white'); setupPiece(7, 5, 'bishop', 'white');
         setupPiece(7, 3, 'queen', 'white'); setupPiece(7, 4, 'king', 'white');
     }
-
+    // Renderiza o tabuleiro e as peças
     function renderBoard() {
         chessboard.innerHTML = '';
         for (let row = 0; row < 8; row++) {
@@ -235,45 +235,47 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
-
+    // Lida com o clique em uma casa do tabuleiro
     function handleSquareClick(event) {
         if (gameEnded || (gameMode === 'pvb' && currentPlayer === 'black')) return;
         const square = event.currentTarget;
         const row = parseInt(square.dataset.row);
         const col = parseInt(square.dataset.col);
         const piece = board[row][col];
-        let moves = [];
 
+        // Caso 1: existe peça selecionada
         if (selectedPiece) {
+                //1.1: Clicou em um movimento possível
             if (square.classList.contains('possible-move') || square.classList.contains('possible-capture')) {
-                movePiece(selectedPiece.dataset, { row, col });
-            } else if (piece && piece.color === currentPlayer) {
+                return movePiece(selectedPiece.dataset, { row, col });
+            }   //1.2: Clicou na mesma peça selecionada
+            if (piece && piece.color === currentPlayer) {
+                selectedPiece = square;
                 clearHighlights();
-                selectedPiece = getSquare(row, col);
-                selectedPiece.classList.add('selected');
-                moves = getPossibleMoves(piece, row, col);
-            } else {
+                square.classList.add('selected');
+                return highlightMoves(getPossibleMoves(piece, row, col), row, col);
+            }   //1.3: Clicou em outro lugar
                 selectedPiece = null;
-                clearHighlights();
-                return;
-            }
-        } else if (piece && piece.color === currentPlayer) {
-            selectedPiece = getSquare(row, col);
-            selectedPiece.classList.add('selected');
-            moves = getPossibleMoves(piece, row, col);
+                square.classList.remove('selected');
+                return clearHighlights();
         }
-        moves.forEach(([ir, ic]) => {
-            const targetSquare = getSquare(row + ir, col + ic);
-            if (targetSquare) {
-                if (getPiece(row + ir, col + ic)) {
-                    targetSquare.classList.add('possible-capture');
-                } else {
-                    targetSquare.classList.add('possible-move');
-                }
-            }
+        // Caso 2: n existe peça selecionada
+        if (piece && piece.color === currentPlayer) {
+            selectedPiece = square;
+            square.classList.add('selected');
+            highlightMoves(getPossibleMoves(piece, row, col), row, col);
+        }
+    }
+    // Destaca os movimentos possíveis
+    function highlightMoves(moves, row, col) {
+        moves.forEach(([dr, dc]) => {
+            const r = row + dr, c = col + dc;
+            const target = getSquare(r, c);
+            if (!target) return;
+            target.classList.add(getPiece(r, c) ? 'possible-capture' : 'possible-move');
         });
     }
-
+    // Move a peça e atualiza o estado do jogo
     function movePiece(from, to) {
         from.row = parseInt(from.row); from.col = parseInt(from.col);
         const pecaCapturada = board[to.row][to.col];
@@ -294,7 +296,7 @@ document.addEventListener('DOMContentLoaded', () => {
             switchPlayer();
         }
     }
-
+    // Alterna o jogador atual e, se for o bot, faz a jogada
     function switchPlayer() {
         currentPlayer = currentPlayer === 'white' ? 'black' : 'white';
         turnDisplay.textContent = `Vez das ${currentPlayer === 'white' ? 'Brancas' : 'Pretas'}`;
@@ -302,7 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(makeBotMove, 1000);
         }
     }
-
+    // Lógica do bot
     function makeBotMove() {
         const allPossibleMoves = [];
         for (let r = 0; r < 8; r++) {
@@ -320,7 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const randomMove = allPossibleMoves[Math.floor(Math.random() * allPossibleMoves.length)];
         movePiece(randomMove.from, randomMove.to);
     }
-
+    // O cerebro do bot
     function updateBotPersonalityAndDialogue(state = null, scores = null) {
         if (!currentBot) return;
         let dialogueKey = state;
@@ -338,7 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
             botDialogue.textContent = `"${phrases[Math.floor(Math.random() * phrases.length)]}"`;
         }
     }
-    
+    // Muda o estilo das peças
     function setPieceStyle(styleName) {
         currentPieceStyle = styleName;
         renderBoard();
@@ -360,7 +362,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // MENU TABULEIRO
    const styleButtonBoard = document.getElementById("styleButtonboard");
-const styleMenuBoard = document.getElementById("styleMenuBoard");
+   const styleMenuBoard = document.getElementById("styleMenuBoard");
 
 styleButtonBoard.addEventListener('click', () => {
   styleMenuBoard.style.display =

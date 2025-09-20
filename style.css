@@ -132,11 +132,11 @@ body::before {
 .piece { width: 80%; height: 80%; object-fit: contain; pointer-events: none; }
 
 #game-info {
-    width: 350px; background-color: #1f2a40; padding: 25px;
+    height: 565px; width: 350px; background-color: #1f2a40; padding: 25px;
     border-radius: 12px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
     color: #e0e0e0;
 }
-#game-info h2, #game-info h3 { border-bottom: 2px solid #3c4b6b; padding-bottom: 8px; margin-top: 25px; color: #e0bb40; }
+#game-info h2, #game-info h3 { border-bottom: 2px solid #3c4b6b; padding-bottom: 8px; margin-top: 5px; color: #e0bb40; }
 #game-info p { font-size: 1.1em; margin-bottom: 10px; }
 #turn-display { font-size: 1.6em; font-weight: bold; color: #007bff; margin-bottom: 15px; }
 #status-display { font-style: italic; color: #a0a0a0; margin-bottom: 20px; }
@@ -144,7 +144,7 @@ body::before {
 #score-display p { font-size: 1.3em; font-weight: bold; margin: 0; }
 #white-score { color: #b0b0b0; }
 #black-score { color: #303030; }
-#move-history { max-height: 200px; overflow-y: auto; background-color: #1a1a2e; padding: 15px; border-radius: 8px; margin-top: 20px; border: 1px solid #3c4b6b; }
+#move-history { height: 120px; overflow-y: auto; background-color: #1a1a2e; padding: 15px; border-radius: 8px; margin-top: 20px; border: 1px solid #3c4b6b; }
 #move-history ul { list-style: none; padding: 0; margin: 0; }
 #move-history li { padding: 8px 0; border-bottom: 1px dashed #3c4b6b; font-size: 1em; color: #e0e0e0; }
 #move-history li:last-child { border-bottom: none; }
@@ -152,7 +152,11 @@ body::before {
 #move-history::-webkit-scrollbar-track { background: #1f2a40; border-radius: 10px; }
 #move-history::-webkit-scrollbar-thumb { background: #4a0e3a; border-radius: 10px; }
 #move-history::-webkit-scrollbar-thumb:hover { background: #6a1a5a; }
-#game-container #back-to-menu { font-size: 1.2em; padding: 10px 20px; margin-top: 20px; cursor: pointer; border: none; border-radius: 5px; background-color: #dc3545; color: white; transition: background-color 0.3s; display: block; width: 100%; box-sizing: border-box; }
+#buttons-infogame-container1 { display: flex; gap: 15px; margin-top: 20px; height: 35px; }
+#buttons-undo-redo { flex: 1; display: flex; gap: 10px;}
+#buttons-undo-redo button { flex: 1; font-size: 1.5em; color: white; background-color: #1f2a40; border: none;}
+#buttons-undo-redo button:hover { color: #007bff; cursor: pointer; }
+#game-container #back-to-menu { font-size: 1em; cursor: pointer; border: none; border-radius: 5px; background-color: #dc3545; color: white; transition: background-color 0.3s; display: block; width: 60%; box-sizing: border-box; }
 #game-container #back-to-menu:hover { background-color: #c82333; }
 
 .piece-style-dropdown { position: relative; display: inline-block; margin-bottom: 15px; }
