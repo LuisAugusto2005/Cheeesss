@@ -242,29 +242,36 @@ document.addEventListener('DOMContentLoaded', () => {
         const row = parseInt(square.dataset.row);
         const col = parseInt(square.dataset.col);
         const piece = board[row][col];
+        let moves = [];
 
         if (selectedPiece) {
             if (square.classList.contains('possible-move') || square.classList.contains('possible-capture')) {
                 movePiece(selectedPiece.dataset, { row, col });
+            } else if (piece && piece.color === currentPlayer) {
+                clearHighlights();
+                selectedPiece = getSquare(row, col);
+                selectedPiece.classList.add('selected');
+                moves = getPossibleMoves(piece, row, col);
             } else {
                 selectedPiece = null;
                 clearHighlights();
+                return;
             }
         } else if (piece && piece.color === currentPlayer) {
             selectedPiece = getSquare(row, col);
             selectedPiece.classList.add('selected');
-            const moves = getPossibleMoves(piece, row, col);
-            moves.forEach(([ir, ic]) => {
-                const targetSquare = getSquare(row + ir, col + ic);
-                if (targetSquare) {
-                    if (getPiece(row + ir, col + ic)) {
-                        targetSquare.classList.add('possible-capture');
-                    } else {
-                        targetSquare.classList.add('possible-move');
-                    }
-                }
-            });
+            moves = getPossibleMoves(piece, row, col);
         }
+        moves.forEach(([ir, ic]) => {
+            const targetSquare = getSquare(row + ir, col + ic);
+            if (targetSquare) {
+                if (getPiece(row + ir, col + ic)) {
+                    targetSquare.classList.add('possible-capture');
+                } else {
+                    targetSquare.classList.add('possible-move');
+                }
+            }
+        });
     }
 
     function movePiece(from, to) {
