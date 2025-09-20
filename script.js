@@ -175,7 +175,9 @@ document.addEventListener('DOMContentLoaded', () => {
         menuContainer.classList.add('hidden');
         botSelectionContainer.classList.add('hidden');
         gameContainer.classList.remove('hidden');
+        document.getElementById('boardStyleDropdown').classList.remove('hidden');
         document.getElementById('pieceStyleDropdown').classList.remove('hidden');
+        
         if (gameMode === 'pvb' && currentBot) {
             initAudioVisualizer("Resources/Musics/Blade-Arts-III.mp3");
             botDisplay.classList.remove('hidden');
@@ -347,6 +349,51 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', (e) => { if (!styleButton.contains(e.target) && !styleMenu.contains(e.target)) { styleMenu.style.display = 'none'; } });
     styleMenu.querySelectorAll('div').forEach(item => { item.addEventListener('click', () => { const style = item.dataset.style; setPieceStyle(style); styleMenu.style.display = 'none'; }); });
 
+
+
+    // MENU TABULEIRO
+   const styleButtonBoard = document.getElementById("styleButtonboard");
+const styleMenuBoard = document.getElementById("styleMenuBoard");
+
+styleButtonBoard.addEventListener('click', () => {
+  styleMenuBoard.style.display =
+    styleMenuBoard.style.display === 'block' ? 'none' : 'block';
+});
+
+document.addEventListener('click', (e) => {
+  if (!styleButtonBoard.contains(e.target) && !styleMenuBoard.contains(e.target)) {
+    styleMenuBoard.style.display = 'none';
+  }
+});
+
+styleMenuBoard.querySelectorAll('div').forEach((item) => {
+  item.addEventListener('click', () => {
+    const style = item.dataset.style;
+    setBoardStyle(style);
+    styleMenuBoard.style.display = 'none';
+  });
+});
+
+let currentBoardStyle = 'normal';
+mainArea.classList.add(`chess-theme-normal`);
+function setBoardStyle(style) {
+  const mainArea = document.getElementById('main-game-area');
+    
+    mainArea.classList.remove('chess-theme-normal', 'chess-theme-light', 'chess-theme-neon');
+    
+    mainArea.classList.add(`chess-theme-${style}`);
+    currentBoardStyle = style;
+}
+
+
+
+
+
+
+
+
+
+
     function getPossibleMoves(piece, row, col) {
         let moves = [];
         switch (piece.type) {
@@ -401,7 +448,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 break;
         }
-        //return moves;
+        
         return moves.filter(([r, c]) => inBoard(row + r, col + c));
     }
     

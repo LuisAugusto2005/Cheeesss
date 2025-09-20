@@ -1,0 +1,7 @@
+#chessboard .white-square { background: var(--white-square); }
+#chessboard .black-square { background: var(--black-square); }
+
+.chess-theme-normal { --white-square: #b0b0b0; --black-square: #606060; }
+.chess-theme-light { --white-square: #f0d9b5; --black-square: #b58863; }
+.chess-theme-neon { --white-square: #0ff; --black-square: #05f; }
+.chess-theme-arthur_wermont{--white-square: rgb(255, 251, 0); --black-square: rgb(255, 166, 0);}
