@@ -379,7 +379,7 @@ mainArea.classList.add(`chess-theme-normal`);
 function setBoardStyle(style) {
   const mainArea = document.getElementById('main-game-area');
     
-    mainArea.classList.remove('chess-theme-normal', 'chess-theme-light', 'chess-theme-neon');
+    mainArea.classList.remove('chess-theme-normal', 'chess-theme-light', 'chess-theme-neon', 'chess-theme-arthur_wermont');
     
     mainArea.classList.add(`chess-theme-${style}`);
     currentBoardStyle = style;
