@@ -65,9 +65,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const pvpButton = document.getElementById('pvpButton');
     const pvbButton = document.getElementById('pvbButton');
     const botList = document.getElementById('bot-list');
-    // Botão de voltar
+    // Botões de voltar
     const backFromBotSelection = botSelectionContainer.querySelector('#back-to-menu');
     const backFromGame = gameContainer.querySelector('#back-to-menu');
+    // Botões
+    const undo = gameContainer.querySelector('#undo-button');
+    const redo = gameContainer.querySelector('#redo-button');
      // Variáveis do jogo
     const chessboard = document.getElementById('chessboard');
     const turnDisplay = document.getElementById('turn-display');
@@ -82,6 +85,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const botDialogue = document.getElementById('bot-dialogue');
     // Variáveis do jogo
     let board = [];
+    let boardUndo = [];
+    let boardRedo = [];
     let currentPlayer = "white"; 
     let selectedPiece = null; 
     let moveHistory = [];
@@ -139,16 +144,36 @@ document.addEventListener('DOMContentLoaded', () => {
         botSelectionContainer.classList.remove('hidden');
         populateBotList();
     }
-
+    // Volta para o menu principal
     backFromBotSelection.addEventListener('click', () => {
         botSelectionContainer.classList.add('hidden');
         menuContainer.classList.remove('hidden');
     });
-
+    // Volta para o menu principal
     backFromGame.addEventListener('click', () => {
         gameContainer.classList.add('hidden');
         menuContainer.classList.remove('hidden');
         stopAudioVisualizer();
+    });
+    // Eventos dos botões de desfazer e refazer
+    undo.addEventListener('click', () => {
+        if (boardUndo.length > 1) {
+            boardRedo.push(JSON.parse(JSON.stringify(board)));
+            boardUndo.pop();
+            board = JSON.parse(JSON.stringify(boardUndo[boardUndo.length - 1]));
+            renderBoard();
+            switchPlayer();
+            updateScore();
+        }
+    });
+    redo.addEventListener('click', () => {
+        if (boardRedo.length > 0) {
+            board = JSON.parse(JSON.stringify(boardRedo.pop()));
+            boardUndo.push(JSON.parse(JSON.stringify(board)));
+            renderBoard();
+            switchPlayer();
+            updateScore();
+        }
     });
     // Popula a lista de bots na tela de seleção
     function populateBotList() {
@@ -295,6 +320,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!gameEnded) {
             switchPlayer();
         }
+        boardRedo = [];// Limpa o redo ao fazer um novo movimento
+        boardUndo.push(JSON.parse(JSON.stringify(board)));// Salva o estado atual do tabuleiro para desfazer
     }
     // Alterna o jogador atual e, se for o bot, faz a jogada
     function switchPlayer() {
@@ -360,39 +387,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-    // MENU TABULEIRO
-   const styleButtonBoard = document.getElementById("styleButtonboard");
-   const styleMenuBoard = document.getElementById("styleMenuBoard");
+        // MENU TABULEIRO
+    const styleButtonBoard = document.getElementById("styleButtonboard");
+    const styleMenuBoard = document.getElementById("styleMenuBoard");
 
-styleButtonBoard.addEventListener('click', () => {
-  styleMenuBoard.style.display =
-    styleMenuBoard.style.display === 'block' ? 'none' : 'block';
-});
+    styleButtonBoard.addEventListener('click', () => {
+    styleMenuBoard.style.display =
+        styleMenuBoard.style.display === 'block' ? 'none' : 'block';
+    });
 
-document.addEventListener('click', (e) => {
-  if (!styleButtonBoard.contains(e.target) && !styleMenuBoard.contains(e.target)) {
-    styleMenuBoard.style.display = 'none';
-  }
-});
+    document.addEventListener('click', (e) => {
+    if (!styleButtonBoard.contains(e.target) && !styleMenuBoard.contains(e.target)) {
+        styleMenuBoard.style.display = 'none';
+    }
+    });
 
-styleMenuBoard.querySelectorAll('div').forEach((item) => {
-  item.addEventListener('click', () => {
-    const style = item.dataset.style;
-    setBoardStyle(style);
-    styleMenuBoard.style.display = 'none';
-  });
-});
+    styleMenuBoard.querySelectorAll('div').forEach((item) => {
+    item.addEventListener('click', () => {
+        const style = item.dataset.style;
+        setBoardStyle(style);
+        styleMenuBoard.style.display = 'none';
+    });
+    });
 
-let currentBoardStyle = 'normal';
-mainArea.classList.add(`chess-theme-normal`);
-function setBoardStyle(style) {
-  const mainArea = document.getElementById('main-game-area');
-    
-    mainArea.classList.remove('chess-theme-normal', 'chess-theme-light', 'chess-theme-neon', 'chess-theme-arthur_wermont');
-    
-    mainArea.classList.add(`chess-theme-${style}`);
-    currentBoardStyle = style;
-}
+    let currentBoardStyle = 'normal';
+    mainArea.classList.add(`chess-theme-normal`);
+    function setBoardStyle(style) {
+    const mainArea = document.getElementById('main-game-area');
+        
+        mainArea.classList.remove('chess-theme-normal', 'chess-theme-light', 'chess-theme-neon', 'chess-theme-arthur_wermont');
+        
+        mainArea.classList.add(`chess-theme-${style}`);
+        currentBoardStyle = style;
+    }
 
 
 
