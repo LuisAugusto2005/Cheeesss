@@ -130,7 +130,33 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 angry: {
                     winning: ["..."],
-                    losing: ["Nah i'd win"],
+                    losing: ["Nah i'd win", "Não posso deixar assim..."],
+                }
+            }
+        },
+        professor: {
+            name: "Professor Xadrez",
+            difficulty: "Apenas Fácil",
+            images: {
+                normal: "../Resources/Bots-IMGs/Professor-Xadrez/ProffX.png",
+                focused: "../Resources/Bots-IMGs/Professor-Xadrez/ProffX.png",
+                angry: "../Resources/Bots-IMGs/Professor-Xadrez/ProffX.png"
+            },
+            dialogue: {
+                normal: {
+                    start: ["Que começe a partida!"],
+                    winning: ["Sei que pode fazer melhor que isso.", "Jogue com calma."],
+                    losing: ["Bom movimento", "Boa jogada!"],
+                    equal: ["Jogue!", "Hmmm..."],
+                },
+                focused: {
+                    winning: ["A vantagem é minha.", "Vamos, vamos!"],
+                    losing: ["Preciso me concentrar mais...", "Até que você é bom!"],
+                    equal: ["Cada movimento conta.", "Estou pensando..."]
+                },
+                angry: {
+                    winning: ["Vamos!!"],
+                    losing: ["Você está indo bem!"],
                 }
             }
         }
