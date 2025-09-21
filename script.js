@@ -392,6 +392,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const pecamovida = board[from.row][from.col];
         if (pecaCapturada && pecaCapturada.type === 'king') { endGame(pecamovida.color); return; }
         if (pecamovida.type === 'pawn' && (to.row === 0 || to.row === 7)) pecamovida.type = 'queen';
+        if (pecamovida.type === 'king' && Math.abs(to.col - from.col) === 2) {
+          if (to.col === 6) {
+            movePiece({row: from.row, col: 7}, {row: from.row, col: 5});
+          } else { 
+            movePiece({row: from.row, col: 0}, {row: from.row, col: 3});
+          }
+        }
         board[to.row][to.col] = pecamovida;
         board[from.row][from.col] = null;
         pecamovida.hasMoved = true;
@@ -678,11 +685,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 break;
             case "king":
-                [[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]].forEach(([dr,dc])=>{
-                    let target = getPiece(row+dr, col+dc);
-                    if(!target || target.color!==piece.color) moves.push([dr,dc]);
+                // movimentos normais
+                [[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]]
+                .forEach(([dr,dc])=>{
+                    let t=getPiece(row+dr,col+dc);
+                    if(!t||t.color!==piece.color) moves.push([dr,dc]);
                 });
+
+                // roques
+                if (piece.hasMoved) break;
+                const Kr = piece.color==="white"?7:0;
+                for(const {rookPos,path,move} of [
+                {rookPos:7,path:[5,6],move:[0,2]},   // pequeno
+                {rookPos:0,path:[1,2,3],move:[0,-2]} // grande
+                ]) {
+                let r=getPiece(Kr,rookPos);
+                if(r&&r.type==="rook"&&!r.hasMoved&&r.color===piece.color &&
+                    path.every(c=>!getPiece(Kr,c)))
+                    moves.push(move);
+                }
                 break;
+
         }
         
         return moves.filter(([r, c]) => inBoard(row + r, col + c));
