@@ -543,12 +543,20 @@ document.addEventListener('DOMContentLoaded', () => {
         let dialogueKey = state;
         const previousMood = botCurrentMood;
         if (!dialogueKey) {
+            if (scores.black >= 30) {
+                botCurrentMood = 'normal';
+            } else if (scores.black >= 20) {
+                botCurrentMood = 'focused';
+            } else {
+                botCurrentMood = 'angry';
+            }
+
             const scoreDiff = scores.black - scores.white;
-            if (scoreDiff > 6) { botCurrentMood = 'angry'; dialogueKey = 'winning'; } 
-            else if (scoreDiff > 2) { botCurrentMood = 'focused'; dialogueKey = 'winning'; } 
-            else if (scoreDiff < -6) { botCurrentMood = 'angry'; dialogueKey = 'losing'; } 
-            else if (scoreDiff < -2) { botCurrentMood = 'focused'; dialogueKey = 'losing'; } 
-            else { botCurrentMood = 'normal'; dialogueKey = 'equal'; }
+            if (scoreDiff > 6) { dialogueKey = 'winning'; } 
+            else if (scoreDiff > 2) { dialogueKey = 'winning'; } 
+            else if (scoreDiff < -6) { dialogueKey = 'losing'; } 
+            else if (scoreDiff < -2) { dialogueKey = 'losing'; } 
+            else { dialogueKey = 'equal'; }
         }
 
         // Mudar dificuldade INgame
