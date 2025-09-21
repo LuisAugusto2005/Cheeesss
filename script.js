@@ -5,24 +5,68 @@ document.addEventListener('DOMContentLoaded', () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    let audio, audioCtx, analyser, source, dataArray;
-
-    function initAudioVisualizer(audioFile) {
-        audio = new Audio(audioFile);
-        audio.loop = true;
-        audio.play();
+    let audioCtx, analyser, dataArray, animationId;
+    let currentAudio = { element: null, source: null, gainNode: null }; // Objeto para a música atual
+    let nextAudio = { element: null, source: null, gainNode: null }; // Objeto para a próxima música (durante o fade)
+    let currentTrackPath = null; // Caminho da música que está tocando
+    
+    // Inicia o áudio e o visualizador com a primeira música
+    function initAudio(audioFile) {
+        if (currentAudio.element || !audioFile) return;
 
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         analyser = audioCtx.createAnalyser();
-        source = audioCtx.createMediaElementSource(audio);
-        source.connect(analyser);
-        analyser.connect(audioCtx.destination);
-
         analyser.fftSize = 256;
         const bufferLength = analyser.frequencyBinCount;
         dataArray = new Uint8Array(bufferLength);
+        
+        currentAudio.element = new Audio(audioFile);
+        currentAudio.element.loop = true;
+        currentAudio.element.crossOrigin = "anonymous";
+        
+        currentAudio.source = audioCtx.createMediaElementSource(currentAudio.element);
+        currentAudio.gainNode = audioCtx.createGain(); // Controle de volume para fade
+        
+        currentAudio.source.connect(currentAudio.gainNode);
+        currentAudio.gainNode.connect(analyser);
+        analyser.connect(audioCtx.destination);
+        
+        currentAudio.element.play();
+        currentTrackPath = audioFile;
 
         drawVisualizer();
+    }
+
+    // NOVO: Função para trocar de música com efeito de fade
+    function switchTrack(newTrackPath) {
+        if (!newTrackPath || newTrackPath === currentTrackPath || !audioCtx) return;
+
+        // 1. Prepara a nova música (nextAudio)
+        nextAudio.element = new Audio(newTrackPath);
+        nextAudio.element.loop = true;
+        nextAudio.element.crossOrigin = "anonymous";
+        nextAudio.source = audioCtx.createMediaElementSource(nextAudio.element);
+        nextAudio.gainNode = audioCtx.createGain();
+        nextAudio.gainNode.gain.setValueAtTime(0, audioCtx.currentTime); // Começa com volume 0
+        
+        nextAudio.source.connect(nextAudio.gainNode);
+        nextAudio.gainNode.connect(analyser); // Conecta ao mesmo analisador
+        
+        nextAudio.element.play();
+
+        // 2. Faz o fade out da música atual e o fade in da nova
+        const fadeDuration = 2.0; // 2 segundos de transição
+        currentAudio.gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + fadeDuration);
+        nextAudio.gainNode.gain.linearRampToValueAtTime(1, audioCtx.currentTime + fadeDuration);
+        
+        currentTrackPath = newTrackPath;
+
+        // 3. Após o fade, a nova música se torna a música atual
+        setTimeout(() => {
+            if (currentAudio.element) currentAudio.element.pause();
+            currentAudio = { ...nextAudio };
+            nextAudio = { element: null, source: null, gainNode: null };
+        }, fadeDuration * 1000);
     }
 
     function drawVisualizer() {
@@ -42,22 +86,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     // Para parar o áudio e o visualizador
-    function stopAudioVisualizer() {
-    if (audio) {
-        audio.pause();
-        audio.currentTime = 0;
-        audio = null;
+    function stopAudioVisualizer() { /* ... (Seu código, MODIFICADO para limpar ambos os áudios) ... */ 
+        if (currentAudio.element) { currentAudio.element.pause(); currentAudio.element = null; }
+        if (nextAudio.element) { nextAudio.element.pause(); nextAudio.element = null; }
+        currentTrackPath = null;
+        if (audioCtx) { audioCtx.close().catch(e => {}); audioCtx = null; }
+        if (animationId) { cancelAnimationFrame(animationId); animationId = null; }
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
-    if (audioCtx) {
-        audioCtx.close();
-        audioCtx = null;
-    }
-    if (animationId) {
-        cancelAnimationFrame(animationId);
-        animationId = null;
-    }
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-}
+
     // Variáveis de interface
     const menuContainer = document.getElementById('menu-container');
     const botSelectionContainer = document.getElementById('bot-selection-container');
@@ -110,11 +147,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const bots = {
         loliBot: {
             name: "Samantha Helkaiser",
-            difficulty: "Dinâmico",
+            difficultyType: "Fácil?",
+            difficulty: {
+                current: "easy",
+                evolution: ["easy", "medium", "hard", "impossible"]
+            },
+            music: { // Músicas para cada humor
+                normal: "Resources/Musics/Blade-Arts-III.mp3",
+                focused: "Resources/Musics/Serious-Mode.mp3", // Exemplo de outra música
+                angry: "Resources/Musics/Serious-Mode.mp3"    // Pode ser a mesma
+            },
             images: {
-                normal: "../Resources/Bots-IMGs/Samathan-Helkiser/normalGyaru.png",
-                focused: "../Resources/Bots-IMGs/Samathan-Helkiser/normalGyaru.png",
-                angry: "../Resources/Bots-IMGs/Samathan-Helkiser/AngryGyaru.png"
+                normal: "Resources/Bots-IMGs/Samathan-Helkiser/normalGyaru.png",
+                focused: "Resources/Bots-IMGs/Samathan-Helkiser/normalGyaru.png",
+                angry: "Resources/Bots-IMGs/Samathan-Helkiser/AngryGyaru.png"
             },
             dialogue: {
                 normal: {
@@ -136,11 +182,13 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         professor: {
             name: "Professor Xadrez",
-            difficulty: "Apenas Fácil",
+            difficultyType: "Fácil",
+            difficulty: "easy",
+            music: "Resources/Musics/Crossroads.mp3",
             images: {
-                normal: "../Resources/Bots-IMGs/Professor-Xadrez/ProffX.png",
-                focused: "../Resources/Bots-IMGs/Professor-Xadrez/ProffX.png",
-                angry: "../Resources/Bots-IMGs/Professor-Xadrez/ProffX.png"
+                normal: "Resources/Bots-IMGs/Professor-Xadrez/ProffX.png",
+                focused: "Resources/Bots-IMGs/Professor-Xadrez/ProffX.png",
+                angry: "Resources/Bots-IMGs/Professor-Xadrez/ProffX.png"
             },
             dialogue: {
                 normal: {
@@ -210,15 +258,20 @@ document.addEventListener('DOMContentLoaded', () => {
             const bot = bots[botKey];
             const card = document.createElement('div');
             card.className = 'bot-card';
-            card.innerHTML = `<img src="${bot.images.normal}" alt="${bot.name}"><h3>${bot.name}</h3><p>Dificuldade: ${bot.difficulty}</p>`;
+            card.innerHTML = `<img src="${bot.images.normal}" alt="${bot.name}"><h3>${bot.name}</h3><p>${bot.difficultyType}</p>`;
             card.addEventListener('click', () => startGame('pvb', bot));
             botList.appendChild(card);
         }
     }
     // Inicia o jogo com o modo selecionado
     function startGame(mode, bot = null) {
+        stopAudioVisualizer();
         gameMode = mode;
         currentBot = bot;
+        if (currentBot && typeof currentBot.difficulty === 'object') {
+            currentBot.difficulty.current = currentBot.difficulty.evolution[0];
+        }
+
         gameEnded = false;
         moveHistory = [];
         moveHistoryList.innerHTML = '';
@@ -232,7 +285,9 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('pieceStyleDropdown').classList.remove('hidden');
         
         if (gameMode === 'pvb' && currentBot) {
-            initAudioVisualizer("Resources/Musics/Blade-Arts-III.mp3");
+            const initialMusic = typeof currentBot.music === 'object' ? currentBot.music.normal : currentBot.music;
+            initAudio(initialMusic);
+            
             botDisplay.classList.remove('hidden');
             botCurrentMood = 'normal';
             botImage.src = currentBot.images.normal;
@@ -363,6 +418,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     // Lógica do bot
     function makeBotMove() {
+        const difficulty = typeof currentBot.difficulty === 'object' ? currentBot.difficulty.current : currentBot.difficulty;
+        const bestMove = getBestMove(difficulty); // Chama o "cérebro" do bot... cerebro tem acento?
+        if (bestMove) {
+            movePiece(bestMove.from, bestMove.to);
+        } else {
+            endGame('white'); // Bot não tem movimentos, jogador vence
+        }
+    }
+
+    // decide o melhor movimento baseado na dificuldade
+    function getBestMove(difficulty) {
         const allPossibleMoves = [];
         for (let r = 0; r < 8; r++) {
             for (let c = 0; c < 8; c++) {
@@ -370,19 +436,105 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (piece && piece.color === 'black') {
                     const moves = getPossibleMoves(piece, r, c);
                     moves.forEach(move => {
-                        allPossibleMoves.push({ from: { row: r, col: c }, to: { row: r + move[0], col: c + move[1] } });
+                        allPossibleMoves.push({
+                            from: { row: r, col: c },
+                            to: { row: r + move[0], col: c + move[1] }
+                        });
                     });
                 }
             }
         }
-        if (allPossibleMoves.length === 0) { endGame('white'); return; }
-        const randomMove = allPossibleMoves[Math.floor(Math.random() * allPossibleMoves.length)];
-        movePiece(randomMove.from, randomMove.to);
+        if (allPossibleMoves.length === 0) return null;
+
+        // Estratégias de Dificuldade
+        switch (difficulty) {
+            case 'easy': {
+                return allPossibleMoves[Math.floor(Math.random() * allPossibleMoves.length)];
+            }
+            case 'medium': {
+                const captures = allPossibleMoves.filter(move => getPiece(move.to.row, move.to.col));
+                if (captures.length > 0) {
+                    // Prioriza a captura de maior valor
+                    captures.sort((a, b) => pieceValues[getPiece(b.to.row, b.to.col).type] - pieceValues[getPiece(a.to.row, a.to.col).type]);
+                    return captures[0];
+                }
+                return allPossibleMoves[Math.floor(Math.random() * allPossibleMoves.length)];
+            }
+            case 'hard':
+            case 'impossible': { // Impossível usa a mesma lógica do difícil ww
+                let bestScore = -Infinity;
+                let bestMoves = [];
+
+                allPossibleMoves.forEach(move => {
+                    const score = evaluateMove(move, 'black');
+                    if (score > bestScore) {
+                        bestScore = score;
+                        bestMoves = [move];
+                    } else if (score === bestScore) {
+                        bestMoves.push(move);
+                    }
+                });
+                return bestMoves[Math.floor(Math.random() * bestMoves.length)];
+            }
+            default: { // Caso padrão é fácil
+                return allPossibleMoves[Math.floor(Math.random() * allPossibleMoves.length)];
+            }
+        }
     }
-    // O cerebro do bot
+
+    // Função que calcula a pontuação de uma jogada
+    function evaluateMove(move, color) {
+        let score = 0;
+        const targetPiece = getPiece(move.to.row, move.to.col);
+        
+        // Recompensa por Captura
+        if (targetPiece) {
+            score += pieceValues[targetPiece.type];
+        }
+
+        // Penalidade por se mover para um local perigoso (simulação de 1 jogada à frente)
+        const opponentColor = color === 'white' ? 'black' : 'white';
+        // Simula o movimento
+        const originalPiece = getPiece(move.from.row, move.from.col);
+        board[move.to.row][move.to.col] = originalPiece;
+        board[move.from.row][move.from.col] = null;
+
+        if (isSquareAttacked(move.to, opponentColor)) {
+            score -= pieceValues[originalPiece.type] * 0.8; // Perder a peça que moveu é ruim
+        }
+
+        // Desfaz a simulação
+        board[move.from.row][move.from.col] = originalPiece;
+        board[move.to.row][move.to.col] = targetPiece;
+
+        if (move.to.row > 1 && move.to.row < 6 && move.to.col > 1 && move.to.col < 6) {
+            score += 0.1;
+        }
+
+        return score;
+    }
+
+    // Função auxiliar para verificar se um quadrado está sob ataque
+    function isSquareAttacked(square, attackerColor) {
+        for (let r = 0; r < 8; r++) {
+            for (let c = 0; c < 8; c++) {
+                const piece = getPiece(r, c);
+                if (piece && piece.color === attackerColor) {
+                    const moves = getPossibleMoves(piece, r, c);
+                    if (moves.some(([dr, dc]) => r + dr === square.row && c + dc === square.col)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    
+    // Mias coisa de bot
     function updateBotPersonalityAndDialogue(state = null, scores = null) {
         if (!currentBot) return;
         let dialogueKey = state;
+        const previousMood = botCurrentMood;
         if (!dialogueKey) {
             const scoreDiff = scores.black - scores.white;
             if (scoreDiff > 6) { botCurrentMood = 'angry'; dialogueKey = 'winning'; } 
@@ -391,12 +543,30 @@ document.addEventListener('DOMContentLoaded', () => {
             else if (scoreDiff < -2) { botCurrentMood = 'focused'; dialogueKey = 'losing'; } 
             else { botCurrentMood = 'normal'; dialogueKey = 'equal'; }
         }
+
+        // Mudar dificuldade INgame
+        if (typeof currentBot.difficulty === 'object') {
+            const botScore = scores ? scores.black : 39;
+            const evolution = currentBot.difficulty.evolution;
+            if (botScore < 10) { currentBot.difficulty.current = evolution[3] || 'impossible'; }
+            else if (botScore < 20) { currentBot.difficulty.current = evolution[2] || 'hard'; }
+            else if (botScore < 30) { currentBot.difficulty.current = evolution[1] || 'medium'; }
+            else { currentBot.difficulty.current = evolution[0] || 'easy'; }
+        }
+
+        // Troca de musíca
+        if (previousMood !== botCurrentMood && typeof currentBot.music === 'object') {
+            const newTrack = currentBot.music[botCurrentMood];
+            switchTrack(newTrack);
+        }
+
         botImage.src = currentBot.images[botCurrentMood] || currentBot.images.normal;
         const phrases = currentBot.dialogue[botCurrentMood]?.[dialogueKey];
         if (phrases && phrases.length > 0) {
             botDialogue.textContent = `"${phrases[Math.floor(Math.random() * phrases.length)]}"`;
         }
     }
+
     // Muda o estilo das peças
     function setPieceStyle(styleName) {
         currentPieceStyle = styleName;
