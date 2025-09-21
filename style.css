@@ -1,5 +1,17 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap');
+
+
+
+
+@font-face {
+    font-family: 'Zaadrez';
+    src: url('../Resources/fonts/balatro.otf') format('opentype');
+}
+
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+font-family: "Merriweather", serif;
   display: flex;
   justify-content: center;
   align-items: center;

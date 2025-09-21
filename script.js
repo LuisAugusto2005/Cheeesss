@@ -283,7 +283,7 @@ document.addEventListener('DOMContentLoaded', () => {
         gameContainer.classList.remove('hidden');
         document.getElementById('boardStyleDropdown').classList.remove('hidden');
         document.getElementById('pieceStyleDropdown').classList.remove('hidden');
-        
+        setBoardStyle('normal');
         if (gameMode === 'pvb' && currentBot) {
             const initialMusic = typeof currentBot.music === 'object' ? currentBot.music.normal : currentBot.music;
             initAudio(initialMusic);
