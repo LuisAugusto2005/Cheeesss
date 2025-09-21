@@ -5,3 +5,5 @@
 .chess-theme-light { --white-square: #f0d9b5; --black-square: #b58863; }
 .chess-theme-neon { --white-square: #0ff; --black-square: #05f; }
 .chess-theme-arthur_wermont{--white-square: rgb(255, 251, 0); --black-square: rgb(255, 166, 0);}
+.chess-theme-vivi{--white-square: rgb(236, 234, 108); --black-square: rgb(255, 255, 255);}
+.chess-theme-shrek{--white-square: rgb(108, 166, 90); --black-square: rgb(102, 51, 0);}

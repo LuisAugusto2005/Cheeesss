@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Variáveis do jogo
     let board = [];
     let boardUndo = [];
-    let boardRedo = [];
+    let boardRedo = [[ [null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null], [null,null,{"type":"pawn","color":"black","hasMoved":false},null,null,{"type":"pawn","color":"black","hasMoved":false},null,null], [null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null], [null,{"type":"pawn","color":"white","hasMoved":false},null,null,null,null,{"type":"pawn","color":"white","hasMoved":false},null], [null,null,{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},null,null], [null,null,null,null,null,null,null,null] ]];
     let currentPlayer = "white"; 
     let selectedPiece = null; 
     let moveHistory = [];
@@ -157,13 +157,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     // Eventos dos botões de desfazer e refazer
     undo.addEventListener('click', () => {
-        if (boardUndo.length > 1) {
-            boardRedo.push(JSON.parse(JSON.stringify(board)));
-            boardUndo.pop();
-            board = JSON.parse(JSON.stringify(boardUndo[boardUndo.length - 1]));
-            renderBoard();
-            switchPlayer();
-            updateScore();
+        if (!currentBot) {
+            if (boardUndo.length > 1) {
+                boardRedo.push(JSON.parse(JSON.stringify(board)));
+                boardUndo.pop();
+                board = JSON.parse(JSON.stringify(boardUndo[boardUndo.length - 1]));
+                renderBoard();
+                switchPlayer();
+                updateScore();
+            }
         }
     });
     redo.addEventListener('click', () => {
@@ -233,6 +235,8 @@ document.addEventListener('DOMContentLoaded', () => {
         setupPiece(7, 1, 'knight', 'white'); setupPiece(7, 6, 'knight', 'white');
         setupPiece(7, 2, 'bishop', 'white'); setupPiece(7, 5, 'bishop', 'white');
         setupPiece(7, 3, 'queen', 'white'); setupPiece(7, 4, 'king', 'white');
+        boardUndo.push(JSON.parse(JSON.stringify(board)));
+
     }
     // Renderiza o tabuleiro e as peças
     function renderBoard() {
@@ -415,7 +419,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function setBoardStyle(style) {
     const mainArea = document.getElementById('main-game-area');
         
-        mainArea.classList.remove('chess-theme-normal', 'chess-theme-light', 'chess-theme-neon', 'chess-theme-arthur_wermont');
+        mainArea.classList.remove('chess-theme-normal', 'chess-theme-light', 'chess-theme-neon', 'chess-theme-arthur_wermont', 'chess-theme-vivi', 'chess-theme-shrek');
         
         mainArea.classList.add(`chess-theme-${style}`);
         currentBoardStyle = style;
