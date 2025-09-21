@@ -153,9 +153,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 evolution: ["easy", "medium", "hard", "impossible"]
             },
             music: { // Músicas para cada humor
-                normal: "Resources/Musics/Blade-Arts-III.mp3",
-                focused: "Resources/Musics/Serious-Mode.mp3", // Exemplo de outra música
-                angry: "Resources/Musics/Serious-Mode.mp3"    // Pode ser a mesma
+                normal: "Resources/Musics/Guardia-Millennial-Fair.mp3",
+                focused: "Resources/Musics/Guardia-Millennial-Fair.mp3", // Exemplo de outra música
+                angry: "Resources/Musics/Blade-Arts-IV.mp3"    // Pode ser a mesma
             },
             images: {
                 normal: "Resources/Bots-IMGs/Samathan-Helkiser/normalGyaru.png",
