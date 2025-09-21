@@ -149,8 +149,8 @@ document.addEventListener('DOMContentLoaded', () => {
             name: "Samantha Helkaiser",
             difficultyType: "Fácil?",
             difficulty: {
-                current: "easy",
-                evolution: ["easy", "medium", "hard", "impossible"]
+                current: "medium",
+                evolution: ["medium", "hard", "impossible"]
             },
             music: { // Músicas para cada humor
                 normal: "Resources/Musics/Guardia-Millennial-Fair.mp3",
@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     start: ["O-Olá! Vamos jogar um pouquinho?", "Eu adoro xadrez! Espero que você goste também."],
                     winning: ["Vamos, sei que você é melhor que isso!", "Que divertido!"],
                     losing: ["Ah...", "Minhas pecinhas estão desaparecendo..."],
-                    equal: ["Estamos empatados?", "Hmmm..."],
+                    equal: ["Empatados por enquanto...", "Hmmm..."],
                 },
                 focused: {
                     winning: ["A vantagem é minha.", "Vamos, vamos!"],

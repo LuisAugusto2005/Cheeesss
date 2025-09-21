@@ -132,7 +132,7 @@ body::before {
 .piece { width: 80%; height: 80%; object-fit: contain; pointer-events: none; }
 
 #game-info {
-    height: 565px; width: 350px; background-color: #1f2a40; padding: 25px;
+    height: 565px; width: 420px; background-color: #1f2a40; padding: 25px;
     border-radius: 12px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
     color: #e0e0e0;
 }
@@ -160,8 +160,8 @@ body::before {
 #game-container #back-to-menu:hover { background-color: #c82333; }
 
 .piece-style-dropdown { position: relative; display: inline-block; margin-bottom: 15px; }
-#styleButton { font-size: 1.2em; padding: 10px 15px; cursor: pointer; border: none; border-radius: 6px; background-color: #007bff; color: white; font-weight: bold; transition: background-color 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); }
-#styleButton:hover { background-color: #0056b3; }
+#styleButton, #styleButtonboard { font-size: 1.2em; padding: 10px 15px; cursor: pointer; border: none; border-radius: 6px; background-color: #007bff; color: white; font-weight: bold; transition: background-color 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); }
+#styleButton:hover, #styleButtonboard:hover { background-color: #0056b3; }
 .dropdown-content { display: none; position: absolute; background-color: #1f2a40; min-width: 160px; border-radius: 6px; box-shadow: 0 8px 20px rgba(0,0,0,0.5); z-index: 1000; margin-top: 5px; padding: 5px 0; }
 .dropdown-content div { padding: 10px 15px; cursor: pointer; color: #e0e0e0; transition: background-color 0.2s; }
 .dropdown-content div:hover { background-color: #007bff; color: white; }
