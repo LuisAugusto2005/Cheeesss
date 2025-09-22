@@ -1,4 +1,19 @@
 document.addEventListener('DOMContentLoaded', () => {
+
+    const insertCodeInput = document.getElementById("insert_code");
+
+    insertCodeInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+            const code = insertCodeInput.value.trim();
+            if (code.toLowerCase() === "story mode") {
+                const resposta = confirm("Você se responsabiliza por todas as suas escolhas?");
+                if (resposta) {
+                    window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+                }
+            }
+        }
+    });
+
     // Parte do áudio, tentei seguir um vídeo e coisinhas que pesquisei
     const canvas = document.getElementById("audio-visualizer");
     const ctx = canvas.getContext("2d");
