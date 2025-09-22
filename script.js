@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
         drawVisualizer();
     }
 
-    // NOVO: Função para trocar de música com efeito de fade
+    // Função para trocar de música com efeito de fade
     function switchTrack(newTrackPath) {
         if (!newTrackPath || newTrackPath === currentTrackPath || !audioCtx) return;
 
