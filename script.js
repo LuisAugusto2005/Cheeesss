@@ -141,23 +141,41 @@ document.addEventListener('DOMContentLoaded', () => {
         california: { 'white': { 'king': 'Resources/pecas_estilos/california/wK.svg', 'queen': 'Resources/pecas_estilos/california/wQ.svg', 'rook': 'Resources/pecas_estilos/california/wR.svg', 'bishop': 'Resources/pecas_estilos/california/wB.svg', 'knight': 'Resources/pecas_estilos/california/wN.svg', 'pawn': 'Resources/pecas_estilos/california/wP.svg' }, 'black': { 'king': 'Resources/pecas_estilos/california/bK.svg', 'queen': 'Resources/pecas_estilos/california/bQ.svg', 'rook': 'Resources/pecas_estilos/california/bR.svg', 'bishop': 'Resources/pecas_estilos/california/bB.svg', 'knight': 'Resources/pecas_estilos/california/bN.svg', 'pawn': 'Resources/pecas_estilos/california/bP.svg' } },
         fantasy: { 'white': { 'king': 'Resources/pecas_estilos/fantasy/wK.svg', 'queen': 'Resources/pecas_estilos/fantasy/wQ.svg', 'rook': 'Resources/pecas_estilos/fantasy/wR.svg', 'bishop': 'Resources/pecas_estilos/fantasy/wB.svg', 'knight': 'Resources/pecas_estilos/fantasy/wN.svg', 'pawn': 'Resources/pecas_estilos/fantasy/wP.svg' }, 'black': { 'king': 'Resources/pecas_estilos/fantasy/bK.svg', 'queen': 'Resources/pecas_estilos/fantasy/bQ.svg', 'rook': 'Resources/pecas_estilos/fantasy/bR.svg', 'bishop': 'Resources/pecas_estilos/fantasy/bB (1).svg', 'knight': 'Resources/pecas_estilos/fantasy/bN.svg', 'pawn': 'Resources/pecas_estilos/fantasy/bP.svg' } },
         janggi: {
-    'white': {
-        'king': 'Resources/pecas_estilos/jangi_red_black/wK.svg',
-        'queen': 'Resources/pecas_estilos/jangi_red_black/wQ.svg',
-        'rook': 'Resources/pecas_estilos/jangi_red_black/wR.svg',
-        'bishop': 'Resources/pecas_estilos/jangi_red_black/wB.svg',
-        'knight': 'Resources/pecas_estilos/jangi_red_black/wN.svg',
-        'pawn': 'Resources/pecas_estilos/jangi_red_black/wP.svg'
-    },
-    'black': {
-        'king': 'Resources/pecas_estilos/jangi_red_black/bK.svg',
-        'queen': 'Resources/pecas_estilos/jangi_red_black/bQ.svg',
-        'rook': 'Resources/pecas_estilos/jangi_red_black/bR.svg',
-        'bishop': 'Resources/pecas_estilos/jangi_red_black/bB.svg',
-        'knight': 'Resources/pecas_estilos/jangi_red_black/bN.svg',
-        'pawn': 'Resources/pecas_estilos/jangi_red_black/bP.svg'
-    }
-}
+            'white': {
+                'king': 'Resources/pecas_estilos/jangi_red_black/wK.svg',
+                'queen': 'Resources/pecas_estilos/jangi_red_black/wQ.svg',
+                'rook': 'Resources/pecas_estilos/jangi_red_black/wR.svg',
+                'bishop': 'Resources/pecas_estilos/jangi_red_black/wB.svg',
+                'knight': 'Resources/pecas_estilos/jangi_red_black/wN.svg',
+                'pawn': 'Resources/pecas_estilos/jangi_red_black/wP.svg'
+            },
+            'black': {
+                'king': 'Resources/pecas_estilos/jangi_red_black/bK.svg',
+                'queen': 'Resources/pecas_estilos/jangi_red_black/bQ.svg',
+                'rook': 'Resources/pecas_estilos/jangi_red_black/bR.svg',
+                'bishop': 'Resources/pecas_estilos/jangi_red_black/bB.svg',
+                'knight': 'Resources/pecas_estilos/jangi_red_black/bN.svg',
+                'pawn': 'Resources/pecas_estilos/jangi_red_black/bP.svg'
+            }
+        },
+        horse: {
+            'white': {
+                'king': 'Resources/pecas_estilos/Horseys/WHITE_YEL.svg',
+                'queen': 'Resources/pecas_estilos/Horseys/WHITE_MRY.svg',
+                'rook': 'Resources/pecas_estilos/Horseys/WHITE_RES.svg',
+                'bishop': 'Resources/pecas_estilos/Horseys/WHITE_SUP.svg',
+                'knight': 'Resources/pecas_estilos/Horseys/WHITE_PNK.svg',
+                'pawn': 'Resources/pecas_estilos/Horseys/WHITE_CYAN.svg'
+            },
+            'black': {
+                'king': 'Resources/pecas_estilos/Horseys/BLACK_YEL.svg',
+                'queen': 'Resources/pecas_estilos/Horseys/BLACK_MRY.svg',
+                'rook': 'Resources/pecas_estilos/Horseys/BLACK_RES.svg',
+                'bishop': 'Resources/pecas_estilos/Horseys/BLACK_SUP.svg',
+                'knight': 'Resources/pecas_estilos/Horseys/BLACK_PNK.svg',
+                'pawn': 'Resources/pecas_estilos/Horseys/BLACK_CYAN.svg'
+            }
+        }
     };
 
     let currentPieceStyle = 'classic'; 

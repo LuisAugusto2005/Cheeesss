@@ -1,0 +1,11 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 135 135" width="135" height="135">
+	<title>WHITE_CYAN</title>
+	<defs>
+		<image  width="91" height="114" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFsAAAByBAMAAADOu7BUAAAAAXNSR0IB2cksfwAAABVQTFRFAAAA////GhIny9/pnq7GAAAIKRs46y0oVgAAAAd0Uk5TAP///////6V/pvsAAAFPSURBVHic7dc7DsIwDABQF4m9vQHiLByAJafswgEYOAniBuneiuLETpOUVLDU7lAP/PQiuYnjhAqWo6rd69ilP2nxJnCrzquaePN+2Zi+DkeLEA4nHPeM6e/ccxab4Ge/mDhInbsSw1nE+LsiV+Rb2tom/dLfNPnxSg3SDg98vcRB4twkrZp4GNQKcz+BvO3G7k6JE69q24tyw2kz5w/Dww2S5SamnQXXuyA3AGnexRDiocDLCrOm8pfipRnMAxdZhJvycsLUHRvPw+ZbmRdnEZPN74YSfGlJxy59IBt65JoccXkW588hw3/tOfDL27p3bU5LykerMg9ZwyZ4vG7sfCucmuJXA9DgWNptfgMS5iY529354CPpmrI8u3xN+2w63LR4tumnK7wK5/MhhlHg8a9DC1nQXIryUO95Y/bhTlwAYV7IcSnW5pzjPHEN/gH0CewiaNsMGwAAAABJRU5ErkJggg=="/>
+		<image  width="30" height="27" id="img2" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAbBAMAAACZ0yIiAAAAAXNSR0IB2cksfwAAABJQTFRFhJil////GhInU1uDOzhjc4q44swwDAAAAAZ0Uk5TAP//////enng/gAAAE5JREFUeJxjZAACRgEQ+f8DiEkEXxDGf08Mn1EAwhf89+D9/w8E+UCOIJMCw78HQIl7NOIzMEB8RSRfCexzoCgxfAaIfUCA8B9ePmnhCQDDIGzoHkk7lAAAAABJRU5ErkJggg=="/>
+	</defs>
+	<style>
+	</style>
+	<use id="img1" href="#img1" x="21" y="10"/>
+	<use id="Camada 3" href="#img2" x="67" y="10"/>
+</svg>
