@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Variáveis do jogo
     let board = [];
     let boardUndo = [];
-    let boardRedo = [[ [null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null], [null,null,{"type":"pawn","color":"black","hasMoved":false},null,null,{"type":"pawn","color":"black","hasMoved":false},null,null], [null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null], [null,{"type":"pawn","color":"white","hasMoved":false},null,null,null,null,{"type":"pawn","color":"white","hasMoved":false},null], [null,null,{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},null,null], [null,null,null,null,null,null,null,null] ]];
+    let boardRedo = [];
     let currentPlayer = "white"; 
     let selectedPiece = null; 
     let moveHistory = [];
@@ -356,6 +356,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inicializa o tabuleiro com as peças na posição inicial
     function initBoard() {
         board = Array(8).fill(null).map(() => Array(8).fill(null));
+        boardUndo = [];
+        boardRedo = [[ [null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null], [null,null,{"type":"pawn","color":"black","hasMoved":false},null,null,{"type":"pawn","color":"black","hasMoved":false},null,null], [null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null], [null,{"type":"pawn","color":"white","hasMoved":false},null,null,null,null,{"type":"pawn","color":"white","hasMoved":false},null], [null,null,{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},null,null], [null,null,null,null,null,null,null,null] ]];
         const setupPiece = (row, col, type, color) => { board[row][col] = { type, color, hasMoved: false }; };
         for (let i = 0; i < 8; i++) setupPiece(1, i, 'pawn', 'black');
         setupPiece(0, 0, 'rook', 'black'); setupPiece(0, 7, 'rook', 'black');
