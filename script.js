@@ -456,9 +456,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (pecamovida.type === 'pawn' && (to.row === 0 || to.row === 7)) pecamovida.type = 'queen';
         if (pecamovida.type === 'king' && Math.abs(to.col - from.col) === 2) {
           if (to.col === 6) {
-            movePiece({row: from.row, col: 7}, {row: from.row, col: 5});
+            board[7][6] = pecamovida;
+            board[7][5] = getPiece(7,7);
+            board[7][7] = null;
+            board[7][4] = null;
           } else { 
-            movePiece({row: from.row, col: 0}, {row: from.row, col: 3});
+            board[7][2] = pecamovida;
+            board[7][3] = getPiece(7,0);
+            board[7][0] = null;
+            board[7][4] = null;
           }
         }
         board[to.row][to.col] = pecamovida;
