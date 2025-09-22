@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    //ISERT CODE
     const insertCodeInput = document.getElementById("insert_code");
-
 
     insertCodeInput.addEventListener("keydown", (event) => {
         if (event.key === "Enter") {
@@ -669,7 +669,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-        // MENU TABULEIRO
+    // MENU TABULEIRO
     const styleButtonBoard = document.getElementById("styleButtonboard");
     const styleMenuBoard = document.getElementById("styleMenuBoard");
 
@@ -703,11 +703,6 @@ document.addEventListener('DOMContentLoaded', () => {
         currentBoardStyle = style;
     }
     // MenuStyle.js - FIM
-
-
-
-
-
 
 
 
