@@ -7,11 +7,11 @@
 
 @font-face {
     font-family: 'Zaadrez';
-    src: url('../Resources/fonts/balatro.otf') format('opentype');
+    src: url('Resources/fonts/alagard.ttf') format('opentype');
 }
 
 body {
-font-family: "Merriweather", serif;
+font-family: "Zaadrez", serif;
   display: flex;
   justify-content: center;
   align-items: center;
