@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const insertCodeInput = document.getElementById("insert_code");
 
+
     insertCodeInput.addEventListener("keydown", (event) => {
         if (event.key === "Enter") {
             const code = insertCodeInput.value.trim();
@@ -14,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Audio.js - INICIO
     // Parte do áudio, tentei seguir um vídeo e coisinhas que pesquisei
     const canvas = document.getElementById("audio-visualizer");
     const ctx = canvas.getContext("2d");
@@ -101,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     // Para parar o áudio e o visualizador
-    function stopAudioVisualizer() { /* ... (Seu código, MODIFICADO para limpar ambos os áudios) ... */ 
+    function stopAudioVisualizer() {
         if (currentAudio.element) { currentAudio.element.pause(); currentAudio.element = null; }
         if (nextAudio.element) { nextAudio.element.pause(); nextAudio.element = null; }
         currentTrackPath = null;
@@ -109,6 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (animationId) { cancelAnimationFrame(animationId); animationId = null; }
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
+    // Audio.js - FIM
 
     // Variáveis de interface
     const menuContainer = document.getElementById('menu-container');
@@ -194,6 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     let currentPieceStyle = 'classic'; 
+    // Bots.js - INICIO
     // Define os bots
     const bots = {
         loliBot: {
@@ -260,6 +264,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     };
+    // BOTS.js - FIM
+
     // Eventos dos botões do menu
     pvpButton.addEventListener('click', () => startGame('pvp'));
     pvbButton.addEventListener('click', showBotSelection);
@@ -303,6 +309,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     // Popula a lista de bots na tela de seleção
+    // BotsLogic.js - Faz parte
     function populateBotList() {
         botList.innerHTML = '';
         for (const botKey in bots) {
@@ -315,6 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     // Inicia o jogo com o modo selecionado
+    
     function startGame(mode, bot = null) {
         stopAudioVisualizer();
         gameMode = mode;
@@ -398,6 +406,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
+    // Move.js - Inicio
     // Lida com o clique em uma casa do tabuleiro
     function handleSquareClick(event) {
         if (gameEnded || (gameMode === 'pvb' && currentPlayer === 'black')) return;
@@ -476,6 +485,9 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(makeBotMove, 1000);
         }
     }
+    // Move.js - FIM
+
+    // BotsLogic.js - INICIO
     // Lógica do bot
     function makeBotMove() {
         const difficulty = typeof currentBot.difficulty === 'object' ? currentBot.difficulty.current : currentBot.difficulty;
@@ -590,7 +602,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return false;
     }
     
-    // Mias coisa de bot
+    // Mais coisa de bot
     function updateBotPersonalityAndDialogue(state = null, scores = null) {
         if (!currentBot) return;
         let dialogueKey = state;
@@ -634,7 +646,9 @@ document.addEventListener('DOMContentLoaded', () => {
             botDialogue.textContent = `"${phrases[Math.floor(Math.random() * phrases.length)]}"`;
         }
     }
+    // BotsLogic.js - FIM
 
+    // MenuStyle.js - Inicio
     // Muda o estilo das peças
     function setPieceStyle(styleName) {
         currentPieceStyle = styleName;
@@ -688,6 +702,7 @@ document.addEventListener('DOMContentLoaded', () => {
         mainArea.classList.add(`chess-theme-${style}`);
         currentBoardStyle = style;
     }
+    // MenuStyle.js - FIM
 
 
 
@@ -698,6 +713,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+    // Moves.js - Faz parte - inicio
     function getPossibleMoves(piece, row, col) {
         let moves = [];
         switch (piece.type) {
@@ -771,6 +787,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         return moves.filter(([r, c]) => inBoard(row + r, col + c));
     }
+    // Moves.js - Faz parte - fim
     
     function updateScore() {
         let whiteScore = 0; let blackScore = 0;
