@@ -119,6 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const gameContainer = document.getElementById('game-container');
     const pvpButton = document.getElementById('pvpButton');
     const pvbButton = document.getElementById('pvbButton');
+    const adventureButton = document.getElementById('adventureButton');
     const botList = document.getElementById('bot-list');
     // Botões de voltar
     const backFromBotSelection = botSelectionContainer.querySelector('#back-to-menu');
@@ -269,6 +270,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Eventos dos botões do menu
     pvpButton.addEventListener('click', () => startGame('pvp'));
     pvbButton.addEventListener('click', showBotSelection);
+    adventureButton.addEventListener('click', function() {
+        window.location.replace("../www/index.html");
+    });
     // Mostra a tela de seleção de bots
     function showBotSelection() {
         menuContainer.classList.add('hidden');

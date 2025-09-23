@@ -4,10 +4,9 @@
 
 
 
-
 @font-face {
     font-family: 'Zaadrez';
-    src: url('Resources/fonts/alagard.ttf') format('opentype');
+    src: url('../Resources/fonts/alagard.ttf') format('opentype');
 }
 
 body {
