@@ -212,7 +212,10 @@ function addToHistory(piece, from, to, captured) {
     const time = new Date().toLocaleTimeString('pt-BR');
     const fromPos = `${String.fromCharCode(97 + from.col)}${8 - from.row}`;
     const toPos = `${String.fromCharCode(97 + to.col)}${8 - to.row}`;
-    const moveText = `${time} - ${piece.color}: ${fromPos} -> ${toPos}`; // Simplificado
+    const color = piece.color === 'white' ? 'Brancas' : 'Pretas';
+    const pieceSymbol = pieceUnicode.classic[piece.color][piece.type];
+    const capturedSymbol = captured ? ` (captura ${pieceUnicode.classic[captured.color][captured.type]})` : '';
+    const moveText = `${time} - ${color}: ${pieceSymbol} de ${fromPos} para ${toPos}${capturedSymbol}`;
     moveHistory.push(moveText);
     const li = document.createElement('li'); li.textContent = moveText; moveHistoryList.appendChild(li);
     moveHistoryList.scrollTop = moveHistoryList.scrollHeight;
