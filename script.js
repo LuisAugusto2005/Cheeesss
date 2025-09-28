@@ -467,13 +467,13 @@ document.addEventListener('DOMContentLoaded', () => {
             board[7][4] = null;
           }
         }
-        board[to.row][to.col] = pecamovida;
-        board[from.row][from.col] = null;
+        board[to.row][to.col] = pecamovida;// Move a peça
+        board[from.row][from.col] = null;// Nulifica onde ela estava
         pecamovida.hasMoved = true;
         addToHistory(pecamovida, from, to, pecaCapturada);
         selectedPiece = null;
-        clearHighlights();
-        renderBoard();
+        clearHighlights();// Limpa indicaçoes de movimento
+        renderBoard();// renderiza dnv
         const scores = updateScore();
         updateBotPersonalityAndDialogue(null, scores);
 

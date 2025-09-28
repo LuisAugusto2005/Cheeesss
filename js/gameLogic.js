@@ -101,8 +101,8 @@ function startGame(mode, bot = null) {
 function initBoard() {
     board = Array(8).fill(null).map(() => Array(8).fill(null));
     boardUndo = [];
-    boardRedo = [];
-    const setupPiece = (row, col, type, color) => { board[row][col] = { type, color, hasMoved: false }; };
+    boardRedo = [[ [null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null], [null,null,{"type":"pawn","color":"black","hasMoved":false},null,null,{"type":"pawn","color":"black","hasMoved":false},null,null], [null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null], [null,{"type":"pawn","color":"white","hasMoved":false},null,null,null,null,{"type":"pawn","color":"white","hasMoved":false},null], [null,null,{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},null,null], [null,null,null,null,null,null,null,null] ]];
+    const setupPiece = (row, col, type, color) => { board[row][col] = { type, color, hasMoved: false, hasDoble: false }; };
     for (let i = 0; i < 8; i++) setupPiece(1, i, 'pawn', 'black');
     setupPiece(0, 0, 'rook', 'black'); setupPiece(0, 7, 'rook', 'black');
     setupPiece(0, 1, 'knight', 'black'); setupPiece(0, 6, 'knight', 'black');
@@ -142,53 +142,84 @@ function renderBoard() {
     }
 }
 
-function handleSquareClick(event) {
-    if (gameEnded || (gameMode === 'pvb' && currentPlayer === 'black')) return;
-    const square = event.currentTarget;
-    const row = parseInt(square.dataset.row);
-    const col = parseInt(square.dataset.col);
-    const piece = board[row][col];
+    // Lida com o clique em uma casa do tabuleiro
+    function handleSquareClick(event) {
+        if (gameEnded || (gameMode === 'pvb' && currentPlayer === 'black')) return;
+        const square = event.currentTarget;
+        const row = parseInt(square.dataset.row);
+        const col = parseInt(square.dataset.col);
+        const piece = board[row][col];
 
-    if (selectedPiece) {
-        if (square.classList.contains('possible-move') || square.classList.contains('possible-capture')) {
-            movePiece(selectedPiece.dataset, { row, col });
-        } else if (piece && piece.color === currentPlayer) {
-            clearHighlights();
+        // Caso 1: existe peça selecionada
+        if (selectedPiece) {
+                //1.1: Clicou em um movimento possível
+            if (square.classList.contains('possible-move') || square.classList.contains('possible-capture')) {
+                return movePiece(selectedPiece.dataset, { row, col });
+            }   //1.2: Clicou na mesma peça selecionada
+            if (piece && piece.color === currentPlayer) {
+                selectedPiece = square;
+                clearHighlights();
+                square.classList.add('selected');
+                return highlightMoves(getPossibleMoves(piece, row, col), row, col);
+            }   //1.3: Clicou em outro lugar
+                selectedPiece = null;
+                square.classList.remove('selected');
+                return clearHighlights();
+        }
+        // Caso 2: n existe peça selecionada
+        if (piece && piece.color === currentPlayer) {
             selectedPiece = square;
             square.classList.add('selected');
             highlightMoves(getPossibleMoves(piece, row, col), row, col);
-        } else {
-            selectedPiece = null;
-            clearHighlights();
         }
-    } else if (piece && piece.color === currentPlayer) {
-        selectedPiece = square;
-        square.classList.add('selected');
-        highlightMoves(getPossibleMoves(piece, row, col), row, col);
     }
-}
 
-function movePiece(from, to) {
-    from.row = parseInt(from.row); from.col = parseInt(from.col);
-    const pecaCapturada = board[to.row][to.col];
-    const pecamovida = board[from.row][from.col];
-    if (pecaCapturada && pecaCapturada.type === 'king') { endGame(pecamovida.color); return; }
-    if (pecamovida.type === 'pawn' && (to.row === 0 || to.row === 7)) pecamovida.type = 'queen';
-    if (pecamovida.type === 'king' && Math.abs(to.col - from.col) === 2) { /* Lógica de roque */ }
+    // Move a peça e atualiza o estado do jogo
+    function movePiece(from, to) {
+        from.row = parseInt(from.row); from.col = parseInt(from.col);
+        const pecaCapturada = board[to.row][to.col];
+        const pecamovida = board[from.row][from.col];
+        if (pecaCapturada && pecaCapturada.type === 'king') { endGame(pecamovida.color); return; }// GGwp
+        if (pecamovida.type === 'pawn' && (to.row === 0 || to.row === 7)) pecamovida.type = 'queen';// Mecanica de promoçao de peao
+        if (pecamovida.type === 'king' && Math.abs(to.col - from.col) === 2) {// Mecanica de roque
+            const r = pecamovida.color === "white" ? 7 : 0;
+            console.log(pecamovida.color);
+          if (to.col === 6) {
+            board[r][6] = pecamovida;
+            board[r][5] = getPiece(r,7);
+            board[r][7] = null;
+            board[r][4] = null;
+          } else { 
+            board[r][2] = pecamovida;
+            board[r][3] = getPiece(r,0);    
+            board[r][0] = null;
+            board[r][4] = null;
+          }
+        }
+        if (pecamovida.type === 'pawn') {// Mecanica El Passante
+            const i = pecamovida.color === 'white' ? 1 : -1;
+            if (getPiece(to.row+i, from.col) && getPiece(to.row+i, from.col).hasDoble) {
+                    board[to.row+i][to.col] = null;
+            }
+        }
+        board[to.row][to.col] = pecamovida;// Move a peça
+        board[from.row][from.col] = null;// Nulifica onde ela estava
+        pecamovida.hasMoved = true;
+        if (pecamovida.type === 'pawn' && Math.abs(to.row - from.row) === 2) pecamovida.hasDoble = true;
+        addToHistory(pecamovida, from, to, pecaCapturada);
+        selectedPiece = null;
+        clearHighlights();// Limpa indicaçoes de movimento
+        renderBoard();// renderiza dnv
+        const scores = updateScore();
+        updateBotPersonalityAndDialogue(null, scores);
 
-    board[to.row][to.col] = pecamovida;
-    board[from.row][from.col] = null;
-    pecamovida.hasMoved = true;
-    addToHistory(pecamovida, from, to, pecaCapturada);
-    selectedPiece = null;
-    clearHighlights();
-    renderBoard();
-    const scores = updateScore();
-    updateBotPersonalityAndDialogue(null, scores);
-    if (!gameEnded) switchPlayer();
-    boardRedo = [];
-    boardUndo.push(JSON.parse(JSON.stringify(board)));
-}
+        if (!gameEnded) {
+            switchPlayer();
+        }
+        boardRedo = [];// Limpa o redo ao fazer um novo movimento
+        boardUndo.push(JSON.parse(JSON.stringify(board)));// Salva o estado atual do tabuleiro para desfazer
+        console.log(getPiece(to.row,to.col));
+    }
 
 function switchPlayer() {
     currentPlayer = currentPlayer === 'white' ? 'black' : 'white';
@@ -227,4 +258,5 @@ function endGame(winner) {
     statusDisplay.textContent = `FIM DE JOGO! As ${winnerColor} venceram!`;
     turnDisplay.textContent = '';
     updateBotPersonalityAndDialogue(winner === 'white' ? 'losing' : 'winning');
+    stopAudioVisualizer();
 }

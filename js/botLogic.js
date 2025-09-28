@@ -23,17 +23,17 @@ const bots = {
         }
     }
 };
-
+// Lógica do bot
 function makeBotMove() {
     const difficulty = typeof currentBot.difficulty === 'object' ? currentBot.difficulty.current : currentBot.difficulty;
-    const bestMove = getBestMove(difficulty);
+    const bestMove = getBestMove(difficulty); // Chama o "cérebro" do bot... cerebro tem acento?
     if (bestMove) {
         movePiece(bestMove.from, bestMove.to);
     } else {
         endGame('white'); // bot não tem movimentos, jogador vence
     }
 }
-
+// decide o melhor movimento baseado na dificuldade
 function getBestMove(difficulty) {
     const allPossibleMoves = [];
     for (let r = 0; r < 8; r++) {
@@ -79,20 +79,23 @@ function getBestMove(difficulty) {
             return allPossibleMoves[Math.floor(Math.random() * allPossibleMoves.length)];
     }
 }
-
+// Função que calcula a pontuação de uma jogada
 function evaluateMove(move, color) {
     let score = 0;
     const targetPiece = getPiece(move.to.row, move.to.col);
+    // Recompensa por Captura
     if (targetPiece) {
         score += pieceValues[targetPiece.type];
     }
+    // Penalidade por se mover para um local perigoso (simulação de 1 jogada à frente)
     const opponentColor = color === 'white' ? 'black' : 'white';
     const originalPiece = getPiece(move.from.row, move.from.col);
     board[move.to.row][move.to.col] = originalPiece;
     board[move.from.row][move.from.col] = null;
     if (isSquareAttacked(move.to, opponentColor)) {
-        score -= pieceValues[originalPiece.type] * 0.8;
+        score -= pieceValues[originalPiece.type] * 0.8; // Perder a peça que moveu é ruim
     }
+    // Desfaz a simulação
     board[move.from.row][move.from.col] = originalPiece;
     board[move.to.row][move.to.col] = targetPiece;
     if (move.to.row > 1 && move.to.row < 6 && move.to.col > 1 && move.to.col < 6) {
@@ -100,7 +103,7 @@ function evaluateMove(move, color) {
     }
     return score;
 }
-
+// Função auxiliar para verificar se um quadrado está sob ataque
 function isSquareAttacked(square, attackerColor) {
     for (let r = 0; r < 8; r++) {
         for (let c = 0; c < 8; c++) {
@@ -115,7 +118,7 @@ function isSquareAttacked(square, attackerColor) {
     }
     return false;
 }
-
+// Mais coisa de bot
 function updateBotPersonalityAndDialogue(state = null, scores = null) {
     if (!currentBot) return;
     let dialogueKey = state;
@@ -138,7 +141,7 @@ function updateBotPersonalityAndDialogue(state = null, scores = null) {
         else if (botScore < 30) currentBot.difficulty.current = evolution[1] || 'medium';
         else currentBot.difficulty.current = evolution[0] || 'easy';
     }
-
+    // Troca de musíca
     if (previousMood !== botCurrentMood && typeof currentBot.music === 'object') {
         const newTrack = currentBot.music[botCurrentMood];
         switchTrack(newTrack);

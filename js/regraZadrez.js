@@ -1,19 +1,26 @@
 function getPossibleMoves(piece, row, col) {
+    console.log(piece);
     let moves = [];
     switch (piece.type) {
         case "pawn":
             let dir = piece.color === "white" ? -1 : 1;
-            if (!getPiece(row + dir, col)) {
+            if (!getPiece(row + dir, col)) { // Frente
                 moves.push([dir, 0]);
                 if (!piece.hasMoved && !getPiece(row + 2 * dir, col)) moves.push([2 * dir, 0]);
             }
-            [[dir, -1], [dir, 1]].forEach(([r, c]) => {
+            [[dir, -1], [dir, 1]].forEach(([r, c]) => { // Capturar
                 let target = getPiece(row + r, col + c);
                 if (target && target.color !== piece.color) moves.push([r, c]);
             });
+            if (-dir*3 + row === 6 || -dir*3 + row === 1) { //El Passante
+                for (c=-1; c<2;c+=2) {
+                let target = getPiece(row, col + c);
+                if (target && target.type === "pawn" && target.hasDoble) moves.push([dir, c]);
+                }
+            }
             break;
         case "rook":
-            [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(([dr, dc]) => {
+            [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(([dr, dc]) => { // X e Y
                 for (let i = 1; i < 8; i++) {
                     let target = getPiece(row + dr * i, col + dc * i);
                     if (!target) moves.push([dr * i, dc * i]);
@@ -22,13 +29,13 @@ function getPossibleMoves(piece, row, col) {
             });
             break;
         case "knight":
-            [[2, 1], [2, -1], [-2, 1], [-2, -1], [1, 2], [1, -2], [-1, 2], [-1, -2]].forEach(([dr, dc]) => {
+            [[2, 1], [2, -1], [-2, 1], [-2, -1], [1, 2], [1, -2], [-1, 2], [-1, -2]].forEach(([dr, dc]) => { // So verifica se da pra ir ou n
                 let target = getPiece(row + dr, col + dc);
                 if (!target || target.color !== piece.color) moves.push([dr, dc]);
             });
             break;
         case "bishop":
-            [[1, 1], [1, -1], [-1, 1], [-1, -1]].forEach(([dr, dc]) => {
+            [[1, 1], [1, -1], [-1, 1], [-1, -1]].forEach(([dr, dc]) => { // X +- Y
                 for (let i = 1; i < 8; i++) {
                     let target = getPiece(row + dr * i, col + dc * i);
                     if (!target) moves.push([dr * i, dc * i]);
@@ -37,7 +44,7 @@ function getPossibleMoves(piece, row, col) {
             });
             break;
         case "queen":
-            [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1]].forEach(([dr, dc]) => {
+            [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1]].forEach(([dr, dc]) => { // Rook e Bishop
                 for (let i = 1; i < 8; i++) {
                     let target = getPiece(row + dr * i, col + dc * i);
                     if (!target) moves.push([dr * i, dc * i]);
@@ -46,11 +53,11 @@ function getPossibleMoves(piece, row, col) {
             });
             break;
         case "king":
-            [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1]].forEach(([dr, dc]) => {
+            [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1]].forEach(([dr, dc]) => { // So verifica se da pra ir
                 let t = getPiece(row + dr, col + dc);
                 if (!t || t.color !== piece.color) moves.push([dr, dc]);
             });
-            if (piece.hasMoved) break;
+            if (piece.hasMoved) break; // Roque
             const Kr = piece.color === "white" ? 7 : 0;
             for (const { rookPos, path, move } of [{ rookPos: 7, path: [5, 6], move: [0, 2] }, { rookPos: 0, path: [1, 2, 3], move: [0, -2] }]) {
                 let r = getPiece(Kr, rookPos);
