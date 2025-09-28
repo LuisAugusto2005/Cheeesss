@@ -1,9 +1,8 @@
 function getPossibleMoves(piece, row, col) {
-    console.log(piece);
     let moves = [];
     switch (piece.type) {
         case "pawn":
-            let dir = piece.color === "white" ? -1 : 1;
+            const dir = piece.color === "white" ? -1 : 1;
             if (!getPiece(row + dir, col)) { // Frente
                 moves.push([dir, 0]);
                 if (!piece.hasMoved && !getPiece(row + 2 * dir, col)) moves.push([2 * dir, 0]);
@@ -11,13 +10,8 @@ function getPossibleMoves(piece, row, col) {
             [[dir, -1], [dir, 1]].forEach(([r, c]) => { // Capturar
                 let target = getPiece(row + r, col + c);
                 if (target && target.color !== piece.color) moves.push([r, c]);
-            });
-            if (-dir*3 + row === 6 || -dir*3 + row === 1) { //El Passante
-                for (c=-1; c<2;c+=2) {
-                let target = getPiece(row, col + c);
-                if (target && target.type === "pawn" && target.hasDoble) moves.push([dir, c]);
-                }
-            }
+            }); 
+            if (ElPassant && row === ElPassant.row && !getPiece(ElPassant.row + dir,ElPassant.col)) moves.push([dir, ElPassant.col - col]); // El Passant
             break;
         case "rook":
             [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(([dr, dc]) => { // X e Y
@@ -66,6 +60,7 @@ function getPossibleMoves(piece, row, col) {
             }
             break;
     }
+    console.log(piece.type + ': ' + moves);
     return moves.filter(([r, c]) => inBoard(row + r, col + c));
 }
 

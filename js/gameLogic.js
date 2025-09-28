@@ -5,6 +5,7 @@ let boardUndo = [];
 let boardRedo = [];
 let currentPlayer = "white";
 let selectedPiece = null;
+let ElPassant = null;
 let moveHistory = [];
 let gameEnded = false;
 let gameMode = 'pvp';
@@ -102,7 +103,7 @@ function initBoard() {
     board = Array(8).fill(null).map(() => Array(8).fill(null));
     boardUndo = [];
     boardRedo = [[ [null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null], [null,null,{"type":"pawn","color":"black","hasMoved":false},null,null,{"type":"pawn","color":"black","hasMoved":false},null,null], [null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null], [null,{"type":"pawn","color":"white","hasMoved":false},null,null,null,null,{"type":"pawn","color":"white","hasMoved":false},null], [null,null,{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},null,null], [null,null,null,null,null,null,null,null] ]];
-    const setupPiece = (row, col, type, color) => { board[row][col] = { type, color, hasMoved: false, hasDoble: false }; };
+    const setupPiece = (row, col, type, color) => { board[row][col] = { type, color, hasMoved: false}; };
     for (let i = 0; i < 8; i++) setupPiece(1, i, 'pawn', 'black');
     setupPiece(0, 0, 'rook', 'black'); setupPiece(0, 7, 'rook', 'black');
     setupPiece(0, 1, 'knight', 'black'); setupPiece(0, 6, 'knight', 'black');
@@ -196,16 +197,20 @@ function renderBoard() {
             board[r][4] = null;
           }
         }
-        if (pecamovida.type === 'pawn') {// Mecanica El Passante
-            const i = pecamovida.color === 'white' ? 1 : -1;
-            if (getPiece(to.row+i, from.col) && getPiece(to.row+i, from.col).hasDoble) {
-                    board[to.row+i][to.col] = null;
+        
+        board[to.row][to.col] = pecamovida; // Move a peça
+        board[from.row][from.col] = null; // Nulifica onde ela estava
+        
+        console.log(ElPassant);
+        if (ElPassant) { // Finaliza El Passant
+            if (pecamovida.type === 'pawn') {
+                const dir = pecamovida.color === "white" ? -1 : 1;
+                board[to.row - dir][to.col] = null;
             }
+            ElPassant = null;
         }
-        board[to.row][to.col] = pecamovida;// Move a peça
-        board[from.row][from.col] = null;// Nulifica onde ela estava
+        if (pecamovida.type === 'pawn' && Math.abs(to.row - from.row) === 2) ElPassant = to; // Inicia El Passant
         pecamovida.hasMoved = true;
-        if (pecamovida.type === 'pawn' && Math.abs(to.row - from.row) === 2) pecamovida.hasDoble = true;
         addToHistory(pecamovida, from, to, pecaCapturada);
         selectedPiece = null;
         clearHighlights();// Limpa indicaçoes de movimento
@@ -215,10 +220,9 @@ function renderBoard() {
 
         if (!gameEnded) {
             switchPlayer();
-        }
+        }   
         boardRedo = [];// Limpa o redo ao fazer um novo movimento
         boardUndo.push(JSON.parse(JSON.stringify(board)));// Salva o estado atual do tabuleiro para desfazer
-        console.log(getPiece(to.row,to.col));
     }
 
 function switchPlayer() {
