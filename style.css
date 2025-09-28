@@ -26,6 +26,41 @@ font-family: "Zaadrez", serif;
   box-sizing: border-box;
 }
 
+.alternate-style-black {
+    background: black;
+    background-size: 100% 100%;
+    animation: none;
+}
+
+.alternate-style-white {
+    background: white;
+    background-size: 100% 100%;
+    animation: none;
+}
+
+.alternate-style-shrek {
+    background-image: url(imgs/shrek-win7.jpg);
+    background-size: 100% 100%;
+    animation: none;
+}
+
+.alternate-style-vivi {
+  background-image: url(imgs/dragonitewp.png);
+  background-size: 100% 100%;
+}
+
+.alternate-style-putin {
+  background-image: url(imgs/putin\ com\ os\ dogs.jpg);
+  background-size: 100% 100%;
+  animation: none;
+}
+
+.alternate-style-guy {
+  background-image: url(imgs/familyguywp.jpg);
+  background-size: 100% 100%;
+  animation: none;
+}
+
 @keyframes gradientMove {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -116,7 +151,7 @@ body::before {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 20px;
 }
 
 #area-jogo {
@@ -124,7 +159,7 @@ body::before {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 15px;
 }
 
 #area-tabuleiro {
@@ -140,7 +175,6 @@ body::before {
     grid-template-rows: repeat(8, 75px);
     width: 600px;
     height: 600px;
-    border: 8px solid #4a0e3a;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
     border-radius: 5px;
     overflow: hidden;
@@ -152,7 +186,6 @@ body::before {
     grid-template-columns: repeat(6, 75px);
     width: 450px;
     height: 75px;
-    border: 8px solid #4a0e3a;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
     border-radius: 5px;
     overflow: hidden;
@@ -163,7 +196,6 @@ body::before {
     grid-template-columns: repeat(6, 75px);
     width: 450px;
     height: 75px;
-    border: 8px solid #4a0e3a;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
     border-radius: 5px;
     overflow: hidden;
@@ -174,7 +206,6 @@ body::before {
     grid-template-rows: repeat(2, 75px);
     width: 75px;
     height: 150px;
-    border: 8px solid #4a0e3a;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
     border-radius: 5px;
     overflow: hidden;
@@ -201,10 +232,22 @@ body::before {
 .piece { width: 80%; height: 80%; object-fit: contain; pointer-events: none; }
 
 #game-info {
-    height: 565px; width: 350px; background-color: #1f2a40; padding: 25px;
-    border-radius: 12px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+    height: 565px; width: 350px; padding: 25px;
+    border-radius: 12px;
     color: #e0e0e0;
 }
+
+.game-info-style {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+    background-color: #1f2a40;
+}
+
+
+.game-info-vazio {
+    background-color: none;
+    box-shadow: none;
+}
+
 #game-info h2, #game-info h3 { border-bottom: 2px solid #3c4b6b; padding-bottom: 8px; margin-top: 5px; color: #e0bb40; }
 #game-info p { font-size: 1.1em; margin-bottom: 10px; }
 #turn-display { font-size: 1.6em; font-weight: bold; color: #007bff; margin-bottom: 15px; }
@@ -223,13 +266,15 @@ body::before {
 #move-history::-webkit-scrollbar-thumb:hover { background: #6a1a5a; }
 #buttons-infogame-container1 { display: flex; gap: 15px; margin-top: 20px; height: 35px; }
 #buttons-undo-redo { flex: 1; display: flex; gap: 10px;}
-#buttons-undo-redo button { flex: 1; font-size: 1.5em; color: white; background-color: #1f2a40; border: none;}
+#buttons-undo-redo button { align-items: center;flex: 1; font-size: 1.5em; color: white; background-color: #1f2a40; border: none; border-radius: 5px; border: none;}
 #buttons-undo-redo button:hover { color: #007bff; cursor: pointer; }
 #game-container #back-to-menu { font-size: 1em; cursor: pointer; border: none; border-radius: 5px; background-color: #dc3545; color: white; transition: background-color 0.3s; display: block; width: 60%; box-sizing: border-box; }
 #game-container #back-to-menu:hover { background-color: #c82333; }
 
+#buttons-infogame-container0 {display: flex;}
+
 .piece-style-dropdown { position: relative; display: inline-block; margin-bottom: 15px; }
-#styleButton, #styleButtonboard { font-size: 1em; padding: 10px 15px; cursor: pointer; border: none; border-radius: 6px; background-color: #007bff; color: white; font-weight: bold; transition: background-color 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); }
+#styleButton, #styleButtonboard, #styleImgButton {height: 46px; width: 100px; margin: 5px; font-size: 1em; padding: 10px 15px; cursor: pointer; border: none; border-radius: 6px; background-color: #007bff; color: white; font-weight: bold; transition: background-color 0.3s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); }
 #styleButton:hover, #styleButtonboard:hover { background-color: #0056b3; }
 .dropdown-content { display: none; position: absolute; background-color: #1f2a40; min-width: 160px; border-radius: 6px; box-shadow: 0 8px 20px rgba(0,0,0,0.5); z-index: 1000; margin-top: 5px; padding: 5px 0; }
 .dropdown-content div { padding: 10px 15px; cursor: pointer; color: #e0e0e0; transition: background-color 0.2s; }

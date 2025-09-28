@@ -60,7 +60,7 @@ function SandRemoveRender() {
 
     const square1 = document.createElement('div');
     square1.classList.add('square', 'black-square');
-    square1.innerHTML = '↻';
+    square1.innerHTML = 'C';
     square1.addEventListener('click', SandReset);
     
     const square2 = document.createElement('div');
@@ -93,8 +93,12 @@ function SandSquareClick(event) {
 }
 
 function SandReset () {
+    clearHighlights();
     board = Array(8).fill(null).map(() => Array(8).fill(null));
     renderBoard();
+
+    boardRedo = [];// Limpa o redo ao fazer um novo movimento
+    boardUndo.push(JSON.parse(JSON.stringify(board)));// Salva o estado atual do tabuleiro para desfazer
 }
 
 function SandNull(event) {
@@ -113,6 +117,10 @@ function SandNull(event) {
 function insertSandPiece(square) {
     const newPiece = nullifier ? null : sandPiece;
     board[square.dataset.row][square.dataset.col] = newPiece;
+
+    boardRedo = [];// Limpa o redo ao fazer um novo movimento
+    boardUndo.push(JSON.parse(JSON.stringify(board)));// Salva o estado atual do tabuleiro para desfazer
+
     renderBoard();
     updateScore();
 }

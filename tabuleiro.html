@@ -56,33 +56,47 @@
                   </div>
             </div>
 
-             <div id="game-info">
+             <div id="game-info" class="game-info-style">
+                <div id="buttons-infogame-container0">
+                    <div class="piece-style-dropdown hidden" id="boardStyleDropdown">
+                        <button id="styleButtonboard">Tabuleiro <br> ▼</button>
+                        <div id="styleMenuBoard" class="dropdown-content">
+                            <div data-style="normal">Normal</div>
+                            <div data-style="light">Claro</div>
+                            <div data-style="neon">Neon</div>
+                            <div data-style="arthur_wermont">arthur_wermont</div>
+                            <div data-style="vivi">Vivi</div>
+                            <div data-style="shrek">Shrek</div>
+                            <div data-style="ryan">Ryan</div>
+                            <div data-style="lumberjack">Lumberjack</div>
+                            <div data-style="Vazio">Vazio</div>
+                        </div>
+                    </div>
+        
+                    <div class="piece-style-dropdown hidden" id="pieceStyleDropdown">
+                        <button id="styleButton">Peças <br> ▼</button>
+                        <div id="styleMenu" class="dropdown-content">
+                            <div data-style="classic">Clássico</div>
+                            <div data-style="california">California</div>
+                            <div data-style="fantasy">Fantasia</div>
+                            <div data-style="janggi">Janggi</div>
+                            <div data-style="horse">Horsey</div>
+                        </div>
+                    </div>
 
-                <div class="piece-style-dropdown hidden" id="boardStyleDropdown">
-                    <button id="styleButtonboard">Estilo tabuleiro ▼</button>
-                    <div id="styleMenuBoard" class="dropdown-content">
-                        <div data-style="normal">Normal</div>
-                        <div data-style="light">Claro</div>
-                        <div data-style="neon">Neon</div>
-                        <div data-style="arthur_wermont">arthur_wermont</div>
-                        <div data-style="vivi">Vivi</div>
-                        <div data-style="shrek">Shrek</div>
-                        <div data-style="ryan">Ryan</div>
-                        <div data-style="lumberjack">Lumberjack</div>
+                    <div class="background-dropdown" id="backgroundStyledropdown">
+                        <button id="styleImgButton">Imagens <br> ▼</button>
+                        <div id="styleImgMenu" class="dropdown-content">
+                            <div data-style="normal">Normal</div>
+                            <div data-style="black">Black</div>
+                            <div data-style="white">White</div>
+                            <div data-style="shrek">Shrek</div>
+                            <div data-style="vivi">Vivi</div>
+                            <div data-style="putin">Putin</div>
+                            <div data-style="guy">Family Guy</div>
+                        </div>
                     </div>
                 </div>
-    
-                <div class="piece-style-dropdown hidden" id="pieceStyleDropdown">
-                    <button id="styleButton">Estilo das peças ▼</button>
-                    <div id="styleMenu" class="dropdown-content">
-                        <div data-style="classic">Clássico</div>
-                        <div data-style="california">California</div>
-                        <div data-style="fantasy">Fantasia</div>
-                        <div data-style="janggi">Janggi</div>
-                        <div data-style="horse">Horsey</div>
-                    </div>
-                </div>
-
                 <h2>Informações do Jogo</h2>
                 <p id="turn-display">Vez das Brancas</p>
                 <p id="status-display">O jogo começou.</p>

@@ -46,6 +46,18 @@ function populateBotList() {
     }
 }
 
+function setImgStyle(Img) {
+
+    console.log(Img)
+    document.body.classList.remove('alternate-style-black', 'alternate-style-white','alternate-style-shrek', 'alternate-style-vivi');
+
+    if (Img === 'normal') {
+        return;
+    }
+
+    document.body.classList.add(`alternate-style-${Img}`);
+}
+
 function setPieceStyle(styleName) {
     currentPieceStyle = styleName;
     renderBoard();
@@ -55,6 +67,14 @@ function setBoardStyle(style) {
     mainArea.classList.remove('chess-theme-normal', 'chess-theme-light', 'chess-theme-neon', 'chess-theme-arthur_wermont', 'chess-theme-vivi', 'chess-theme-shrek', 'chess-theme-ryan', 'chess-theme-lumberjack');
     mainArea.classList.add(`chess-theme-${style}`);
     currentBoardStyle = style;
+
+    if(style === 'Vazio') {
+        document.getElementById('game-info').classList.remove('game-info-style')
+        document.getElementById('game-info').classList.add('game-info-vazio')
+    } else {
+        document.getElementById('game-info').classList.add('game-info-style')
+        document.getElementById('game-info').classList.remove('game-info-vazio')
+    }
 }
 
 function highlightMoves(moves, row, col, piece) {
@@ -67,6 +87,7 @@ function highlightMoves(moves, row, col, piece) {
     if (ElPassant && piece.type === 'pawn' && ElPassant.row === row && piece.color != ElPassant.color){
         const dir = piece.color === "white" ? -1 : 1;
         getSquare(ElPassant.row + dir, ElPassant.col).classList.add('possible-capture');
+        getSquare(ElPassant.row + dir, ElPassant.col).classList.remove('possible-move');
     }
 }
 
@@ -87,4 +108,9 @@ styleButtonBoard.addEventListener('click', () => { styleMenuBoard.style.display 
 document.addEventListener('click', (e) => { if (!styleButtonBoard.contains(e.target) && !styleMenuBoard.contains(e.target)) { styleMenuBoard.style.display = 'none'; } });
 styleMenuBoard.querySelectorAll('div').forEach((item) => { item.addEventListener('click', () => { const style = item.dataset.style; setBoardStyle(style); styleMenuBoard.style.display = 'none'; }); });
 
+const styleImgButton = document.getElementById("styleImgButton");
+const styleImgMenu = document.getElementById("styleImgMenu");
+styleImgButton.addEventListener('click', () => { styleImgMenu.style.display = styleImgMenu.style.display === 'block' ? 'none' : 'block'; });
+document.addEventListener('click', (e) => { if (!styleImgButton.contains(e.target) && !styleImgMenu.contains(e.target)) { styleImgMenu.style.display = 'none'; } });
+styleImgMenu.querySelectorAll('div').forEach((item) => { item.addEventListener('click', () => { const style = item.dataset.style; setImgStyle(style); styleImgMenu.style.display = 'none'; }); });
 //Especialista na Informação (Information Expert): É o princípio que nos ajuda a decidir onde colocar uma função. A responsabilidade de fazer algo deve ser dada ao módulo que já tem a maior parte da informação necessária para aquilo.
