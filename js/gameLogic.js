@@ -169,7 +169,7 @@ function renderBoard() {
         
         //Caso 2: Existe Peça
         if (piece) {
-            if (gameMode === 'pvp' && piece.color != currentPlayer) return;
+            if ((gameMode === 'pvp' || gameMode === 'pvb') && piece.color != currentPlayer) return;
                 selectedPiece = square;
                 clearHighlights();
                 square.classList.add('selected');
@@ -226,7 +226,7 @@ function renderBoard() {
         const scores = updateScore();
         updateBotPersonalityAndDialogue(null, scores);
 
-        if (!gameEnded && gameMode === 'pvp') {
+        if (!gameEnded && gameMode != 'sandbox') {
             switchPlayer();
         }   
         boardRedo = [];// Limpa o redo ao fazer um novo movimento
