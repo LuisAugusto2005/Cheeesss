@@ -89,6 +89,8 @@ function startGame(mode, bot = null) {
         botImage.src = currentBot.images.normal;
         botName.textContent = currentBot.name;
         updateBotPersonalityAndDialogue('start');
+    } else if (gameMode === 'sandbox') {
+        botDisplay.classList.add('hidden');
     } else {
         botDisplay.classList.add('hidden');
     }
@@ -151,28 +153,26 @@ function renderBoard() {
         const col = parseInt(square.dataset.col);
         const piece = board[row][col];
 
-        // Caso 1: existe peça selecionada
-        if (selectedPiece) {
-                //1.1: Clicou em um movimento possível
-            if (square.classList.contains('possible-move') || square.classList.contains('possible-capture')) {
-                return movePiece(selectedPiece.dataset, { row, col });
-            }   //1.2: Clicou na mesma peça selecionada
-            if (piece && piece.color === currentPlayer) {
+        // Caso 1: Captura
+        if (square.classList.contains('possible-move') || square.classList.contains('possible-capture')) {
+            movePiece(selectedPiece.dataset, { row, col });
+            return clearHighlights();
+        }
+
+        //Caso 2: Existe Peça
+        if (piece) {
+            if (gameMode === 'pvp' && piece.color != currentPlayer) return;
+
                 selectedPiece = square;
                 clearHighlights();
                 square.classList.add('selected');
-                return highlightMoves(getPossibleMoves(piece, row, col), row, col);
-            }   //1.3: Clicou em outro lugar
+                return highlightMoves(getPossibleMoves(piece, row, col), row, col, piece);
+
+        // Caso 3: n existe peça
+        } else {
                 selectedPiece = null;
-                square.classList.remove('selected');
                 return clearHighlights();
-        }
-        // Caso 2: n existe peça selecionada
-        if (piece && piece.color === currentPlayer) {
-            selectedPiece = square;
-            square.classList.add('selected');
-            highlightMoves(getPossibleMoves(piece, row, col), row, col, piece);
-        }
+            }
     }
 
     // Move a peça e atualiza o estado do jogo
@@ -184,7 +184,6 @@ function renderBoard() {
         if (pecamovida.type === 'pawn' && (to.row === 0 || to.row === 7)) pecamovida.type = 'queen';// Mecanica de promoçao de peao
         if (pecamovida.type === 'king' && Math.abs(to.col - from.col) === 2) {// Mecanica de roque
             const r = pecamovida.color === "white" ? 7 : 0;
-            console.log(pecamovida.color);
           if (to.col === 6) {
             board[r][6] = pecamovida;
             board[r][5] = getPiece(r,7);
@@ -200,8 +199,7 @@ function renderBoard() {
         
         board[to.row][to.col] = pecamovida; // Move a peça
         board[from.row][from.col] = null; // Nulifica onde ela estava
-        
-        console.log(ElPassant);
+
         if (ElPassant) { // Finaliza El Passant
             if (pecamovida.type === 'pawn') {
                 const dir = pecamovida.color === "white" ? -1 : 1;
@@ -209,7 +207,10 @@ function renderBoard() {
             }
             ElPassant = null;
         }
-        if (pecamovida.type === 'pawn' && Math.abs(to.row - from.row) === 2) ElPassant = to; // Inicia El Passant
+        if (pecamovida.type === 'pawn' && Math.abs(to.row - from.row) === 2){ // Inicia El Passant
+            ElPassant = to;
+            ElPassant.color = pecamovida.color;
+        } 
         pecamovida.hasMoved = true;
         addToHistory(pecamovida, from, to, pecaCapturada);
         selectedPiece = null;
@@ -218,7 +219,7 @@ function renderBoard() {
         const scores = updateScore();
         updateBotPersonalityAndDialogue(null, scores);
 
-        if (!gameEnded) {
+        if (!gameEnded && gameMode === 'pvp') {
             switchPlayer();
         }   
         boardRedo = [];// Limpa o redo ao fazer um novo movimento

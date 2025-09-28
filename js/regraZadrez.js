@@ -11,7 +11,7 @@ function getPossibleMoves(piece, row, col) {
                 let target = getPiece(row + r, col + c);
                 if (target && target.color !== piece.color) moves.push([r, c]);
             }); 
-            if (ElPassant && row === ElPassant.row && !getPiece(ElPassant.row + dir,ElPassant.col)) moves.push([dir, ElPassant.col - col]); // El Passant
+            if (ElPassant && row === ElPassant.row && !getPiece(ElPassant.row + dir, ElPassant.col) && ElPassant.color != piece.color) moves.push([dir, ElPassant.col - col]); // El Passant
             break;
         case "rook":
             [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(([dr, dc]) => { // X e Y
@@ -60,7 +60,6 @@ function getPossibleMoves(piece, row, col) {
             }
             break;
     }
-    console.log(piece.type + ': ' + moves);
     return moves.filter(([r, c]) => inBoard(row + r, col + c));
 }
 

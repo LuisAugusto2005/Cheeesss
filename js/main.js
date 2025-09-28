@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //botões do menu
     pvpButton.addEventListener('click', () => startGame('pvp'));
+    SandBoxButton.addEventListener('click', () => startGame('sandbox'));
     pvbButton.addEventListener('click', showBotSelection);
     adventureButton.addEventListener('click', function() {
         window.location.replace("../www/index.html");
