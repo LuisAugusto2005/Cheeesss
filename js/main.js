@@ -16,6 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
     //botões do menu
     pvpButton.addEventListener('click', () => startGame('pvp'));
     pvbButton.addEventListener('click', showBotSelection);
+    adventureButton.addEventListener('click', function() {
+        window.location.replace("../www/index.html");
+    });
 
     backFromBotSelection.addEventListener('click', () => {
         botSelectionContainer.classList.add('hidden');

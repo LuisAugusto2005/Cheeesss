@@ -4,6 +4,7 @@ const botSelectionContainer = document.getElementById('bot-selection-container')
 const gameContainer = document.getElementById('game-container');
 const pvpButton = document.getElementById('pvpButton');
 const pvbButton = document.getElementById('pvbButton');
+const adventureButton = document.getElementById('adventureButton');
 const botList = document.getElementById('bot-list');
 const backFromBotSelection = botSelectionContainer.querySelector('#back-to-menu');
 const backFromGame = gameContainer.querySelector('#back-to-menu');
