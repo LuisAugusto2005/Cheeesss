@@ -171,7 +171,7 @@ function renderBoard() {
         if (piece && piece.color === currentPlayer) {
             selectedPiece = square;
             square.classList.add('selected');
-            highlightMoves(getPossibleMoves(piece, row, col), row, col);
+            highlightMoves(getPossibleMoves(piece, row, col), row, col, piece);
         }
     }
 

@@ -53,7 +53,11 @@ function setBoardStyle(style) {
     currentBoardStyle = style;
 }
 
-function highlightMoves(moves, row, col) {
+function highlightMoves(moves, row, col, piece) {
+    if (ElPassant && piece.type === 'pawn' && ElPassant.row === row){
+        const dir = piece.color === "white" ? -1 : 1;
+        getSquare(ElPassant.row + dir, ElPassant.col).classList.add('possible-capture');
+    }
     moves.forEach(([dr, dc]) => {
         const r = row + dr, c = col + dc;
         const target = getSquare(r, c);
