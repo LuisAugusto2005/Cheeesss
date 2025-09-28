@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     SandBoxButton.addEventListener('click', function() {
         SandBoxBlack.classList.remove('hidden');
         SandBoxWhite.classList.remove('hidden');
+        SandRemoveBox.classList.remove('hidden');
          startGame('sandbox')
     });
     pvbButton.addEventListener('click', showBotSelection);
@@ -34,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         gameContainer.classList.add('hidden');
         SandBoxBlack.classList.add('hidden');
         SandBoxWhite.classList.add('hidden');
+        SandRemoveBox.classList.add('hidden');
         menuContainer.classList.remove('hidden');
         
         stopAudioVisualizer();

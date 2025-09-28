@@ -14,6 +14,7 @@ const redoButton = gameContainer.querySelector('#redo-button');
 const chessboard = document.getElementById('chessboard');
 const SandBoxBlack = document.getElementById('SandBoxBlack');
 const SandBoxWhite = document.getElementById('SandBoxWhite');
+const SandRemoveBox = document.getElementById('SandRemoveBox');
 const turnDisplay = document.getElementById('turn-display');
 const statusDisplay = document.getElementById('status-display');
 const whiteScoreDisplay = document.getElementById('white-score');
@@ -70,7 +71,7 @@ function highlightMoves(moves, row, col, piece) {
 }
 
 function clearHighlights() {
-    document.querySelectorAll('.selected, .possible-move, .possible-capture, .sanded').forEach(el => el.classList.remove('selected', 'possible-move', 'possible-capture', 'sanded'));
+    document.querySelectorAll('.selected, .possible-move, .possible-capture, .sanded , .nullifier').forEach(el => el.classList.remove('selected', 'possible-move', 'possible-capture', 'sanded', 'nullifier'));
 }
 
 //styles

@@ -91,8 +91,9 @@ function startGame(mode, bot = null) {
         updateBotPersonalityAndDialogue('start');
     } else if (gameMode === 'sandbox') {
         botDisplay.classList.add('hidden');
-        sandboxboard('black');
-        sandboxboard('white');
+        sandboxRender('black');
+        sandboxRender('white');
+        SandRemoveRender();
     } else {
         botDisplay.classList.add('hidden');
     }
@@ -107,6 +108,7 @@ function initBoard() {
     boardUndo = [];
     boardRedo = [[ [null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null], [null,null,{"type":"pawn","color":"black","hasMoved":false},null,null,{"type":"pawn","color":"black","hasMoved":false},null,null], [null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null], [null,{"type":"pawn","color":"white","hasMoved":false},null,null,null,null,{"type":"pawn","color":"white","hasMoved":false},null], [null,null,{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},null,null], [null,null,null,null,null,null,null,null] ]];
     sandPiece = null;
+    nullifier = false;
     const setupPiece = (row, col, type, color) => { board[row][col] = { type, color, hasMoved: false}; };
     for (let i = 0; i < 8; i++) setupPiece(1, i, 'pawn', 'black');
     setupPiece(0, 0, 'rook', 'black'); setupPiece(0, 7, 'rook', 'black');
@@ -152,7 +154,7 @@ function renderBoard() {
         if (gameEnded || (gameMode === 'pvb' && currentPlayer === 'black')) return;
         
         const square = event.currentTarget;
-        if (sandPiece) return insertSandPiece(square); // SandBox Insert
+        if (sandPiece || nullifier) return insertSandPiece(square); // SandBox Insert
 
         const row = parseInt(square.dataset.row);
         const col = parseInt(square.dataset.col);

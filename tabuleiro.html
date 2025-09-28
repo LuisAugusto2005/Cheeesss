@@ -31,30 +31,32 @@
 
     <div id="game-container" class="hidden">
 
+        <div id="bot-personality-display" class="hidden">
+            <img id="bot-image" src="" alt="Bot Avatar">
+            <div id="bot-dialogue-box">
+                <p id="bot-name"></p>
+                <p id="bot-dialogue">"Boa sorte... você vai precisar."</p>
+            </div>
+        </div>
+
         <div id="main-game-area">
 
-            <di class="area-jogo">
+          <div id="area-jogo">
 
-                <div id="bot-personality-display" class="hidden">
-                    <img id="bot-image" src="" alt="Bot Avatar">
-                    <div id="bot-dialogue-box">
-                        <p id="bot-name"></p>
-                        <p id="bot-dialogue">"Boa sorte... você vai precisar."</p>
-                    </div>
-                </div>
+                  <div id="SandRemoveBox" class="hidden"></div>
 
-                <div id="sandremove"></div>
+                  <div id="area-tabuleiro">
 
-                <div id="area-tabuleiro">
+                    <div id="SandBoxBlack" class="hidden"></div>
 
-                  <div id="SandBoxBlack" class="barra-pecas hidden"></div>
+                    <div id="chessboard"></div>
 
-                  <div id="chessboard"></div>
+                    <div id="SandBoxWhite" class="hidden"></div>
+                    
+                  </div>
+            </div>
 
-                  <div id="SandBoxWhite" class="barra-pecas hidden"></div>
-                  
-                </div>
-            </div> <div id="game-info">
+             <div id="game-info">
 
                 <div class="piece-style-dropdown hidden" id="boardStyleDropdown">
                     <button id="styleButtonboard">Estilo tabuleiro ▼</button>
@@ -103,8 +105,10 @@
                     </div>
                     <button id="back-to-menu">Voltar para menu</button>
                 </div>
-                
-            </div> </div> </div> 
+          </div>
+      </div>
+     </div> 
+
     <script src="js/UI.js"></script>
     <script src="js/Audio.js"></script>
     <script src="js/regraZadrez.js"></script>
