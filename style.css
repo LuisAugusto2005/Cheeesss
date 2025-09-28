@@ -221,48 +221,48 @@ body::before {
 }
 
 #game-frame {
-  position: relative;
-  left: 60px;
-  width: 1104px;
-  height: 624px;
-  margin: 0 auto;
-  padding: 15px;
-  border: 10px solid rgba(224, 187, 64, 0.8);
-  border-radius: 20px;
-  background: rgba(15, 15, 30, 0.85);
-  box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(224,187,64,0.3);
-  overflow: hidden;
+    position: relative;
+    left: 60px;
+    width: 1104px;
+    height: 624px;
+    margin: 0 auto;
+    padding: 15px;
+    border: 10px solid rgba(224, 187, 64, 0.8);
+    border-radius: 20px;
+    background: rgba(15, 15, 30, 0.85);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(224,187,64,0.3);
+    overflow: hidden;
 }
 
 #gameContainer, #gameContainer canvas {
-  width: 100% !important;
-  height: 100% !important;
-  position: relative !important;
-  display: block;
-  margin: 0 auto;
+    width: 100% !important;
+    height: 100% !important;
+    position: relative !important;
+    display: block;
+    margin: 0 auto;
 }
 
 #link-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
 }
 
 #extra-link {
-  font-family: "Zaadrez", serif;
-  font-size: 1.5em;
-  padding: 15px 40px;
-  cursor: pointer;
-  border: none;
-  border-radius: 10px;
-  background: linear-gradient(45deg, #007bff, #00c3ff);
-  color: white;
-  font-weight: bold;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5), 0 0 12px rgba(0, 195, 255, 0.7);
-  transition: transform 0.2s ease, box-shadow 0.3s ease;
+    font-family: "Zaadrez", serif;
+    font-size: 1.5em;
+    padding: 15px 40px;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(45deg, #007bff, #00c3ff);
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5), 0 0 12px rgba(0, 195, 255, 0.7);
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
 }
 
 #extra-link:hover {
-  transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 195, 255, 1);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 195, 255, 1);
 }
