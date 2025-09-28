@@ -2,104 +2,116 @@
 <html lang="pt-br">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jogo de Xadrez com JavaScript</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="boards_styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo de Xadrez com JavaScript</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="boards_styles.css">
 </head>
 
 <body>
-  <canvas id="audio-visualizer"></canvas>
+    <canvas id="audio-visualizer"></canvas>
 
-  <div id="menu-container">
-    <h1>Bem-vindo a Zadrez!!</h1>
-    <p>Selecione o modo de gaming:</p>
-    <button id="SandBoxButton">SandBox</button>
-    <button id="pvpButton">Jogador vs Jogador</button>
-    <button id="adventureButton">Aventura</button>
-    <button id="pvbButton">Jogador vs Desafiante</button>
-    <input type="text" id="insert_code" placeholder="INSERT CODE">
-  </div>
-
-  <div id="bot-selection-container" class="hidden">
-    <h1>Escolha seu Oponente</h1>
-    <div id="bot-list">
-    </div>
-    <button id="back-to-menu">Voltar ao Menu</button>
-  </div>
-
-  <div id="game-container" class="hidden">
-
-    <div id="main-game-area">
-      <div id="bot-personality-display" class="hidden">
-        <img id="bot-image" src="" alt="Bot Avatar">
-        <div id="bot-dialogue-box">
-          <p id="bot-name"></p>
-          <p id="bot-dialogue">"Boa sorte... você vai precisar."</p>
-        </div>
-      </div>
-
-      <div id="chessboard"></div>
-    </div>
-    <div id="game-info">
-      <div class="piece-style-dropdown hidden" id="boardStyleDropdown">
-        <button id="styleButtonboard">Estilo tabuleiro ▼</button>
-        <div id="styleMenuBoard" class="dropdown-content">
-          <div data-style="normal">Normal</div>
-          <div data-style="light">Claro</div>
-          <div data-style="neon">Neon</div>
-          <div data-style="arthur_wermont">arthur_wermont</div>
-          <div data-style="vivi">Vivi</div>
-          <div data-style="shrek">Shrek</div>
-          <div data-style="ryan">Ryan</div>
-          <div data-style="lumberjack">Lumberjack</div>
-        </div>
-      </div>
-
-      <div class="piece-style-dropdown hidden" id="pieceStyleDropdown">
-        <button id="styleButton">Estilo das peças ▼</button>
-        <div id="styleMenu" class="dropdown-content">
-          <div data-style="classic">Clássico</div>
-          <div data-style="california">California</div>
-          <div data-style="fantasy">Fantasia</div>
-          <div data-style="janggi">Janggi</div>
-          <div data-style="horse">Horsey</div>
-        </div>
-      </div>
-      <h2>Informações do Jogo</h2>
-      <p id="turn-display">Vez das Brancas</p>
-      <p id="status-display">O jogo começou.</p>
-
-      <h3>Placar</h3>
-      <div id="score-display">
-        <p>Brancas: <span id="white-score">0</span></p>
-        <p>Pretas: <span id="black-score">0</span></p>
-      </div>
-
-      <h3>Histórico de Movimentos</h3>
-      <div id="move-history">
-        <ul>
-        </ul>
-
-      </div>
-      <div id="buttons-infogame-container1">
-        <div id="buttons-undo-redo">
-          <button id="undo-button">❮</button>
-          <button id="redo-button">❯</button>
-        </div>
-        <button id="back-to-menu">Voltar para menu</button>
-      </div>
+    <div id="menu-container">
+        <h1>Bem-vindo a Zadrez!!</h1>
+        <p>Selecione o modo de gaming:</p>
+        <button id="SandBoxButton">SandBox</button>
+        <button id="pvpButton">Jogador vs Jogador</button>
+        <button id="pvbButton">Jogador vs Desafiante</button>
+        <button id="adventureButton">Aventura</button>
+        <input type="text" id="insert_code" placeholder="INSERT CODE">
     </div>
 
-  </div>
+    <div id="bot-selection-container" class="hidden">
+        <h1>Escolha seu Oponente</h1>
+        <div id="bot-list">
+        </div>
+        <button id="back-to-menu">Voltar ao Menu</button>
+    </div>
 
-  <script src="js/UI.js"></script>
-  <script src="js/Audio.js"></script>
-  <script src="js/regraZadrez.js"></script>
-  <script src="js/botLogic.js"></script>
-  <script src="js/gameLogic.js"></script>
-  <script src="js/main.js"></script>
+    <div id="game-container" class="hidden">
+
+        <div id="main-game-area">
+
+            <di class="area-jogo">
+
+                <div id="bot-personality-display" class="hidden">
+                    <img id="bot-image" src="" alt="Bot Avatar">
+                    <div id="bot-dialogue-box">
+                        <p id="bot-name"></p>
+                        <p id="bot-dialogue">"Boa sorte... você vai precisar."</p>
+                    </div>
+                </div>
+
+                <div id="sandremove"></div>
+
+                <div id="area-tabuleiro">
+
+                  <div id="SandBoxBlack" class="barra-pecas hidden"></div>
+
+                  <div id="chessboard"></div>
+
+                  <div id="SandBoxWhite" class="barra-pecas hidden"></div>
+                  
+                </div>
+            </div> <div id="game-info">
+
+                <div class="piece-style-dropdown hidden" id="boardStyleDropdown">
+                    <button id="styleButtonboard">Estilo tabuleiro ▼</button>
+                    <div id="styleMenuBoard" class="dropdown-content">
+                        <div data-style="normal">Normal</div>
+                        <div data-style="light">Claro</div>
+                        <div data-style="neon">Neon</div>
+                        <div data-style="arthur_wermont">arthur_wermont</div>
+                        <div data-style="vivi">Vivi</div>
+                        <div data-style="shrek">Shrek</div>
+                        <div data-style="ryan">Ryan</div>
+                        <div data-style="lumberjack">Lumberjack</div>
+                    </div>
+                </div>
+    
+                <div class="piece-style-dropdown hidden" id="pieceStyleDropdown">
+                    <button id="styleButton">Estilo das peças ▼</button>
+                    <div id="styleMenu" class="dropdown-content">
+                        <div data-style="classic">Clássico</div>
+                        <div data-style="california">California</div>
+                        <div data-style="fantasy">Fantasia</div>
+                        <div data-style="janggi">Janggi</div>
+                        <div data-style="horse">Horsey</div>
+                    </div>
+                </div>
+
+                <h2>Informações do Jogo</h2>
+                <p id="turn-display">Vez das Brancas</p>
+                <p id="status-display">O jogo começou.</p>
+    
+                <h3>Placar</h3>
+                <div id="score-display">
+                    <p>Brancas: <span id="white-score">0</span></p>
+                    <p>Pretas: <span id="black-score">0</span></p>
+                </div>
+    
+                <h3>Histórico de Movimentos</h3>
+                <div id="move-history">
+                    <ul></ul>
+                </div>
+
+                <div id="buttons-infogame-container1">
+                    <div id="buttons-undo-redo">
+                        <button id="undo-button">❮</button>
+                        <button id="redo-button">❯</button>
+                    </div>
+                    <button id="back-to-menu">Voltar para menu</button>
+                </div>
+                
+            </div> </div> </div> 
+    <script src="js/UI.js"></script>
+    <script src="js/Audio.js"></script>
+    <script src="js/regraZadrez.js"></script>
+    <script src="js/sandbox.js"></script>
+    <script src="js/botLogic.js"></script>
+    <script src="js/gameLogic.js"></script>
+    <script src="js/main.js"></script>
 </body>
 
 </html>
