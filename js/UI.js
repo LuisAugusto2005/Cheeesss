@@ -2,6 +2,7 @@
 const menuContainer = document.getElementById('menu-container');
 const botSelectionContainer = document.getElementById('bot-selection-container');
 const gameContainer = document.getElementById('game-container');
+const SandBoxButton = document.getElementById('SandBoxButton');
 const pvpButton = document.getElementById('pvpButton');
 const pvbButton = document.getElementById('pvbButton');
 const adventureButton = document.getElementById('adventureButton');
@@ -11,6 +12,8 @@ const backFromGame = gameContainer.querySelector('#back-to-menu');
 const undoButton = gameContainer.querySelector('#undo-button');
 const redoButton = gameContainer.querySelector('#redo-button');
 const chessboard = document.getElementById('chessboard');
+const SandBoxBlack = document.getElementById('SandBoxBlack');
+const SandBoxWhite = document.getElementById('SandBoxWhite');
 const turnDisplay = document.getElementById('turn-display');
 const statusDisplay = document.getElementById('status-display');
 const whiteScoreDisplay = document.getElementById('white-score');
@@ -67,7 +70,7 @@ function highlightMoves(moves, row, col, piece) {
 }
 
 function clearHighlights() {
-    document.querySelectorAll('.selected, .possible-move, .possible-capture').forEach(el => el.classList.remove('selected', 'possible-move', 'possible-capture'));
+    document.querySelectorAll('.selected, .possible-move, .possible-capture, .sanded').forEach(el => el.classList.remove('selected', 'possible-move', 'possible-capture', 'sanded'));
 }
 
 //styles

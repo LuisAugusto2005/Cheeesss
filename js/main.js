@@ -15,7 +15,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //botões do menu
     pvpButton.addEventListener('click', () => startGame('pvp'));
-    SandBoxButton.addEventListener('click', () => startGame('sandbox'));
+    SandBoxButton.addEventListener('click', function() {
+        SandBoxBlack.classList.remove('hidden');
+        SandBoxWhite.classList.remove('hidden');
+         startGame('sandbox')
+    });
     pvbButton.addEventListener('click', showBotSelection);
     adventureButton.addEventListener('click', function() {
         window.location.replace("../www/index.html");
@@ -28,7 +32,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     backFromGame.addEventListener('click', () => {
         gameContainer.classList.add('hidden');
+        SandBoxBlack.classList.add('hidden');
+        SandBoxWhite.classList.add('hidden');
         menuContainer.classList.remove('hidden');
+        
         stopAudioVisualizer();
     });
 

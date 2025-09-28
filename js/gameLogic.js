@@ -91,6 +91,8 @@ function startGame(mode, bot = null) {
         updateBotPersonalityAndDialogue('start');
     } else if (gameMode === 'sandbox') {
         botDisplay.classList.add('hidden');
+        sandboxboard('black');
+        sandboxboard('white');
     } else {
         botDisplay.classList.add('hidden');
     }
@@ -100,11 +102,11 @@ function startGame(mode, bot = null) {
     turnDisplay.textContent = 'Vez das Brancas';
     statusDisplay.textContent = 'O jogo começou.';
 }
-
 function initBoard() {
     board = Array(8).fill(null).map(() => Array(8).fill(null));
     boardUndo = [];
     boardRedo = [[ [null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null], [null,null,{"type":"pawn","color":"black","hasMoved":false},null,null,{"type":"pawn","color":"black","hasMoved":false},null,null], [null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null], [null,{"type":"pawn","color":"white","hasMoved":false},null,null,null,null,{"type":"pawn","color":"white","hasMoved":false},null], [null,null,{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},null,null], [null,null,null,null,null,null,null,null] ]];
+    sandPiece = null;
     const setupPiece = (row, col, type, color) => { board[row][col] = { type, color, hasMoved: false}; };
     for (let i = 0; i < 8; i++) setupPiece(1, i, 'pawn', 'black');
     setupPiece(0, 0, 'rook', 'black'); setupPiece(0, 7, 'rook', 'black');
@@ -148,21 +150,24 @@ function renderBoard() {
     // Lida com o clique em uma casa do tabuleiro
     function handleSquareClick(event) {
         if (gameEnded || (gameMode === 'pvb' && currentPlayer === 'black')) return;
+        
         const square = event.currentTarget;
+        if (sandPiece) return insertSandPiece(square); // SandBox Insert
+
         const row = parseInt(square.dataset.row);
         const col = parseInt(square.dataset.col);
         const piece = board[row][col];
-
+        
+        
         // Caso 1: Captura
         if (square.classList.contains('possible-move') || square.classList.contains('possible-capture')) {
             movePiece(selectedPiece.dataset, { row, col });
             return clearHighlights();
         }
-
+        
         //Caso 2: Existe Peça
         if (piece) {
             if (gameMode === 'pvp' && piece.color != currentPlayer) return;
-
                 selectedPiece = square;
                 clearHighlights();
                 square.classList.add('selected');
