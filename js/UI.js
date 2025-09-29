@@ -61,6 +61,8 @@ function setImgStyle(Img) {
 function setPieceStyle(styleName) {
     currentPieceStyle = styleName;
     renderBoard();
+    sandboxRender('black');
+    sandboxRender('white');
 }
 
 function setBoardStyle(style) {
