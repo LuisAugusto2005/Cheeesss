@@ -119,7 +119,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const gameContainer = document.getElementById('game-container');
     const pvpButton = document.getElementById('pvpButton');
     const pvbButton = document.getElementById('pvbButton');
-    const adventureButton = document.getElementById('adventureButton');
     const botList = document.getElementById('bot-list');
     // Botões de voltar
     const backFromBotSelection = botSelectionContainer.querySelector('#back-to-menu');
@@ -157,42 +156,42 @@ document.addEventListener('DOMContentLoaded', () => {
             'white': { 'king': '♔', 'queen': '♕', 'rook': '♖', 'bishop': '♗', 'knight': '♘', 'pawn': '♙' },
             'black': { 'king': '♚', 'queen': '♛', 'rook': '♜', 'bishop': '♝', 'knight': '♞', 'pawn': '♟' }
         },
-        california: { 'white': { 'king': '../Resources/pecas_estilos/california/wK.svg', 'queen': '../Resources/pecas_estilos/california/wQ.svg', 'rook': '../Resources/pecas_estilos/california/wR.svg', 'bishop': '../Resources/pecas_estilos/california/wB.svg', 'knight': '../Resources/pecas_estilos/california/wN.svg', 'pawn': '../Resources/pecas_estilos/california/wP.svg' }, 'black': { 'king': '../Resources/pecas_estilos/california/bK.svg', 'queen': '../Resources/pecas_estilos/california/bQ.svg', 'rook': '../Resources/pecas_estilos/california/bR.svg', 'bishop': '../Resources/pecas_estilos/california/bB.svg', 'knight': '../Resources/pecas_estilos/california/bN.svg', 'pawn': '../Resources/pecas_estilos/california/bP.svg' } },
-        fantasy: { 'white': { 'king': '../Resources/pecas_estilos/fantasy/wK.svg', 'queen': '../Resources/pecas_estilos/fantasy/wQ.svg', 'rook': '../Resources/pecas_estilos/fantasy/wR.svg', 'bishop': '../Resources/pecas_estilos/fantasy/wB.svg', 'knight': '../Resources/pecas_estilos/fantasy/wN.svg', 'pawn': '../Resources/pecas_estilos/fantasy/wP.svg' }, 'black': { 'king': '../Resources/pecas_estilos/fantasy/bK.svg', 'queen': '../Resources/pecas_estilos/fantasy/bQ.svg', 'rook': '../Resources/pecas_estilos/fantasy/bR.svg', 'bishop': '../Resources/pecas_estilos/fantasy/bB (1).svg', 'knight': '../Resources/pecas_estilos/fantasy/bN.svg', 'pawn': '../Resources/pecas_estilos/fantasy/bP.svg' } },
+        california: { 'white': { 'king': 'Resources/pecas_estilos/california/wK.svg', 'queen': 'Resources/pecas_estilos/california/wQ.svg', 'rook': 'Resources/pecas_estilos/california/wR.svg', 'bishop': 'Resources/pecas_estilos/california/wB.svg', 'knight': 'Resources/pecas_estilos/california/wN.svg', 'pawn': 'Resources/pecas_estilos/california/wP.svg' }, 'black': { 'king': 'Resources/pecas_estilos/california/bK.svg', 'queen': 'Resources/pecas_estilos/california/bQ.svg', 'rook': 'Resources/pecas_estilos/california/bR.svg', 'bishop': 'Resources/pecas_estilos/california/bB.svg', 'knight': 'Resources/pecas_estilos/california/bN.svg', 'pawn': 'Resources/pecas_estilos/california/bP.svg' } },
+        fantasy: { 'white': { 'king': 'Resources/pecas_estilos/fantasy/wK.svg', 'queen': 'Resources/pecas_estilos/fantasy/wQ.svg', 'rook': 'Resources/pecas_estilos/fantasy/wR.svg', 'bishop': 'Resources/pecas_estilos/fantasy/wB.svg', 'knight': 'Resources/pecas_estilos/fantasy/wN.svg', 'pawn': 'Resources/pecas_estilos/fantasy/wP.svg' }, 'black': { 'king': 'Resources/pecas_estilos/fantasy/bK.svg', 'queen': 'Resources/pecas_estilos/fantasy/bQ.svg', 'rook': 'Resources/pecas_estilos/fantasy/bR.svg', 'bishop': 'Resources/pecas_estilos/fantasy/bB (1).svg', 'knight': 'Resources/pecas_estilos/fantasy/bN.svg', 'pawn': 'Resources/pecas_estilos/fantasy/bP.svg' } },
         janggi: {
             'white': {
-                'king': '../Resources/pecas_estilos/jangi_red_black/wK.svg',
-                'queen': '../Resources/pecas_estilos/jangi_red_black/wQ.svg',
-                'rook': '../Resources/pecas_estilos/jangi_red_black/wR.svg',
-                'bishop': '../Resources/pecas_estilos/jangi_red_black/wB.svg',
-                'knight': '../Resources/pecas_estilos/jangi_red_black/wN.svg',
-                'pawn': '../Resources/pecas_estilos/jangi_red_black/wP.svg'
+                'king': 'Resources/pecas_estilos/jangi_red_black/wK.svg',
+                'queen': 'Resources/pecas_estilos/jangi_red_black/wQ.svg',
+                'rook': 'Resources/pecas_estilos/jangi_red_black/wR.svg',
+                'bishop': 'Resources/pecas_estilos/jangi_red_black/wB.svg',
+                'knight': 'Resources/pecas_estilos/jangi_red_black/wN.svg',
+                'pawn': 'Resources/pecas_estilos/jangi_red_black/wP.svg'
             },
             'black': {
-                'king': '../Resources/pecas_estilos/jangi_red_black/bK.svg',
-                'queen': '../Resources/pecas_estilos/jangi_red_black/bQ.svg',
-                'rook': '../Resources/pecas_estilos/jangi_red_black/bR.svg',
-                'bishop': '../Resources/pecas_estilos/jangi_red_black/bB.svg',
-                'knight': '../Resources/pecas_estilos/jangi_red_black/bN.svg',
-                'pawn': '../Resources/pecas_estilos/jangi_red_black/bP.svg'
+                'king': 'Resources/pecas_estilos/jangi_red_black/bK.svg',
+                'queen': 'Resources/pecas_estilos/jangi_red_black/bQ.svg',
+                'rook': 'Resources/pecas_estilos/jangi_red_black/bR.svg',
+                'bishop': 'Resources/pecas_estilos/jangi_red_black/bB.svg',
+                'knight': 'Resources/pecas_estilos/jangi_red_black/bN.svg',
+                'pawn': 'Resources/pecas_estilos/jangi_red_black/bP.svg'
             }
         },
         horse: {
             'white': {
-                'king': '../Resources/pecas_estilos/Horseys/WHITE_YEL.svg',
-                'queen': '../Resources/pecas_estilos/Horseys/WHITE_MRY.svg',
-                'rook': '../Resources/pecas_estilos/Horseys/WHITE_RES.svg',
-                'bishop': '../Resources/pecas_estilos/Horseys/WHITE_SUP.svg',
-                'knight': '../Resources/pecas_estilos/Horseys/WHITE_PNK.svg',
-                'pawn': '../Resources/pecas_estilos/Horseys/WHITE_CYAN.svg'
+                'king': 'Resources/pecas_estilos/Horseys/WHITE_YEL.svg',
+                'queen': 'Resources/pecas_estilos/Horseys/WHITE_MRY.svg',
+                'rook': 'Resources/pecas_estilos/Horseys/WHITE_RES.svg',
+                'bishop': 'Resources/pecas_estilos/Horseys/WHITE_SUP.svg',
+                'knight': 'Resources/pecas_estilos/Horseys/WHITE_PNK.svg',
+                'pawn': 'Resources/pecas_estilos/Horseys/WHITE_CYAN.svg'
             },
             'black': {
-                'king': '../Resources/pecas_estilos/Horseys/BLACK_YEL.svg',
-                'queen': '../Resources/pecas_estilos/Horseys/BLACK_MRY.svg',
-                'rook': '../Resources/pecas_estilos/Horseys/BLACK_RES.svg',
-                'bishop': '../Resources/pecas_estilos/Horseys/BLACK_SUP.svg',
-                'knight': '../Resources/pecas_estilos/Horseys/BLACK_PNK.svg',
-                'pawn': '../Resources/pecas_estilos/Horseys/BLACK_CYAN.svg'
+                'king': 'Resources/pecas_estilos/Horseys/BLACK_YEL.svg',
+                'queen': 'Resources/pecas_estilos/Horseys/BLACK_MRY.svg',
+                'rook': 'Resources/pecas_estilos/Horseys/BLACK_RES.svg',
+                'bishop': 'Resources/pecas_estilos/Horseys/BLACK_SUP.svg',
+                'knight': 'Resources/pecas_estilos/Horseys/BLACK_PNK.svg',
+                'pawn': 'Resources/pecas_estilos/Horseys/BLACK_CYAN.svg'
             }
         }
     };
@@ -209,14 +208,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 evolution: ["medium", "hard", "impossible"]
             },
             music: { // Músicas para cada humor
-                normal: "../Resources/Musics/Guardia-Millennial-Fair.mp3",
-                focused: "../Resources/Musics/Guardia-Millennial-Fair.mp3", // Exemplo de outra música
-                angry: "../Resources/Musics/Blade-Arts-IV.mp3"    // Pode ser a mesma
+                normal: "Resources/Musics/Guardia-Millennial-Fair.mp3",
+                focused: "Resources/Musics/Guardia-Millennial-Fair.mp3", // Exemplo de outra música
+                angry: "Resources/Musics/Blade-Arts-IV.mp3"    // Pode ser a mesma
             },
             images: {
-                normal: "../Resources/Bots-IMGs/Samathan-Helkiser/normalGyaru.png",
-                focused: "../Resources/Bots-IMGs/Samathan-Helkiser/normalGyaru.png",
-                angry: "../Resources/Bots-IMGs/Samathan-Helkiser/AngryGyaru.png"
+                normal: "Resources/Bots-IMGs/Samathan-Helkiser/normalGyaru.png",
+                focused: "Resources/Bots-IMGs/Samathan-Helkiser/normalGyaru.png",
+                angry: "Resources/Bots-IMGs/Samathan-Helkiser/AngryGyaru.png"
             },
             dialogue: {
                 normal: {
@@ -240,11 +239,11 @@ document.addEventListener('DOMContentLoaded', () => {
             name: "Professor Xadrez",
             difficultyType: "Fácil",
             difficulty: "easy",
-            music: "../Resources/Musics/Crossroads.mp3",
+            music: "Resources/Musics/Crossroads.mp3",
             images: {
-                normal: "../Resources/Bots-IMGs/Professor-Xadrez/ProffX.png",
-                focused: "../Resources/Bots-IMGs/Professor-Xadrez/ProffX.png",
-                angry: "../Resources/Bots-IMGs/Professor-Xadrez/ProffX.png"
+                normal: "Resources/Bots-IMGs/Professor-Xadrez/ProffX.png",
+                focused: "Resources/Bots-IMGs/Professor-Xadrez/ProffX.png",
+                angry: "Resources/Bots-IMGs/Professor-Xadrez/ProffX.png"
             },
             dialogue: {
                 normal: {
@@ -270,9 +269,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Eventos dos botões do menu
     pvpButton.addEventListener('click', () => startGame('pvp'));
     pvbButton.addEventListener('click', showBotSelection);
-    adventureButton.addEventListener('click', function() {
-        window.location.replace("../www/index.html");
-    });
     // Mostra a tela de seleção de bots
     function showBotSelection() {
         menuContainer.classList.add('hidden');
@@ -471,13 +467,13 @@ document.addEventListener('DOMContentLoaded', () => {
             board[7][4] = null;
           }
         }
-        board[to.row][to.col] = pecamovida;
-        board[from.row][from.col] = null;
+        board[to.row][to.col] = pecamovida;// Move a peça
+        board[from.row][from.col] = null;// Nulifica onde ela estava
         pecamovida.hasMoved = true;
         addToHistory(pecamovida, from, to, pecaCapturada);
         selectedPiece = null;
-        clearHighlights();
-        renderBoard();
+        clearHighlights();// Limpa indicaçoes de movimento
+        renderBoard();// renderiza dnv
         const scores = updateScore();
         updateBotPersonalityAndDialogue(null, scores);
 
@@ -707,7 +703,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function setBoardStyle(style) {
     const mainArea = document.getElementById('main-game-area');
         
-        mainArea.classList.remove('chess-theme-normal', 'chess-theme-light', 'chess-theme-neon', 'chess-theme-arthur_wermont', 'chess-theme-vivi', 'chess-theme-shrek');
+        mainArea.classList.remove('chess-theme-normal', 'chess-theme-light', 'chess-theme-neon', 'chess-theme-arthur_wermont', 'chess-theme-vivi', 'chess-theme-shrek', 'chess-theme-ryan', 'chess-theme-lumberjack');
         
         mainArea.classList.add(`chess-theme-${style}`);
         currentBoardStyle = style;
