@@ -49,7 +49,7 @@ function populateBotList() {
 function setImgStyle(Img) {
 
     console.log(Img)
-    document.body.classList.remove('alternate-style-black', 'alternate-style-white','alternate-style-shrek', 'alternate-style-vivi', 'alternate-style-putin', 'alternate-style-guy');
+    document.body.classList.remove('alternate-style-black', 'alternate-style-white','alternate-style-shrek', 'alternate-style-vivi', 'alternate-style-putin', 'alternate-style-guy', 'alternate-style-ronaldo');
 
     if (Img === 'normal') {
         return;

@@ -61,6 +61,12 @@ font-family: "Zaadrez", serif;
   animation: none;
 }
 
+.alternate-style-ronaldo {
+  background-image: url(imgs/Weezer.gif);
+  background-size: 100% 100%;
+  animation: none;
+}
+
 @keyframes gradientMove {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
