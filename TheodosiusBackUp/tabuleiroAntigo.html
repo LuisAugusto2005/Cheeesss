@@ -35,14 +35,14 @@
   
   <a href="../index.html" id="link-som"><br><br>Zadrez</a>
 
-  <audio id="som-hover" src="../Resources/ZadrezAudioSolo.MP3"></audio>
+  <audio id="som-hover" src="../Resources/ZadrezAudioCooP.MP3"></audio>
 
   <script src="scriptAntigo.js"></script>
   <script>
     const link = document.getElementById("link-som");
     const som = document.getElementById("som-hover");
 
-    som.volume = 0.5;
+    som.volume = 1;
 
     link.addEventListener("mouseenter", () => {
       som.loop = true;
