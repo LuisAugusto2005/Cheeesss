@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>Xadrez de cria</title>
   <style>
-
     body {
         background-color: #f0f0f0;
     }
@@ -33,5 +32,28 @@
 <body id="body">
   <h1>Tabuleiro de Xadrez</h1>
   <table id="tabuleiro"></table>
-  <a href="../tabuleiro.html"><br><br>Zadrez</a>
+  
+  <a href="../index.html" id="link-som"><br><br>Zadrez</a>
+
+  <audio id="som-hover" src="../Resources/ZadrezAudioSolo.MP3"></audio>
+
   <script src="scriptAntigo.js"></script>
+  <script>
+    const link = document.getElementById("link-som");
+    const som = document.getElementById("som-hover");
+
+    som.volume = 0.5;
+
+    link.addEventListener("mouseenter", () => {
+      som.loop = true;
+      som.currentTime = 0;
+      som.play();
+    });
+
+    link.addEventListener("mouseleave", () => {
+      som.pause();
+      som.currentTime = 0;
+    });
+  </script>
+</body>
+</html>

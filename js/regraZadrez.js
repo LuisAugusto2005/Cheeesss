@@ -69,7 +69,7 @@ function getSquare(row, col) { return inBoard(row, col) ? chessboard.querySelect
 function getPiece(row, col) { return inBoard(row, col) ? board[row][col] || null : null; }
 
 //Alta Coesão: deve ter uma responsabilidade única e focada. Todas as funções dentro dele trabalham para um objetivo em comum.
-//Alta Coesão: Módulo dedicado exclusivamente ao controle de peças e regras do xadrez
+//Alta Coesão: Módulo dedicado exclusivamente ao controle de peças e regras do Zadrez
 
-//Baixo Acoplamento: regraXadrez.js não sabe nada sobre os outros arquivos.
+//Baixo Acoplamento: regraZadrez.js não sabe nada sobre os outros arquivos.
 //Especialista na Informação (Information Expert): É o princípio que nos ajuda a decidir onde colocar uma função. A responsabilidade de fazer algo deve ser dada ao módulo que já tem a maior parte da informação necessária para aquilo.
