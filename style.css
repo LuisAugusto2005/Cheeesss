@@ -374,3 +374,16 @@ body::before {
     transform: translateY(-3px) scale(1.05);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 195, 255, 1);
 }
+
+/* Minha tentativa de girar o tabuleiro */
+#chessboard {
+  transition: transform 1s cubic-bezier(0.45, 0, 0.55, 1);
+}
+
+#chessboard.rotated {
+  transform: rotate(180deg);
+}
+
+#chessboard.rotated .piece-container {
+  transform: rotate(180deg);
+}

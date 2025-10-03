@@ -97,6 +97,10 @@ function clearHighlights() {
     document.querySelectorAll('.selected, .possible-move, .possible-capture, .sanded , .nullifier').forEach(el => el.classList.remove('selected', 'possible-move', 'possible-capture', 'sanded', 'nullifier'));
 }
 
+function flipBoard() {
+    chessboard.classList.toggle('rotated');
+}
+
 //styles
 const styleButton = document.getElementById('styleButton');
 const styleMenu = document.getElementById('styleMenu');

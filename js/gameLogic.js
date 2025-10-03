@@ -236,6 +236,10 @@ function renderBoard() {
 function switchPlayer() {
     currentPlayer = currentPlayer === 'white' ? 'black' : 'white';
     turnDisplay.textContent = `Vez das ${currentPlayer === 'white' ? 'Brancas' : 'Pretas'}`;
+    if (gameMode === 'pvp') {
+        // cara, talvez deixe o jogador tonto wwwww
+        flipBoard();
+    }
     if (gameMode === 'pvb' && currentPlayer === 'black' && !gameEnded) {
         setTimeout(makeBotMove, 1000);
     }
