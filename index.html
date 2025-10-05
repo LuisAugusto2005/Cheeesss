@@ -11,6 +11,16 @@
 
 <body>
     <canvas id="audio-visualizer"></canvas>
+    <div id="victory-popup-overlay" class="hidden">
+        <div id="victory-popup">
+            <h2 id="victory-title">Vitória!</h2>
+            <p id="victory-message">As peças Brancas venceram!</p>
+            <div class="popup-buttons">
+                <button id="play-again-button" class="popup-button">Jogar Novamente</button>
+                <button id="popup-back-to-menu-button" class="popup-button secondary">Voltar ao Menu</button>
+            </div>
+        </div>
+    </div>
 
     <div id="menu-container">
         <h1>Bem-vindo a Zadrez!!</h1>
@@ -95,6 +105,7 @@
                             <div data-style="putin">Putin</div>
                             <div data-style="guy">Family Guy</div>
                             <div data-style="ronaldo">RonaldFriends</div>
+                            <div data-style="kamen">Kamen Rider</div>
                         </div>
                     </div>
                 </div>

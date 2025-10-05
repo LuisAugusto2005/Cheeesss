@@ -16,6 +16,9 @@ let botCurrentMood = 'normal';
 let currentPieceStyle = 'classic';
 let currentBoardStyle = 'normal';
 
+let lastGameMode = null;
+let lastBot = null;
+
 
 // constantes do jogo
 const pieceValues = { 'pawn': 1, 'knight': 3, 'bishop': 3, 'rook': 5, 'queen': 9, 'king': 1000 };
@@ -67,6 +70,9 @@ const pieceUnicode = {
 //funções de lógica do jogo
 function startGame(mode, bot = null) {
     stopAudioVisualizer();
+    lastGameMode = mode;
+    lastBot = bot;
+
     gameMode = mode;
     currentBot = bot;
     if (currentBot && typeof currentBot.difficulty === 'object') {
@@ -312,9 +318,10 @@ function addToHistory(piece, from, to, captured) {
 
 function endGame(winner) {
     gameEnded = true;
-    const winnerColor = winner === 'white' ? 'BRANCAS' : 'PRETAS';
-    statusDisplay.textContent = `FIM DE JOGO! As ${winnerColor} venceram!`;
-    turnDisplay.textContent = '';
+    // const winnerColor = winner === 'white' ? 'BRANCAS' : 'PRETAS';
+    // statusDisplay.textContent = `FIM DE JOGO! As ${winnerColor} venceram!`;
+    // turnDisplay.textContent = '';
     updateBotPersonalityAndDialogue(winner === 'white' ? 'losing' : 'winning');
     stopAudioVisualizer();
+    showVictoryPopup(winner);
 }

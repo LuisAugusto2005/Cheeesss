@@ -49,7 +49,7 @@ function populateBotList() {
 function setImgStyle(Img) {
 
     console.log(Img)
-    document.body.classList.remove('alternate-style-black', 'alternate-style-white','alternate-style-shrek', 'alternate-style-vivi', 'alternate-style-putin', 'alternate-style-guy', 'alternate-style-ronaldo');
+    document.body.classList.remove('alternate-style-black', 'alternate-style-white','alternate-style-shrek', 'alternate-style-vivi', 'alternate-style-putin', 'alternate-style-guy', 'alternate-style-ronaldo', 'alternate-style-kamen');
 
     if (Img === 'normal') {
         return;
@@ -105,6 +105,38 @@ function flipBoard() {
         playerAtBottom = (playerAtBottom === 'white') ? 'black' : 'white';
     }
 }
+
+// Congrats
+function showVictoryPopup(winner) {
+    const overlay = document.getElementById('victory-popup-overlay');
+    const message = document.getElementById('victory-message');
+    const winnerColor = winner === 'white' ? 'BRANCAS' : 'PRETAS';
+
+    message.textContent = `As peças ${winnerColor} cometeram regicídio !`;
+    overlay.classList.remove('hidden');
+}
+// Aqui ainda faz parte do menu de vitória
+const victoryOverlay = document.getElementById('victory-popup-overlay');
+const playAgainButton = document.getElementById('play-again-button');
+const popupBackToMenuButton = document.getElementById('popup-back-to-menu-button');
+
+function returnToMenu() {
+    victoryOverlay.classList.add('hidden');
+    gameContainer.classList.add('hidden');
+    SandBoxBlack.classList.add('hidden');
+    SandBoxWhite.classList.add('hidden');
+    SandRemoveBox.classList.add('hidden');
+    menuContainer.classList.remove('hidden');
+        
+    stopAudioVisualizer();
+}
+
+playAgainButton.addEventListener('click', () => {
+    victoryOverlay.classList.add('hidden');
+    startGame(lastGameMode, lastBot);
+});
+
+popupBackToMenuButton.addEventListener('click', returnToMenu);
 
 
 //styles
