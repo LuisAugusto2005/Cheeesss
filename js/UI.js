@@ -97,9 +97,15 @@ function clearHighlights() {
     document.querySelectorAll('.selected, .possible-move, .possible-capture, .sanded , .nullifier').forEach(el => el.classList.remove('selected', 'possible-move', 'possible-capture', 'sanded', 'nullifier'));
 }
 
+// flipar o board, usado no pvp e contra o bot ladrão
 function flipBoard() {
+    // cara, talvez deixe o jogador tonto wwwww
     chessboard.classList.toggle('rotated');
+    if (gameMode === 'pvb') {
+        playerAtBottom = (playerAtBottom === 'white') ? 'black' : 'white';
+    }
 }
+
 
 //styles
 const styleButton = document.getElementById('styleButton');

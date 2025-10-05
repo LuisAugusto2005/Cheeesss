@@ -4,15 +4,18 @@ let board = [];
 let boardUndo = [];
 let boardRedo = [];
 let currentPlayer = "white";
+let playerAtBottom = 'white'; // coisa com o ladrão
 let selectedPiece = null;
 let ElPassant = null;
 let moveHistory = [];
 let gameEnded = false;
 let gameMode = 'pvp';
 let currentBot = null;
+let hasBotStolenThisGame = false; // O filho da #### do ladrão
 let botCurrentMood = 'normal';
 let currentPieceStyle = 'classic';
 let currentBoardStyle = 'normal';
+
 
 // constantes do jogo
 const pieceValues = { 'pawn': 1, 'knight': 3, 'bishop': 3, 'rook': 5, 'queen': 9, 'king': 1000 };
@@ -70,10 +73,13 @@ function startGame(mode, bot = null) {
         currentBot.difficulty.current = currentBot.difficulty.evolution[0];
     }
     gameEnded = false;
+    hasBotStolenThisGame = false;
+    playerAtBottom = 'white'; // isso aqui existe porque tava tendo uns problemas na hora da virada do board (com o ladrão)
     moveHistory = [];
     moveHistoryList.innerHTML = '';
     selectedPiece = null;
     clearHighlights();
+    chessboard.classList.remove('rotated'); // tentando corrigir um bug da rotação do tabuleiro
     currentPlayer = 'white';
     menuContainer.classList.add('hidden');
     botSelectionContainer.classList.add('hidden');
@@ -243,6 +249,42 @@ function switchPlayer() {
     if (gameMode === 'pvb' && currentPlayer === 'black' && !gameEnded) {
         setTimeout(makeBotMove, 1000);
     }
+}
+
+// Isso tudo só pro botLadrão WWW
+
+function stealBoardState() {
+    hasBotStolenThisGame = true;
+    
+    statusDisplay.textContent = `${currentBot.name} está virando o jogo... literalmente!`;
+    botCurrentMood = 'angry';
+    updateBotPersonalityAndDialogue('losing');
+    flipBoard(); 
+
+    setTimeout(() => {
+        // invertendo a cor de CADA peça no tabuleiro lógico
+        for (let r = 0; r < 8; r++) {
+            for (let c = 0; c < 8; c++) {
+                const piece = board[r][c];
+                if (piece) {
+                    piece.color = (piece.color === 'white') ? 'black' : 'white';
+                }
+            }
+        }
+
+        // Aqui só pra atualizar o estado do tabueliro por conta da troca
+        renderBoard();
+        updateScore();
+        
+        const difficulty = typeof currentBot.difficulty === 'object' ? currentBot.difficulty.current : currentBot.difficulty;
+        const bestMove = getBestMove(difficulty);
+        if (bestMove) {
+            movePiece(bestMove.from, bestMove.to);
+        } else {
+            endGame('white'); // Se mesmo assim não tiver movimentos, o jogador vence
+        }
+
+    }, 1000); // Pequeno atraso só pra criar impacto
 }
 
 function updateScore() {

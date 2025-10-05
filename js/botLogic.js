@@ -21,10 +21,47 @@ const bots = {
             focused: { winning: ["A vantagem é minha.", "Vamos, vamos!"], losing: ["Preciso me concentrar mais...", "Até que você é bom!"], equal: ["Cada movimento conta.", "Estou pensando..."] },
             angry: { winning: ["Vamos!!"], losing: ["Você está indo bem!"] }
         }
+    },
+
+    // Adicione este bot ao seu objeto 'bots' no arquivo do bot
+
+    ladraoBot: {
+        name: "Dante Kobraian",
+        difficultyType: "Trapaceiro",
+        difficulty: "easy",
+        canSteal: true,
+        music: "Resources/Musics/Space-Road.mp3",
+        images: {
+            normal: "Resources/Bots-IMGs/ladrao/ladrao.png", // a imagem não existe ainda
+            focused: "Resources/Bots-IMGs/ladrao/ladrao.png",
+            angry: "Resources/Bots-IMGs/ladrao/ladrao.png"
+        },
+        dialogue: {
+            normal: {
+                start: ["Vamos ver o que você tem.", "Suas peças parecem... valiosas."],
+                winning: ["Tudo conforme o plano.", "Estou sempre um passo à frente."],
+                losing: ["Hmph. Isso não estava nos meus cálculos.", "Você está me forçando a... improvisar."],
+                equal: ["Um impasse interessante.", "Cada movimento é uma aposta."]
+            },
+            focused: {
+                winning: ["Sua derrota é inevitável."],
+                losing: ["Não vou aceitar isso...", "É hora de mudar as regras do jogo."],
+                equal: ["Analisando..."]
+            },
+            angry: {
+                winning: ["Ha! E agora?"],
+                losing: ["ACHOU QUE TINHA GANHADO? O JOGO VIROU!"]
+            }
+        }
     }
 };
 // Lógica do bot
 function makeBotMove() {
+    const scores = updateScore(); // Pega a pontuação atual pra ver se dá pra usar o steal
+    if (currentBot.canSteal && !hasBotStolenThisGame && (scores.black <= 30)) {
+        stealBoardState(); // Roubando...
+        return;
+    }
     const difficulty = typeof currentBot.difficulty === 'object' ? currentBot.difficulty.current : currentBot.difficulty;
     const bestMove = getBestMove(difficulty); // Chama o "cérebro" do bot... cerebro tem acento?
     if (bestMove) {

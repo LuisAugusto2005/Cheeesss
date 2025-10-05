@@ -2,7 +2,8 @@ function getPossibleMoves(piece, row, col) {
     let moves = [];
     switch (piece.type) {
         case "pawn":
-            const dir = piece.color === "white" ? -1 : 1;
+            // const dir = piece.color === "white" ? -1 : 1;    // o original
+            const dir = piece.color === playerAtBottom ? -1 : 1;// fiz isso aqui pois tava com problema com o bot do ladrão
             if (!getPiece(row + dir, col)) { // Frente
                 moves.push([dir, 0]);
                 if (!piece.hasMoved && !getPiece(row + 2 * dir, col)) moves.push([2 * dir, 0]);
