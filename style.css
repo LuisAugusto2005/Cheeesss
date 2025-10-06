@@ -268,7 +268,7 @@ body::before {
 #score-display { display: flex; justify-content: space-around; background-color: #1a1a2e; padding: 15px; border-radius: 8px; margin-top: 15px; }
 #score-display p { font-size: 1.3em; font-weight: bold; margin: 0; }
 #white-score { color: #b0b0b0; }
-#black-score { color: #303030; }
+#black-score { color: #4a484a; }
 #move-history { height: 120px; overflow-y: auto; background-color: #1a1a2e; padding: 15px; border-radius: 8px; margin-top: 20px; border: 1px solid #3c4b6b; }
 #move-history ul { list-style: none; padding: 0; margin: 0; }
 #move-history li { padding: 8px 0; border-bottom: 1px dashed #3c4b6b; font-size: 1em; color: #e0e0e0; }
