@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     pvbButton.addEventListener('click', showBotSelection);
     adventureButton.addEventListener('click', function() {
-        window.location.replace("../www/index.html");
+        window.location.replace("https://luisaugusto2005.github.io/Cheeesss/www/index.html");
     });
 
     backFromBotSelection.addEventListener('click', () => {
