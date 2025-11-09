@@ -68,7 +68,10 @@ const pieceUnicode = {
     };
 
 //funções de lógica do jogo
-function startGame(mode, bot = null) {
+function startGame(mode) {
+    startGame(mode, null )
+}
+function startGame(mode, bot) {
     stopAudioVisualizer();
     lastGameMode = mode;
     lastBot = bot;
@@ -92,7 +95,6 @@ function startGame(mode, bot = null) {
     gameContainer.classList.remove('hidden');
     document.getElementById('boardStyleDropdown').classList.remove('hidden');
     document.getElementById('pieceStyleDropdown').classList.remove('hidden');
-    setBoardStyle('normal');
     if (gameMode === 'pvb' && currentBot) {
         const initialMusic = typeof currentBot.music === 'object' ? currentBot.music.normal : currentBot.music;
         initAudio(initialMusic);
@@ -115,24 +117,27 @@ function startGame(mode, bot = null) {
     turnDisplay.textContent = 'Vez das Brancas';
     statusDisplay.textContent = 'O jogo começou.';
 }
-function initBoard() {
+function initBoard(color) {
     board = Array(8).fill(null).map(() => Array(8).fill(null));
     boardUndo = [];
     boardRedo = [[ [null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null], [null,null,{"type":"pawn","color":"black","hasMoved":false},null,null,{"type":"pawn","color":"black","hasMoved":false},null,null], [null,null,null,null,null,null,null,null], [null,null,null,null,null,null,null,null], [null,{"type":"pawn","color":"white","hasMoved":false},null,null,null,null,{"type":"pawn","color":"white","hasMoved":false},null], [null,null,{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},null,null], [null,null,null,null,null,null,null,null] ]];
     sandPiece = null;
     nullifier = false;
     const setupPiece = (row, col, type, color) => { board[row][col] = { type, color, hasMoved: false}; };
-    for (let i = 0; i < 8; i++) setupPiece(1, i, 'pawn', 'black');
-    setupPiece(0, 0, 'rook', 'black'); setupPiece(0, 7, 'rook', 'black');
-    setupPiece(0, 1, 'knight', 'black'); setupPiece(0, 6, 'knight', 'black');
-    setupPiece(0, 2, 'bishop', 'black'); setupPiece(0, 5, 'bishop', 'black');
-    setupPiece(0, 3, 'queen', 'black'); setupPiece(0, 4, 'king', 'black');
-    for (let i = 0; i < 8; i++) setupPiece(6, i, 'pawn', 'white');
-    setupPiece(7, 0, 'rook', 'white'); setupPiece(7, 7, 'rook', 'white');
-    setupPiece(7, 1, 'knight', 'white'); setupPiece(7, 6, 'knight', 'white');
-    setupPiece(7, 2, 'bishop', 'white'); setupPiece(7, 5, 'bishop', 'white');
-    setupPiece(7, 3, 'queen', 'white'); setupPiece(7, 4, 'king', 'white');
+
+        for (let i = 0; i < 8; i++) setupPiece(1, i, 'pawn', 'black');
+        setupPiece(0, 0, 'rook', 'black'); setupPiece(0, 7, 'rook', 'black');
+        setupPiece(0, 1, 'knight', 'black'); setupPiece(0, 6, 'knight', 'black');
+        setupPiece(0, 2, 'bishop', 'black'); setupPiece(0, 5, 'bishop', 'black');
+        setupPiece(0, 3, 'queen', 'black'); setupPiece(0, 4, 'king', 'black');
+        for (let i = 0; i < 8; i++) setupPiece(6, i, 'pawn', 'white');
+        setupPiece(7, 0, 'rook', 'white'); setupPiece(7, 7, 'rook', 'white');
+        setupPiece(7, 1, 'knight', 'white'); setupPiece(7, 6, 'knight', 'white');
+        setupPiece(7, 2, 'bishop', 'white'); setupPiece(7, 5, 'bishop', 'white');
+        setupPiece(7, 3, 'queen', 'white'); setupPiece(7, 4, 'king', 'white');
+
     boardUndo.push(JSON.parse(JSON.stringify(board)));
+    if(color === 'black') flipBoard()
 }
 
 function renderBoard() {
@@ -163,11 +168,12 @@ function renderBoard() {
 
     // Lida com o clique em uma casa do tabuleiro
     function handleSquareClick(event) {
+        if (gameMode === 'online') return onlineHandleSquare(event);
         if (gameEnded || (gameMode === 'pvb' && currentPlayer === 'black')) return;
         
-        const square = event.currentTarget;
         if (sandPiece || nullifier) return insertSandPiece(square); // SandBox Insert
-
+        
+        const square = event.currentTarget;
         const row = parseInt(square.dataset.row);
         const col = parseInt(square.dataset.col);
         const piece = board[row][col];
@@ -199,7 +205,7 @@ function renderBoard() {
         from.row = parseInt(from.row); from.col = parseInt(from.col);
         const pecaCapturada = board[to.row][to.col];
         const pecamovida = board[from.row][from.col];
-        if (pecaCapturada && pecaCapturada.type === 'king') { endGame(pecamovida.color); return; }// GGwp
+        if (pecaCapturada && pecaCapturada.type === 'king') { endGame(pecamovida.color); endOnlineGame(); return; }// GGwp
         if (pecamovida.type === 'pawn' && (to.row === 0 || to.row === 7)) pecamovida.type = 'queen';// Mecanica de promoçao de peao
         if (pecamovida.type === 'king' && Math.abs(to.col - from.col) === 2) {// Mecanica de roque
             const r = pecamovida.color === "white" ? 7 : 0;
@@ -243,6 +249,7 @@ function renderBoard() {
         }   
         boardRedo = [];// Limpa o redo ao fazer um novo movimento
         boardUndo.push(JSON.parse(JSON.stringify(board)));// Salva o estado atual do tabuleiro para desfazer
+        return
     }
 
 function switchPlayer() {

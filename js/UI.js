@@ -1,12 +1,15 @@
 //variáveis de interface
 const menuContainer = document.getElementById('menu-container');
+const loadingContainer = document.getElementById('loading_container')
 const botSelectionContainer = document.getElementById('bot-selection-container');
 const gameContainer = document.getElementById('game-container');
 const SandBoxButton = document.getElementById('SandBoxButton');
 const pvpButton = document.getElementById('pvpButton');
+const onlineButton = document.getElementById('onlineButton')
 const pvbButton = document.getElementById('pvbButton');
 const adventureButton = document.getElementById('adventureButton');
 const botList = document.getElementById('bot-list');
+const backFromLoading = loadingContainer.querySelector('#back-to-menu');
 const backFromBotSelection = botSelectionContainer.querySelector('#back-to-menu');
 const backFromGame = gameContainer.querySelector('#back-to-menu');
 const undoButton = gameContainer.querySelector('#undo-button');

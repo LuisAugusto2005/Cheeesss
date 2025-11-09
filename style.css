@@ -89,7 +89,7 @@ body::before {
   pointer-events: none;
 }
 
-#menu-container, #bot-selection-container {
+#menu-container, #bot-selection-container, #loading_container {
     text-align: center;
     background-color: #1f2a40;
     padding: 50px;
@@ -104,7 +104,7 @@ body::before {
     to { opacity: 1; transform: scale(1); }
 }
 
-#menu-container h1, #bot-selection-container h1 {
+#menu-container h1, #bot-selection-container h1, #loading_container h1 {
     color: #e0bb40;
     margin-bottom: 20px;
     font-size: 2.8em;
@@ -117,7 +117,7 @@ body::before {
     color: #a0a0a0;
 }
 
-#menu-container button, #bot-selection-container #back-to-menu {
+#menu-container button, #bot-selection-container #back-to-menu, #loading_container #back-to-menu {
     font-size: 1.5em;
     padding: 15px 30px;
     margin: 15px;
@@ -130,11 +130,21 @@ body::before {
     transition: background-color 0.3s ease, transform 0.2s ease;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
 }
-#menu-container button:hover, #bot-selection-container #back-to-menu:hover {
+#menu-container button:hover, #bot-selection-container #back-to-menu:hover, #bot-selection-container #back-to-menu:hover {
     background-color: #0056b3;
     transform: translateY(-3px);
 }
 
+#menu-container #onlineButton {
+    background-color: #0a9c4c;
+}
+#menu-container #onlineButton:hover {
+    background-color: #0a7038;
+    transform: translateY(-3px);
+}
+
+#loading_container #back-to-menu { background-color: #6c757d; }
+#loading_container #back-to-menu:hover { background-color: #5a6268; }
 #bot-selection-container #back-to-menu { background-color: #6c757d; }
 #bot-selection-container #back-to-menu:hover { background-color: #5a6268; }
 

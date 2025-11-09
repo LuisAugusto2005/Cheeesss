@@ -27,6 +27,7 @@
         <p>Selecione o modo de gaming:</p>
         <button id="SandBoxButton">SandBox</button>
         <button id="pvpButton">Jogador vs Jogador</button>
+        <button id="onlineButton">Online</button>
         <button id="pvbButton">Jogador vs Desafiante</button>
         <button id="adventureButton">Aventura</button>
         <input type="text" id="insert_code" placeholder="INSERT CODE">
@@ -37,6 +38,11 @@
         <div id="bot-list">
         </div>
         <button id="back-to-menu">Voltar ao Menu</button>
+    </div>
+
+    <div id="loading_container" class="hidden">
+        <h1>Procurando outro Jogador</h1>
+        <button id="back-to-menu">Voltar ao Menu</button>     
     </div>
 
     <div id="game-container" class="hidden">
@@ -141,6 +147,8 @@
     <script src="js/sandbox.js"></script>
     <script src="js/botLogic.js"></script>
     <script src="js/gameLogic.js"></script>
+    <script src="js/OnlineGame/MultPlayerLogic.js"></script>
+    <script src="js/OnlineGame/OnlineGameLogic.js"></script>
     <script src="js/main.js"></script>
 </body>
 

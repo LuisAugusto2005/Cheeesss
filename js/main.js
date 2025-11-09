@@ -15,6 +15,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //botões do menu
     pvpButton.addEventListener('click', () => startGame('pvp'));
+
+    onlineButton.addEventListener('click', function(){
+        loadingContainer.classList.remove('hidden');
+        menuContainer.classList.add('hidden');
+        searchGameOnl()
+    })
+    
     SandBoxButton.addEventListener('click', function() {
         SandBoxBlack.classList.remove('hidden');
         SandBoxWhite.classList.remove('hidden');
@@ -24,6 +31,11 @@ document.addEventListener('DOMContentLoaded', () => {
     pvbButton.addEventListener('click', showBotSelection);
     adventureButton.addEventListener('click', function() {
         window.location.replace("https://luisaugusto2005.github.io/Cheeesss/www/index.html");
+    });
+
+    backFromLoading.addEventListener('click', () => {
+        loadingContainer.classList.add('hidden');
+        menuContainer.classList.remove('hidden');
     });
 
     backFromBotSelection.addEventListener('click', () => {
