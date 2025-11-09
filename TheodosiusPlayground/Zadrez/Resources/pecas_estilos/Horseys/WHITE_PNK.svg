@@ -1,0 +1,9 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 135 135" width="135" height="135">
+	<title>PNK</title>
+	<defs>
+		<image  width="89" height="122" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFkAAAB6BAMAAAAmHeIEAAAAAXNSR0IB2cksfwAAABtQTFRFAAAA////GhIny9/pnq7GSklueYOiAAAI5eXlmpiGWAAAAAl0Uk5TAP//////////NwKb1AAAAZlJREFUeJzF1jFuwzAMAEDaKNo1+oHRL/QDfUqnzt30hmyZM+UhfURfEPQHypoAbUqTlkRZtqeKJIoAtU8AQVG0Oiii28H94gACLEanpp3U94utdoi63aTnC3Q1pk7U/X5XC1T1M/6SxtR5QbDTWMEz/iLtB1wQcurqWvY35m2kX7hwvKAf4OfLRGPtHAr8A/jsh7Cdt4LmoOy3uqq1fng9x70M2yetqY6NNeValE9bw9NH8e/18F+aqJNPKJO9sq5pWjBlr6R9orwjPPYpgqbGpONrbJLj41uiPPz3WtqL2oXbCUgfAd6jpiK21yLpWvOroKVlM+UK3k5Zj13eXPul0zXel4Sm7WyvRflk8HxLTd9clxu5Gip6PnGqMz89vKpriqJ8/KSxnrdUfneYn8C22q9tJE/hYio11otJJ53rS3tpq+X0sdHx6jAWMX4bTHT8Rk53C/5eGuscirqcO6G4aCrqeK1Mp8tKpzYqe9pCiyx9cbFT0uKKIIJTV9XxAlF1szfS1bZNQ0dV07ZVrSyHjpJeeroWLfUfLBWTKV3FYlgAAAAASUVORK5CYII="/>
+	</defs>
+	<style>
+	</style>
+	<use id="Camada 4" href="#img1" x="22" y="6"/>
+</svg>

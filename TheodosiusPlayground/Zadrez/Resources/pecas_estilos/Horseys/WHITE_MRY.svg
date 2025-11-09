@@ -1,0 +1,9 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 135 135" width="135" height="135">
+	<title>MRY</title>
+	<defs>
+		<image  width="78" height="131" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAE4AAACDBAMAAADR8jBEAAAAAXNSR0IB2cksfwAAABtQTFRFAAAA////GhIny9/peYOinq7GSkluAAAI5eXlpagk1AAAAAl0Uk5TAP//////////NwKb1AAAAYZJREFUeJzt2EFOwzAQBVCnSLCtb1D5BEhcgYOwYs2uZ+iua1Y9Si+A1CP0Bs62iDZ8z8R2mroBCc8gIazIcZIXaToZO20bc6VZ6n08bHRcM+9d1+q5Zo4NkTl2RBWcJRe2rnXHHXqv5fzNvTnuHPVe080W7rTn7Gg6FAE7DN60XLiMhzFbhDHlxag4S47rz3bt5Oeo7HDhgeLz0/mr6kJeUPEYgH6Rv6qOQnw87d3Hliebkrt7OTs8rH/iCL0a84zd+8bcPmG/UnFI8siV46vqllTDI4cz4o6W5SBAuVdweBhwg9cupSTcKeioAqwpNUm3LCGPNWQUX1UHxBkptrxeVXfnKD8PLovDWsJNBMc39PO8ros1d635fl2r78o1x42SIuGKZZeDo6SIuG8k5d/JulgE+m4Vh6KOZ7XVdQEhC8Npr+Ni6vMM1HV5xVFwg1LLqVFx6ZRJr7HfcxfzTdil/1V0XSqFP+g4BReu/+Ir5jiU9D5OjX9gGEkX9mmyDUMc3FzbfQKW541lOcTBKAAAAABJRU5ErkJggg=="/>
+	</defs>
+	<style>
+	</style>
+	<use id="Camada 3" href="#img1" x="28" y="1"/>
+</svg>

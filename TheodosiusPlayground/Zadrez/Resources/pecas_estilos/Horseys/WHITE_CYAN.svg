@@ -1,0 +1,9 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 135 135" width="135" height="135">
+	<title>CYN</title>
+	<defs>
+		<image  width="91" height="114" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFsAAAByBAMAAADOu7BUAAAAAXNSR0IB2cksfwAAABVQTFRFAAAA////GhIny9/pnq7GAAAI5eXlAcUlKAAAAAd0Uk5TAP///////6V/pvsAAAFPSURBVHic7dc7DsIwDABQF4m9vQHiLByAJafswgEYOAniBuneiuLETpOUVLDU7lAP/PQiuYnjhAqWo6rd69ilP2nxJnCrzquaePN+2Zi+DkeLEA4nHPeM6e/ccxab4Ge/mDhInbsSw1nE+LsiV+Rb2tom/dLfNPnxSg3SDg98vcRB4twkrZp4GNQKcz+BvO3G7k6JE69q24tyw2kz5w/Dww2S5SamnQXXuyA3AGnexRDiocDLCrOm8pfipRnMAxdZhJvycsLUHRvPw+ZbmRdnEZPN74YSfGlJxy59IBt65JoccXkW588hw3/tOfDL27p3bU5LykerMg9ZwyZ4vG7sfCucmuJXA9DgWNptfgMS5iY529354CPpmrI8u3xN+2w63LR4tumnK7wK5/MhhlHg8a9DC1nQXIryUO95Y/bhTlwAYV7IcSnW5pzjPHEN/gH0CewiaNsMGwAAAABJRU5ErkJggg=="/>
+	</defs>
+	<style>
+	</style>
+	<use id="Camada 2" href="#img1" x="21" y="10"/>
+</svg>

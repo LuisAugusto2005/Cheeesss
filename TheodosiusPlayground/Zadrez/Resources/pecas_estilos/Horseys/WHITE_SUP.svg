@@ -1,0 +1,11 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 135 135" width="135" height="135">
+	<title>SUP</title>
+	<defs>
+		<image  width="93" height="89" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAF0AAABZAgMAAAAhjsBGAAAAAXNSR0IB2cksfwAAAAlQTFRFAAAAAAAI5eXlGpfCOgAAAAN0Uk5TAP//RFDWIQAAAQZJREFUeJzd1bERgyAUAFAo2CBMY6HZgAJzlwFSZZ5UDuBdpCAThCbTMAJFwhcVNE38UIXzTuTdIfzvR0pi4w2xZn6gPwATreuKAJW8KQQtE8Tp0B+ygB8lIe5VK14r39FoaCGCEWSPhvEFAFr6UQUhQILPxLRoa1hlCB7oWZB1eyuLA8hEOvqoDmHnu2HedmpYuCVDQ7g5FMQIxnZXBAWXZrNWBRcCvpJhzVgM+eBnD5svAP1Unwg4rfP6f1AwVgEgB2Nd+bI0eQAfqwxnWZcH9qnmMygbrtCHKt0sFw3+7NgEcR/Az0yHT9+neXB4gDpfdiuhonLALj9+JqaDDAlimTdt++EDh/llqfbjChUAAAAASUVORK5CYII="/>
+		<image  width="30" height="39" id="img2" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAnBAMAAADqa+X0AAAAAXNSR0IB2cksfwAAABVQTFRFhJil////GhIny9/pnq7GeYOiSklu5z1+TwAAAAd0Uk5TAP///////6V/pvsAAAB1SURBVHicjdHBEQARDAXQxDYgHRgVbBFb9tZidEAFbMTB7IVvHDwzyA8mG0JUbMGI2Q/3ClrYFxfUBbbOBFrhwnDLesXRYsXNSAnz02uyVKDlukm3cLccf+d3Jgs/6lv5dp71aaf0ihfzbEFZ/Tg46k/bk4A/Kw+yjbJ+5y4AAAAASUVORK5CYII="/>
+	</defs>
+	<style>
+	</style>
+	<use id="Background" href="#img1" x="20" y="38"/>
+	<use id="Camada 6" href="#img2" x="77" y="7"/>
+</svg>

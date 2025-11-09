@@ -1,0 +1,9 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 135 135" width="135" height="135">
+	<title>YEL</title>
+	<defs>
+		<image  width="89" height="125" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFkAAAB9BAMAAAA7GNK8AAAAAXNSR0IB2cksfwAAABtQTFRFAAAA////GhIny9/pnq7GeYOiSkluAAAI5eXlL82qYAAAAAl0Uk5TAP//////////NwKb1AAAAWtJREFUeJzt17FuwjAQANBLBljxH0T5Fj6EqTObv4GNuV/TL0H5A7wiVXHPZzuOTRNFan2H1N5gEvuBjvMlgQZWQtF4TxONjG4OQVsjq1VzAGt6pNbcpTWinvIW14q28/YC2m3nOGyudx2NDnXbOT0OsbGENIq2w4MX0e5iE9WupdruRl3Vj0NsLBmNy0csH/Z3anEB7SvY08HWelfSlPrRGvX5sfW6/FWtF99L8fiRpu1wYc07jruTH8MDSE6/AfhRWO9O+OpHWT2f59b7M0y6CGxdRq1jfkC/09Kx/wj8Jmx6njSuFd/Bmguw6KfyzVP3pzxa52shdR9054fHFeprTVOwEJFCbb1OqZmu8aSyXqFhC6cQ1SlpUZ2VT1hfsvN/XbSUqM428k/q2S1YQuu0FndOp58vrFpNSU9r+7PK38+s08L0FH+60hh0kWIoooguts0XkV+Xz4BYRAmdz7rw/x45NXwzuxQ19RcqRktcKZjNhwAAAABJRU5ErkJggg=="/>
+	</defs>
+	<style>
+	</style>
+	<use id="Camada 1" href="#img1" x="22" y="4"/>
+</svg>
