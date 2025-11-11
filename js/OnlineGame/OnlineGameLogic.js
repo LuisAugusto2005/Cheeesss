@@ -29,6 +29,7 @@ function startGameOnline(game) {
     turnDisplay.textContent = 'Vez das Brancas';
     statusDisplay.textContent = 'O jogo começou.';
     if(localColor!=currentPlayer) waitOponentMove()
+        console.log(board)
 }
 
 async function onlineHandleSquare(event) {
@@ -43,6 +44,7 @@ async function onlineHandleSquare(event) {
         if (square.classList.contains('possible-move') || square.classList.contains('possible-capture')) {
             movePiece(selectedPiece.dataset, { row, col });
             await postMoviment()
+            console.log('postado com sucesso')
             clearHighlights()
             waitOponentMove()
             return
@@ -66,17 +68,12 @@ async function waitOponentMove() {
     const onlineGame = await getOnlineGame() //GetServerGame
     console.log('getonlineGame: ', onlineGame)
 
-    if (onlineGame.moves > localGame.moves) { // Recebeu novo moviento
-        board = onlineGame.board
-        renderBoard()
-        updateScore()
-        switchPlayer()
-        if (onlineGame.gameStats === 'ended') {
-            endGame(localColor === 'white'?'white':'black')
-        }
-        return
+    board = onlineGame.board || [[{"type":"rook","color":"black","hasMoved":false},{"type":"knight","color":"black","hasMoved":false},{"type":"bishop","color":"black","hasMoved":false},{"type":"queen","color":"black","hasMoved":false},{"type":"king","color":"black","hasMoved":false},{"type":"bishop","color":"black","hasMoved":false},{"type":"knight","color":"black","hasMoved":false},{"type":"rook","color":"black","hasMoved":false}],[{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false}],[null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null],[{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false}],[{"type":"rook","color":"white","hasMoved":false},{"type":"knight","color":"white","hasMoved":false},{"type":"bishop","color":"white","hasMoved":false},{"type":"queen","color":"white","hasMoved":false},{"type":"king","color":"white","hasMoved":false},{"type":"bishop","color":"white","hasMoved":false},{"type":"knight","color":"white","hasMoved":false},{"type":"rook","color":"white","hasMoved":false}]]
+    renderBoard()
+    updateScore()
+    switchPlayer()
+    if (onlineGame.gameStats === 'ended') {
+        endGame(localColor === 'white'?'white':'black')
     }
-    console.log('esperando') // n recebeu nada novo
-    waitOponentMove()
-    return
+    console.log('get com sucesso')
 }

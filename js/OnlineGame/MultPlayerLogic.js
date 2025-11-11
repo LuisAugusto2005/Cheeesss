@@ -2,11 +2,12 @@ let localGame = {
     gameId: null,
     gameStats: 'inGame',
     moves: 0,
-    board: null
+    board: [[{"type":"rook","color":"black","hasMoved":false},{"type":"knight","color":"black","hasMoved":false},{"type":"bishop","color":"black","hasMoved":false},{"type":"queen","color":"black","hasMoved":false},{"type":"king","color":"black","hasMoved":false},{"type":"bishop","color":"black","hasMoved":false},{"type":"knight","color":"black","hasMoved":false},{"type":"rook","color":"black","hasMoved":false}],[{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false}],[null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null],[{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false}],[{"type":"rook","color":"white","hasMoved":false},{"type":"knight","color":"white","hasMoved":false},{"type":"bishop","color":"white","hasMoved":false},{"type":"queen","color":"white","hasMoved":false},{"type":"king","color":"white","hasMoved":false},{"type":"bishop","color":"white","hasMoved":false},{"type":"knight","color":"white","hasMoved":false},{"type":"rook","color":"white","hasMoved":false}]],
+    oldBoard: null
 }
 let localColor
 
-const SERVER_URL = 'https://zadrezserver.onrender.com'
+const SERVER_URL = 'http://localhost:3088'
 
 async function searchGameOnl() {
     try {
@@ -32,8 +33,9 @@ async function searchGameOnl() {
 }
 
 async function postMoviment() {
+    localGame.board = JSON.parse(JSON.stringify(board))
+    console.log('a jogar: ', localGame)
     const gameToPost = localGame
-    localGame.board = board
     const req = await fetch(`${SERVER_URL}/inGame/${localGame.gameId}`, {
                 method: 'POST',
                 headers: {
@@ -43,7 +45,7 @@ async function postMoviment() {
             })
     const res = await req.json()
     localGame = res
-    console.log('localGame ', localGame)
+    console.log('localGame: ', localGame)
 }
 
 async function getOnlineGame() {

@@ -164,6 +164,7 @@ function renderBoard() {
             chessboard.appendChild(square);
         }
     }
+    console.log(board)
 }
 
     // Lida com o clique em uma casa do tabuleiro

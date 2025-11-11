@@ -1,7 +1,7 @@
-import { createServer } from 'node:http'
+import { createServer, get } from 'node:http'
 import express from 'express'
 import cors from 'cors';
-import { setTimeout } from 'node:timers/promises';
+import { setTimeout as wait } from 'node:timers/promises';
 import  { randomUUID } from 'node:crypto'
 
 const PORT = 3088
@@ -23,8 +23,26 @@ function newGame(gameId) {
     gameId: gameId,
     gameStats: 'inGame',
     moves: 0,
-    board: null
+    board: [[{"type":"rook","color":"black","hasMoved":false},{"type":"knight","color":"black","hasMoved":false},{"type":"bishop","color":"black","hasMoved":false},{"type":"queen","color":"black","hasMoved":false},{"type":"king","color":"black","hasMoved":false},{"type":"bishop","color":"black","hasMoved":false},{"type":"knight","color":"black","hasMoved":false},{"type":"rook","color":"black","hasMoved":false}],[{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false}],[null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null],[{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false}],[{"type":"rook","color":"white","hasMoved":false},{"type":"knight","color":"white","hasMoved":false},{"type":"bishop","color":"white","hasMoved":false},{"type":"queen","color":"white","hasMoved":false},{"type":"king","color":"white","hasMoved":false},{"type":"bishop","color":"white","hasMoved":false},{"type":"knight","color":"white","hasMoved":false},{"type":"rook","color":"white","hasMoved":false}]],
+    oldBoard: [[{"type":"rook","color":"black","hasMoved":false},{"type":"knight","color":"black","hasMoved":false},{"type":"bishop","color":"black","hasMoved":false},{"type":"queen","color":"black","hasMoved":false},{"type":"king","color":"black","hasMoved":false},{"type":"bishop","color":"black","hasMoved":false},{"type":"knight","color":"black","hasMoved":false},{"type":"rook","color":"black","hasMoved":false}],[{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false}],[null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null],[{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false}],[{"type":"rook","color":"white","hasMoved":false},{"type":"knight","color":"white","hasMoved":false},{"type":"bishop","color":"white","hasMoved":false},{"type":"queen","color":"white","hasMoved":false},{"type":"king","color":"white","hasMoved":false},{"type":"bishop","color":"white","hasMoved":false},{"type":"knight","color":"white","hasMoved":false},{"type":"rook","color":"white","hasMoved":false}]]
   };
+}
+
+async function waitOpenntent(gameId) {
+    const thisGame = getGame(gameId)
+    if (!thisGame) {
+        console.error('Jogo não encontrado para o ID:', gameId)
+        return
+    }
+    
+    if (JSON.stringify(thisGame.oldBoard) !== JSON.stringify(thisGame.board)) {
+        thisGame.oldBoard = JSON.parse(JSON.stringify(thisGame.board))
+        return thisGame
+    }
+
+    await wait(400)
+
+    return waitOpenntent(gameId)
 }
 
 function getGame(gameId) {
@@ -34,6 +52,7 @@ function getGame(gameId) {
 function setGame(game) {
     const index = currentGames.findIndex(g => g.gameId === game.gameId);
         currentGames[index] = game
+        console.log('Jogo atualizado: ', currentGames[index])
 }
 
 function getRandomInt(min, max) {
@@ -41,7 +60,7 @@ function getRandomInt(min, max) {
         max = Math.floor(max);
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
-
+    
 app.get('/waitAGame', async (req, res) => {
     
     if (Jogador1 === null) {
@@ -57,36 +76,42 @@ app.get('/waitAGame', async (req, res) => {
     else {
         const gameId = randomUUID()
         const colors = getRandomInt(1,2)
-
+        
         Jogador1.json({ 
             message: 'Partida encontrada!',
             gameId: gameId,
             color: colors===1?'white':'black'
         })
-
+        
         res.json({ 
             message: 'Partida encontrada!',
             gameId: gameId,
             color: colors===2?'white':'black'
         })
+        
         console.log('Jogo iniciado', gameId)
         currentGames.push(newGame(gameId))
     }
 })
 
 app.get('/inGame/:id', async (req, res) => {
-    const thisGame = getGame(req.params.id)
-    await setTimeout(100)
+    const gameId = req.params.id
+    console.log(gameId)
+    const thisGame = await waitOpenntent(gameId)
+    console.log('espera acabou')
     res.json(thisGame)
     res.end
 })
 
 app.post('/inGame/:id', (req, res) => {
     const postedGame = req.body
+    console.log('postrecebido: ', )
     const thisGame = getGame(req.params.id)
+    console.log(thisGame)
     thisGame.moves++
     thisGame.board = postedGame.board
     thisGame.gameStats = postedGame.gameStats
+    console.log(thisGame.board)
     setGame(thisGame)
     res.json(thisGame)
     res.end

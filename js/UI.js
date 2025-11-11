@@ -102,6 +102,7 @@ function clearHighlights() {
 
 // flipar o board, usado no pvp e contra o bot ladrão
 function flipBoard() {
+    console.log('flip')
     // cara, talvez deixe o jogador tonto wwwww
     chessboard.classList.toggle('rotated');
     if (gameMode === 'pvb') {
