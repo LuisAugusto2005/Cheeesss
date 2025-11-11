@@ -18,12 +18,14 @@ let Jogador1 = null
 
 let currentGames = []
 
-function newGame(gameId) {
+function newGame(gameId, p1, p2) {
   return {
     gameId: gameId,
     gameStats: 'inGame',
     moves: 0,
-    board: null
+    board: null,
+    player1: p1, 
+    player2: p2
   };
 }
 
@@ -41,7 +43,7 @@ function getRandomInt(min, max) {
         max = Math.floor(max);
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
-
+    
 app.get('/waitAGame', async (req, res) => {
     
     if (Jogador1 === null) {
@@ -58,27 +60,26 @@ app.get('/waitAGame', async (req, res) => {
         const gameId = randomUUID()
         const colors = getRandomInt(1,2)
 
+        currentGames.push(newGame(gameId, Jogador1, res))
+        
         Jogador1.json({ 
             message: 'Partida encontrada!',
             gameId: gameId,
             color: colors===1?'white':'black'
         })
-
+        
         res.json({ 
             message: 'Partida encontrada!',
             gameId: gameId,
             color: colors===2?'white':'black'
         })
+        
         console.log('Jogo iniciado', gameId)
-        currentGames.push(newGame(gameId))
     }
 })
 
 app.get('/inGame/:id', async (req, res) => {
-    const thisGame = getGame(req.params.id)
-    await setTimeout(100)
-    res.json(thisGame)
-    res.end
+
 })
 
 app.post('/inGame/:id', (req, res) => {
@@ -88,7 +89,10 @@ app.post('/inGame/:id', (req, res) => {
     thisGame.board = postedGame.board
     thisGame.gameStats = postedGame.gameStats
     setGame(thisGame)
-    res.json(thisGame)
+    p1 = thisGame.p1
+    p1.json(thisGame)
+    p2 = thisGame.p2
+    p2.json(thisGame)
     res.end
 })
 
