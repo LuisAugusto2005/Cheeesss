@@ -105,7 +105,7 @@ app.get('/inGame/:id/:color', async (req, res) => {
 
 app.post('/inGame/:id/:color', (req, res) => {
     const postedGame = req.body
-    console.log('postrecebido: ')
+    console.log('postrecebido')
     const thisGame = getGame(req.params.id)
     thisGame.moves++
     thisGame.needUpd = true
