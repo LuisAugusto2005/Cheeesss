@@ -1,7 +1,7 @@
-import { createServer } from 'node:http'
+import { createServer, get } from 'node:http'
 import express from 'express'
 import cors from 'cors';
-import { setTimeout } from 'node:timers/promises';
+import { setTimeout as wait } from 'node:timers/promises';
 import  { randomUUID } from 'node:crypto'
 
 const PORT = 3088
@@ -18,24 +18,31 @@ let Jogador1 = null
 
 let currentGames = []
 
-function newGame(gameId, p1, p2) {
+function newGame(gameId) {
   return {
     gameId: gameId,
     gameStats: 'inGame',
     moves: 0,
-    board: null,
-    player1: p1, 
-    player2: p2
+    board: [[{"type":"rook","color":"black","hasMoved":false},{"type":"knight","color":"black","hasMoved":false},{"type":"bishop","color":"black","hasMoved":false},{"type":"queen","color":"black","hasMoved":false},{"type":"king","color":"black","hasMoved":false},{"type":"bishop","color":"black","hasMoved":false},{"type":"knight","color":"black","hasMoved":false},{"type":"rook","color":"black","hasMoved":false}],[{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false}],[null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null],[{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false}],[{"type":"rook","color":"white","hasMoved":false},{"type":"knight","color":"white","hasMoved":false},{"type":"bishop","color":"white","hasMoved":false},{"type":"queen","color":"white","hasMoved":false},{"type":"king","color":"white","hasMoved":false},{"type":"bishop","color":"white","hasMoved":false},{"type":"knight","color":"white","hasMoved":false},{"type":"rook","color":"white","hasMoved":false}]],
+    oldBoard: [[{"type":"rook","color":"black","hasMoved":false},{"type":"knight","color":"black","hasMoved":false},{"type":"bishop","color":"black","hasMoved":false},{"type":"queen","color":"black","hasMoved":false},{"type":"king","color":"black","hasMoved":false},{"type":"bishop","color":"black","hasMoved":false},{"type":"knight","color":"black","hasMoved":false},{"type":"rook","color":"black","hasMoved":false}],[{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false}],[null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null],[{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false}],[{"type":"rook","color":"white","hasMoved":false},{"type":"knight","color":"white","hasMoved":false},{"type":"bishop","color":"white","hasMoved":false},{"type":"queen","color":"white","hasMoved":false},{"type":"king","color":"white","hasMoved":false},{"type":"bishop","color":"white","hasMoved":false},{"type":"knight","color":"white","hasMoved":false},{"type":"rook","color":"white","hasMoved":false}]]
   };
 }
 
-async function waitOpenntent(Game) {
-    thisGame = getGame(Game.gameId)
-    if (Game === thisGame) {
+async function waitOpenntent(gameId) {
+    const thisGame = getGame(gameId)
+    if (!thisGame) {
+        console.error('Jogo não encontrado para o ID:', gameId)
+        return
+    }
+    
+    if (JSON.stringify(thisGame.oldBoard) !== JSON.stringify(thisGame.board)) {
+        thisGame.oldBoard = JSON.parse(JSON.stringify(thisGame.board))
         return thisGame
     }
-    await setTimeout(100)
-    waitOpenntent()
+
+    await wait(400)
+
+    return waitOpenntent(gameId)
 }
 
 function getGame(gameId) {
@@ -45,6 +52,7 @@ function getGame(gameId) {
 function setGame(game) {
     const index = currentGames.findIndex(g => g.gameId === game.gameId);
         currentGames[index] = game
+        console.log('Jogo atualizado: ', currentGames[index])
 }
 
 function getRandomInt(min, max) {
@@ -68,8 +76,6 @@ app.get('/waitAGame', async (req, res) => {
     else {
         const gameId = randomUUID()
         const colors = getRandomInt(1,2)
-
-        currentGames.push(newGame(gameId, Jogador1, res))
         
         Jogador1.json({ 
             message: 'Partida encontrada!',
@@ -84,27 +90,30 @@ app.get('/waitAGame', async (req, res) => {
         })
         
         console.log('Jogo iniciado', gameId)
+        currentGames.push(newGame(gameId))
     }
 })
 
 app.get('/inGame/:id', async (req, res) => {
-    Game = getGame(req.params.id)
-    const thisGame = await waitOpenntent(Game)
+    const gameId = req.params.id
+    console.log(gameId)
+    const thisGame = await waitOpenntent(gameId)
+    console.log('espera acabou')
     res.json(thisGame)
     res.end
 })
 
 app.post('/inGame/:id', (req, res) => {
     const postedGame = req.body
+    console.log('postrecebido: ', )
     const thisGame = getGame(req.params.id)
+    console.log(thisGame)
     thisGame.moves++
     thisGame.board = postedGame.board
     thisGame.gameStats = postedGame.gameStats
+    console.log(thisGame.board)
     setGame(thisGame)
-    p1 = thisGame.p1
-    p1.json(thisGame)
-    p2 = thisGame.p2
-    p2.json(thisGame)
+    res.json(thisGame)
     res.end
 })
 
