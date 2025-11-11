@@ -29,6 +29,15 @@ function newGame(gameId, p1, p2) {
   };
 }
 
+async function waitOpenntent(Game) {
+    thisGame = getGame(Game.gameId)
+    if (Game === thisGame) {
+        return thisGame
+    }
+    await setTimeout(100)
+    waitOpenntent()
+}
+
 function getGame(gameId) {
     return currentGames.find(g => g.gameId === gameId)
 }
@@ -79,7 +88,10 @@ app.get('/waitAGame', async (req, res) => {
 })
 
 app.get('/inGame/:id', async (req, res) => {
-
+    Game = getGame(req.params.id)
+    const thisGame = await waitOpenntent(Game)
+    res.json(thisGame)
+    res.end
 })
 
 app.post('/inGame/:id', (req, res) => {
