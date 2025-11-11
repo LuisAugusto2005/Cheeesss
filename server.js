@@ -23,26 +23,29 @@ function newGame(gameId) {
     gameId: gameId,
     gameStats: 'inGame',
     moves: 0,
+    lastColor: 'white',
     board: [[{"type":"rook","color":"black","hasMoved":false},{"type":"knight","color":"black","hasMoved":false},{"type":"bishop","color":"black","hasMoved":false},{"type":"queen","color":"black","hasMoved":false},{"type":"king","color":"black","hasMoved":false},{"type":"bishop","color":"black","hasMoved":false},{"type":"knight","color":"black","hasMoved":false},{"type":"rook","color":"black","hasMoved":false}],[{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false}],[null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null],[{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false}],[{"type":"rook","color":"white","hasMoved":false},{"type":"knight","color":"white","hasMoved":false},{"type":"bishop","color":"white","hasMoved":false},{"type":"queen","color":"white","hasMoved":false},{"type":"king","color":"white","hasMoved":false},{"type":"bishop","color":"white","hasMoved":false},{"type":"knight","color":"white","hasMoved":false},{"type":"rook","color":"white","hasMoved":false}]],
-    oldBoard: [[{"type":"rook","color":"black","hasMoved":false},{"type":"knight","color":"black","hasMoved":false},{"type":"bishop","color":"black","hasMoved":false},{"type":"queen","color":"black","hasMoved":false},{"type":"king","color":"black","hasMoved":false},{"type":"bishop","color":"black","hasMoved":false},{"type":"knight","color":"black","hasMoved":false},{"type":"rook","color":"black","hasMoved":false}],[{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false},{"type":"pawn","color":"black","hasMoved":false}],[null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null],[{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false},{"type":"pawn","color":"white","hasMoved":false}],[{"type":"rook","color":"white","hasMoved":false},{"type":"knight","color":"white","hasMoved":false},{"type":"bishop","color":"white","hasMoved":false},{"type":"queen","color":"white","hasMoved":false},{"type":"king","color":"white","hasMoved":false},{"type":"bishop","color":"white","hasMoved":false},{"type":"knight","color":"white","hasMoved":false},{"type":"rook","color":"white","hasMoved":false}]]
-  };
+    needUpd: false
+};
 }
 
-async function waitOpenntent(gameId) {
+async function waitOpenntent(gameId, color) {
+    await wait(400)
     const thisGame = getGame(gameId)
+
     if (!thisGame) {
         console.error('Jogo não encontrado para o ID:', gameId)
         return
     }
+    if(color === thisGame.lastColor) return waitOpenntent(gameId, color)
     
-    if (JSON.stringify(thisGame.oldBoard) !== JSON.stringify(thisGame.board)) {
-        thisGame.oldBoard = JSON.parse(JSON.stringify(thisGame.board))
+    if (thisGame.needUpd) {
+        thisGame.needUpd = false
         return thisGame
     }
 
-    await wait(400)
 
-    return waitOpenntent(gameId)
+    return waitOpenntent(gameId, color)
 }
 
 function getGame(gameId) {
@@ -52,7 +55,6 @@ function getGame(gameId) {
 function setGame(game) {
     const index = currentGames.findIndex(g => g.gameId === game.gameId);
         currentGames[index] = game
-        console.log('Jogo atualizado: ', currentGames[index])
 }
 
 function getRandomInt(min, max) {
@@ -94,24 +96,22 @@ app.get('/waitAGame', async (req, res) => {
     }
 })
 
-app.get('/inGame/:id', async (req, res) => {
-    const gameId = req.params.id
-    console.log(gameId)
-    const thisGame = await waitOpenntent(gameId)
+app.get('/inGame/:id/:color', async (req, res) => {
+    const thisGame = await waitOpenntent(req.params.id, req.params.color)
     console.log('espera acabou')
     res.json(thisGame)
     res.end
 })
 
-app.post('/inGame/:id', (req, res) => {
+app.post('/inGame/:id/:color', (req, res) => {
     const postedGame = req.body
-    console.log('postrecebido: ', )
+    console.log('postrecebido: ')
     const thisGame = getGame(req.params.id)
-    console.log(thisGame)
     thisGame.moves++
+    thisGame.needUpd = true
     thisGame.board = postedGame.board
+    thisGame.lastColor = req.params.color
     thisGame.gameStats = postedGame.gameStats
-    console.log(thisGame.board)
     setGame(thisGame)
     res.json(thisGame)
     res.end
