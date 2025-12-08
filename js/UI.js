@@ -15,6 +15,7 @@ const backFromGame = gameContainer.querySelector('#back-to-menu');
 const undoButton = gameContainer.querySelector('#undo-button');
 const redoButton = gameContainer.querySelector('#redo-button');
 const chessboard = document.getElementById('chessboard');
+const LabirintoMenu = document.getElementById('Labirinto-Menu')
 const SandBoxBlack = document.getElementById('SandBoxBlack');
 const SandBoxWhite = document.getElementById('SandBoxWhite');
 const SandRemoveBox = document.getElementById('SandRemoveBox');
@@ -27,7 +28,7 @@ const botDisplay = document.getElementById('bot-personality-display');
 const botImage = document.getElementById('bot-image');
 const botName = document.getElementById('bot-name');
 const botDialogue = document.getElementById('bot-dialogue');
-const mainArea = document.getElementById('main-game-area');
+const mainArea = document.getElementById('game-container-center');
 
 //funções de UI
 
@@ -130,6 +131,7 @@ function returnToMenu() {
     SandBoxBlack.classList.add('hidden');
     SandBoxWhite.classList.add('hidden');
     SandRemoveBox.classList.add('hidden');
+    LabirintoMenu.classList.add('hidden')
     menuContainer.classList.remove('hidden');
         
     stopAudioVisualizer();

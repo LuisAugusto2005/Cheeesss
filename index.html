@@ -25,11 +25,11 @@
     <div id="menu-container">
         <h1>Bem-vindo a Zadrez!!</h1>
         <p>Selecione o modo de gaming:</p>
-        <button id="SandBoxButton">SandBox</button>
-        <button id="pvpButton">Jogador vs Jogador</button>
-        <button id="onlineButton">Online</button>
-        <button id="pvbButton">Jogador vs Desafiante</button>
-        <button id="adventureButton">Aventura</button>
+        <button id="SandBoxButton" class="buttons">SandBox</button>
+        <button id="pvpButton" class="buttons">Jogador vs Jogador</button>
+        <button id="onlineButton" class="buttons">Online</button>
+        <button id="pvbButton" class="buttons">Jogador vs Desafiante</button>
+        <button id="adventureButton" class="buttons">Aventura</button>
         <input type="text" id="insert_code" placeholder="INSERT CODE">
     </div>
 
@@ -37,12 +37,12 @@
         <h1>Escolha seu Oponente</h1>
         <div id="bot-list">
         </div>
-        <button id="back-to-menu">Voltar ao Menu</button>
+        <button id="back-to-menu" class="buttons">Voltar ao Menu</button>
     </div>
 
     <div id="loading_container" class="hidden">
         <h1>Procurando outro Jogador</h1>
-        <button id="back-to-menu">Voltar ao Menu</button>     
+        <button id="back-to-menu" class="buttons">Voltar ao Menu</button>     
     </div>
 
     <div id="game-container" class="hidden">
@@ -55,98 +55,106 @@
             </div>
         </div>
 
-        <div id="main-game-area">
-
-          <div id="area-jogo">
-
-                  <div id="SandRemoveBox" class="hidden"></div>
-
-                  <div id="area-tabuleiro">
-
-                    <div id="SandBoxBlack" class="hidden"></div>
-
-                    <div id="chessboard"></div>
-
-                    <div id="SandBoxWhite" class="hidden"></div>
-                    
-                  </div>
+        <div id="game-container2">
+            
+            <div id="game-container-left">
+                <div id="Labirinto-Menu" class="game-info-style hidden">dsa</div>
             </div>
 
-             <div id="game-info" class="game-info-style">
-                <div id="buttons-infogame-container0">
-                    <div class="piece-style-dropdown hidden" id="boardStyleDropdown">
-                        <button id="styleButtonboard">Tabuleiro <br> ▼</button>
-                        <div id="styleMenuBoard" class="dropdown-content">
-                            <div data-style="normal">Normal</div>
-                            <div data-style="light">Claro</div>
-                            <div data-style="neon">Neon</div>
-                            <div data-style="arthur_wermont">arthur_wermont</div>
-                            <div data-style="vivi">Vivi</div>
-                            <div data-style="shrek">Shrek</div>
-                            <div data-style="ryan">Ryan</div>
-                            <div data-style="lumberjack">Lumberjack</div>
-                            <div data-style="Vazio">Vazio</div>
-                        </div>
-                    </div>
-        
-                    <div class="piece-style-dropdown hidden" id="pieceStyleDropdown">
-                        <button id="styleButton">Peças <br> ▼</button>
-                        <div id="styleMenu" class="dropdown-content">
-                            <div data-style="classic">Clássico</div>
-                            <div data-style="california">California</div>
-                            <div data-style="fantasy">Fantasia</div>
-                            <div data-style="janggi">Janggi</div>
-                            <div data-style="horse">Horsey</div>
-                        </div>
-                    </div>
+            <div id="game-container-center">
 
-                    <div class="background-dropdown" id="backgroundStyledropdown">
-                        <button id="styleImgButton">Imagens <br> ▼</button>
-                        <div id="styleImgMenu" class="dropdown-content">
-                            <div data-style="normal">Normal</div>
-                            <div data-style="black">Black</div>
-                            <div data-style="white">White</div>
-                            <div data-style="shrek">Shrek</div>
-                            <div data-style="vivi">Vivi</div>
-                            <div data-style="putin">Putin</div>
-                            <div data-style="guy">Family Guy</div>
-                            <div data-style="ronaldo">RonaldFriends</div>
-                            <div data-style="kamen">Kamen Rider</div>
-                        </div>
-                    </div>
-                </div>
-                <h2>Informações do Jogo</h2>
-                <p id="turn-display">Vez das Brancas</p>
-                <p id="status-display">O jogo começou.</p>
-    
-                <h3>Placar</h3>
-                <div id="score-display">
-                    <p>Brancas: <span id="white-score">0</span></p>
-                    <p>Pretas: <span id="black-score">0</span></p>
-                </div>
-    
-                <h3>Histórico de Movimentos</h3>
-                <div id="move-history">
-                    <ul></ul>
-                </div>
+                <div id="area-jogo">
+                    
+                        <div id="SandRemoveBox" class="hidden"></div>
 
-                <div id="buttons-infogame-container1">
-                    <div id="buttons-undo-redo">
-                        <button id="undo-button">❮</button>
-                        <button id="redo-button">❯</button>
-                    </div>
-                    <button id="back-to-menu">Voltar para menu</button>
+                        <div id="area-tabuleiro">
+
+                            <div id="SandBoxBlack" class="hidden"></div>
+
+                            <div id="chessboard"></div>
+
+                            <div id="SandBoxWhite" class="hidden"></div>
+                            
+                        </div>
                 </div>
-          </div>
-      </div>
+                    <div id="game-info" class="game-info-style">
+                        <div id="buttons-infogame-container0">
+                            <div class="piece-style-dropdown hidden" id="boardStyleDropdown">
+                                <button id="styleButtonboard" class="buttons">Tabuleiro <br> ▼</button>
+                                <div id="styleMenuBoard" class="dropdown-content">
+                                    <div data-style="normal">Normal</div>
+                                    <div data-style="light">Claro</div>
+                                    <div data-style="neon">Neon</div>
+                                    <div data-style="arthur_wermont">arthur_wermont</div>
+                                    <div data-style="vivi">Vivi</div>
+                                    <div data-style="shrek">Shrek</div>
+                                    <div data-style="ryan">Ryan</div>
+                                    <div data-style="lumberjack">Lumberjack</div>
+                                    <div data-style="Vazio">Vazio</div>
+                                </div>
+                            </div>
+                
+                            <div class="piece-style-dropdown hidden" id="pieceStyleDropdown">
+                                <button id="styleButton" class="buttons">Peças <br> ▼</button>
+                                <div id="styleMenu" class="dropdown-content">
+                                    <div data-style="classic">Clássico</div>
+                                    <div data-style="california">California</div>
+                                    <div data-style="fantasy">Fantasia</div>
+                                    <div data-style="janggi">Janggi</div>
+                                    <div data-style="horse">Horsey</div>
+                                </div>
+                            </div>
+
+                            <div class="background-dropdown" id="backgroundStyledropdown">
+                                <button id="styleImgButton" class="buttons">Imagens <br> ▼</button>
+                                <div id="styleImgMenu" class="dropdown-content">
+                                    <div data-style="normal">Normal</div>
+                                    <div data-style="black">Black</div>
+                                    <div data-style="white">White</div>
+                                    <div data-style="shrek">Shrek</div>
+                                    <div data-style="vivi">Vivi</div>
+                                    <div data-style="putin">Putin</div>
+                                    <div data-style="guy">Family Guy</div>
+                                    <div data-style="ronaldo">RonaldFriends</div>
+                                    <div data-style="kamen">Kamen Rider</div>
+                                </div>
+                            </div>
+                        </div>
+                        <h2>Informações do Jogo</h2>
+                        <p id="turn-display">Vez das Brancas</p>
+                        <p id="status-display">O jogo começou.</p>
+            
+                        <h3>Placar</h3>
+                        <div id="score-display">
+                            <p>Brancas: <span id="white-score">0</span></p>
+                            <p>Pretas: <span id="black-score">0</span></p>
+                        </div>
+            
+                        <h3>Histórico de Movimentos</h3>
+                        <div id="move-history">
+                            <ul></ul>
+                        </div>
+
+                        <div id="buttons-infogame-container1">
+                            <div id="buttons-undo-redo">
+                                <button id="undo-button" class="buttons">❮</button>
+                                <button id="redo-button" class="buttons">❯</button>
+                            </div>
+                            <button id="back-to-menu" class="buttons">Voltar para menu</button>
+                        </div>
+                </div>
+            </div>
+            <div id="game-container-right">
+            </div>
      </div> 
 
     <script src="js/UI.js"></script>
     <script src="js/Audio.js"></script>
     <script src="js/regraZadrez.js"></script>
-    <script src="js/sandbox.js"></script>
     <script src="js/botLogic.js"></script>
     <script src="js/gameLogic.js"></script>
+    <script src="js/sandbox/sandbox.js"></script>
+    <script src="js/sandbox/LabMain.js"></script>
     <script src="js/OnlineGame/MultPlayerLogic.js"></script>
     <script src="js/OnlineGame/OnlineGameLogic.js"></script>
     <script src="js/main.js"></script>

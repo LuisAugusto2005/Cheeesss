@@ -172,13 +172,12 @@ function renderBoard() {
         if (gameMode === 'online') return onlineHandleSquare(event);
         if (gameEnded || (gameMode === 'pvb' && currentPlayer === 'black')) return;
         
-        if (sandPiece || nullifier) return insertSandPiece(square); // SandBox Insert
-        
         const square = event.currentTarget;
         const row = parseInt(square.dataset.row);
         const col = parseInt(square.dataset.col);
         const piece = board[row][col];
         
+        if (sandPiece || nullifier) return insertSandPiece(square); // SandBox Insert
         
         // Caso 1: Captura
         if (square.classList.contains('possible-move') || square.classList.contains('possible-capture')) {
