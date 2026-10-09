@@ -7,7 +7,7 @@ let localGame = {
 }
 let localColor
 
-const SERVER_URL = 'https://zadrezserver.onrender.com'
+const SERVER_URL = 'https://zadrezserver-t2ic.onrender.com'
 
 async function searchGameOnl() {
     try {
